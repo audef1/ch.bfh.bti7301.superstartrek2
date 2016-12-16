@@ -13,8 +13,8 @@ public class SpaceStation extends SpaceObject {
     private int upgradeShieldMultiplier = 2;
     private int upgradeHealthMultiplier = 2;
 
-    public SpaceStation(Color color, Texture texture, float x, float y, float speed, int width, int height, int tx, int ty){
-        super(color, texture,x,y,speed,width,height,tx,ty);
+    public SpaceStation(int width, int height){
+        super(width, height);
     }
 
     public int getFuelCost() {

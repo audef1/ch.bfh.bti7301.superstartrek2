@@ -18,6 +18,10 @@ public class SpaceShip extends SpaceObject {
     protected int maxFuel;
     protected int money;
 
+    public SpaceShip(int width, int height){
+        super(width, height);
+    }
+
     public int getMoney() {
         return money;
     }
@@ -120,7 +124,4 @@ public class SpaceShip extends SpaceObject {
         return (this.healthMax - this.health) + (this.shieldMax - this.shield);
     }
 
-    public SpaceShip(Color color, Texture texture, float x, float y, float speed,  int width, int height, int tx, int ty){
-        super(color, texture,x,y,speed,width,height,tx,ty);
-    }
 }

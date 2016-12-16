@@ -1,5 +1,6 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class StateMachine implements State{
      */
     public StateMachine() {
         states = new HashMap<>();
-        currentState = new EmptyState();
+        currentState = new MenuState(); // initial state
         states.put(null, currentState);
     }
 
@@ -46,6 +47,27 @@ public class StateMachine implements State{
         currentState.enter();
     }
 
+    /**
+     * Initiates the States
+     *
+     * @param size Size of the current Game
+     */
+    public void initStates(int size){
+        add("menu", new MenuState());
+        add("game", new GameState(size));
+        change("game");
+    }
+
+    public void keyPressed(int k)
+    {
+        currentState.keyPressed(k);
+    }
+
+    public void keyReleased(int k)
+    {
+        currentState.keyReleased(k);
+    }
+
     @Override
     public void input() {
         currentState.input();
@@ -57,18 +79,8 @@ public class StateMachine implements State{
     }
 
     @Override
-    public void update(float delta) {
-        currentState.update(delta);
-    }
-
-    @Override
-    public void render() {
-        currentState.render();
-    }
-
-    @Override
-    public void render(float alpha) {
-        currentState.render(alpha);
+    public void draw(Graphics2D g) {
+        currentState.draw(g);
     }
 
     @Override

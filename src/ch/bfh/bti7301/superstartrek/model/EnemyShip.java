@@ -1,11 +1,13 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import com.sun.prism.Texture;
+
 /**
  * Created by filip on 02.12.2016.
  */
 public class EnemyShip extends SpaceShip {
 
-    public EnemyShip(Color color, Texture texture, float x, float y, float speed, int width, int height, int tx, int ty){
-        super(color, texture,x,y,speed,width,height,tx,ty);
+    public EnemyShip(int width, int height){
+        super(width, height);
     }
 }

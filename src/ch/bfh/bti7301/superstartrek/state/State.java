@@ -1,7 +1,6 @@
 package ch.bfh.bti7301.superstartrek.state;
 
-import ch.bfh.bti7301.superstartrek.model.Game;
-
+import java.awt.*;
 
 /**
  * Created by buche on 01.12.2016.
@@ -13,32 +12,14 @@ public interface State {
     public void input();
 
     /**
-     * Updates the state (fixed timestep).
+     * Updates the state
      */
-    public default void update() {
-        update(1f / Game.TARGET_UPS);
-    }
+    public void update();
 
     /**
-     * Updates the state (variable timestep)
-     *
-     * @param delta Time difference in seconds
+     * Draws the elements in the state
      */
-    public void update(float delta);
-
-    /**
-     * Renders the state (no interpolation).
-     */
-    public default void render() {
-        render(1f);
-    }
-
-    /**
-     * Renders the state (with interpolation).
-     *
-     * @param alpha Alpha value, needed for interpolation
-     */
-    public void render(float alpha);
+    public void draw(Graphics2D g);
 
     /**
      * Gets executed when entering the state, useful for initialization.
@@ -49,4 +30,14 @@ public interface State {
      * Gets executed when leaving the state, useful for disposing.
      */
     public void exit();
+
+    /**
+     * Gets the pressed keys
+     */
+    public void keyPressed(int k);
+
+    /**
+     * Gets the released keys
+     */
+    public void keyReleased(int k);
 }

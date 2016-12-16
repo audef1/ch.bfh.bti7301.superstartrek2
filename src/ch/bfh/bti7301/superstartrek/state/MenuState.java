@@ -1,22 +1,17 @@
 package ch.bfh.bti7301.superstartrek.state;
 
-import org.lwjgl.glfw.GLFW;
-
+import java.awt.*;
 import java.util.ArrayList;
-
-import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Created by florianauderset on 16.12.16.
  */
 public class MenuState implements State {
 
-    private final Renderer renderer;
     private ArrayList<String[]> options;
     private int menupointer = 0;
 
-    public MenuState(Renderer renderer) {
-        this.renderer = renderer;
+    public MenuState() {
 
         // define menuoptions
         this.options = new ArrayList<String[]>();
@@ -41,19 +36,18 @@ public class MenuState implements State {
 
     @Override
     public void input() {
-        long window = GLFW.glfwGetCurrentContext();
-        if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        if (false) {
             if (menupointer != 0){
                 menupointer--;
             }
         }
-        if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        if (false) {
             if (menupointer != options.size()-1){
                 menupointer++;
             }
         }
-        if (glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS) {
-            System.out.println("entering " + options.get(menupointer) + " state.");
+        if (false) {
+            System.out.println("entering " + options.get(menupointer)[0] + " state.");
         }
 
         try {
@@ -62,16 +56,16 @@ public class MenuState implements State {
             e.printStackTrace();
         }
 
-        System.out.println(options.get(menupointer) + " selected");
+        System.out.println(options.get(menupointer)[0] + " selected");
     }
 
     @Override
-    public void update(float delta) {
+    public void update() {
 
     }
 
     @Override
-    public void render(float alpha) {
+    public void draw(Graphics2D g) {
 
     }
 
@@ -82,6 +76,16 @@ public class MenuState implements State {
 
     @Override
     public void exit() {
+
+    }
+
+    @Override
+    public void keyPressed(int k) {
+
+    }
+
+    @Override
+    public void keyReleased(int k) {
 
     }
 }

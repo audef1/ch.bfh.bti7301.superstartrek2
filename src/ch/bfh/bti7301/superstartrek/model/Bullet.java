@@ -9,12 +9,8 @@ public class Bullet extends SpaceObject{
     private float areaOfDamage;
     int timeToExplode = 0;
 
-    public Bullet(Color color, Texture texture, int width, int height, int tx, int ty, int speed, int damage, float areaOfDamage, int timeToExplode){
-        super(color, texture, width, height, speed, width, height, tx, ty);
-
-        this.damage = damage;
-        this.areaOfDamage = areaOfDamage;
-        this.timeToExplode = timeToExplode;
+    public Bullet(int width, int height){
+        super(width, height);
     }
 
     public int getDamage() {
