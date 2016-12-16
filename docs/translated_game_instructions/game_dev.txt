@@ -1,0 +1,68 @@
+Super Star Trek - Regeln und Kommentare
+
+1. Plot
+Du bist Kapitän im Raumschiff "Enterprise" mit der Mission, Klingonische Raumschiffe (in der Regel 17),
+welche die United Federation of Planets bedrohen, zu suchen und zu zerstören. Du hast spezifizierte
+Stern-Daten, in denen du die Mission abschliessen musst. Dir Stehen 3 Federation Starbasets zu Verfügung,
+in welchen du dein Schiff wieder aufladen kannst.
+
+2. Das Spiel weist dir eine Position irgendwo in der Galaxie zu. Die Galaxie ist aufgeteilt in ein
+8x8 Grid von Quadraten. Der astronomische Name eines Quadrates wird jeweils eingeblendet, sobald 
+du ein neues Quadrat betrittst. Jedes Quadrat wiederum ist in ein 8x8 Grid von Sektionen unterteilt.
+
+3. In einem Sektionen-Diagramm gibt es folgende Symbole:
+<*> Enterprise
+>|< Starbase
+||| Klingon
+* Stern
+
+4. Dir stehen 8 Kommandos zur Verfügung. (Eine Detaillierte Beschreibung steht dir in der Programm-
+beschreibung zur Verfügung):
+
+NAV Navigiert dein Raumschiff, mögliche Eingaben sind Kurs und Warp-Speed
+SRS Kurzstrecken Sensor Scanner (1 Quadrant)
+LRS Langstrecken Sensor Scanner (9 Quadranten)
+PHA Phaser Control
+TOR Photonen-Torpedo Control
+SHE SChild Control (Schutz vor gegnerischen Phaser Waffen)
+DAM Schadens- und Reparatur Status Angabe
+COM Benutze Computer Library
+
+5. Die Computer Library Optionen sind wie folgt (komplette Beschreibungen 
+sind in den Programm Instruktionen):
+	0 Kummultativer Galaktik Report
+	1 Status Report
+	2 Photonen-Torpedo Kurs Daten
+	3 Starbase Navigationsdaten
+	4 Richtungs / Distanzrechner
+	5 Nomenklatur Karte des Quadranten
+
+6. Aktuelle Reports über den Status des Schiffes werden vonden Offizieren der Enterprise gemacht, welche
+auch in der Originalserie erschienen sind (Spock, Scott, Uhura, Chevok etc.)
+
+7. Klingonen sind nicht-stationär innerhalb eines Quadranten. Wenn du an ihnen vorbei manövrieren willst,
+bewegen sie sich auf dich zu un schiessen auf dich.
+
+8. Feuer und Schaden:
+A. Phaser verringern ihr Feuer, je höher die Distanzen zwischen den euch sind.
+B. Rammt dich ein Klingone hart genug (in Relation zu deiner Schildstärke), entsteht generell
+ein Schaden bei deinem Schiff, gefolgt von einem Schadensreport
+C. Wenn du einen Klingonen nicht hart genug triffst (relativ zu seiner Schildstärke), machst du keinen
+Schaden. Es folgt ein Statusreport
+D. Die Schadenskontrolle gibt eine Meldung, wenn ausgefallene 
+Teile des Schiffes wieder vollständig Repariert sind.
+
+9. Dein Antrieb fährt automatisch herunter, wenn du versuchst die Galaxie zu verlassen, durch einen Stern oder
+eine Starbase oder (Gott bewahre) durch einen Klingonen zu fliegen versuchst.
+
+10. Während einer Quetschung solltest du dich nur leicht verrechnen, ein wenig Schildenergie wird automatisch
+auf den Warp-Antrieb umgeleitet (wenn deine Schilde kontrollierbar sind!).
+
+11. Wenn du an einer Starbase angedockt bist, kann ein Team von Technikern dein Schiff reparieren
+(wenn du gewillt bist, ihnen die nötige Zeit zu geben... und sie unterschätzen den Schaden immer...)
+
+12. Wenn du, um Maneuvrierzeit zu sparen, eine Starbase zerstörst, bekommst du eine böse Nachricht des
+Starfleet Kommandeurs. Wenn du die letzte Starbase zerstörst, hast du das Spiel verloren!
+
+13. Die Endgame Logik wurde an mehreren Stellen "aufgeräumt", und es ist jetzt möglich, einen neuen Befehl
+freizuschalten, sobald man das Spiel fertig gespielt hat (oder danach einen neuen Spielstand startet).
