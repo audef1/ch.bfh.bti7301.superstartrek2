@@ -13,9 +13,9 @@ import java.awt.image.BufferedImage;
  */
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
-    public static final int SCALE = 1;
+    private static final int WIDTH = 640;
+    private static final int HEIGHT = 480;
+    private static final int SCALE = 1;
 
     private Thread thread;
     private boolean running;
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }
     }
 
-    public void init()
+    private void init()
     {
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         g = (Graphics2D) image.getGraphics();
@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     /**
      * The game loop.
      */
-    public void gameLoop() {
+    private void gameLoop() {
 
         long start;
         long elapsed;
@@ -132,8 +132,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     {
         stateMachine.keyReleased(key.getKeyCode());
     }
-
-
 
     public int getGamesize() {
         return gamesize;

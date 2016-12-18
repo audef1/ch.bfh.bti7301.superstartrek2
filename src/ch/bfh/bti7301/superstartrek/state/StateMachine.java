@@ -22,7 +22,7 @@ public class StateMachine implements State{
      */
     public StateMachine() {
         states = new HashMap<>();
-        currentState = new MenuState(); // initial state
+        currentState = new MenuState(this); // initial state
         states.put(null, currentState);
     }
 
@@ -53,9 +53,9 @@ public class StateMachine implements State{
      * @param size Size of the current Game
      */
     public void initStates(int size){
-        add("menu", new MenuState());
+        add("menu", new MenuState(this));
         add("game", new GameState(size));
-        change("game");
+        change("menu");
     }
 
     public void keyPressed(int k)

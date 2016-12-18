@@ -1,6 +1,9 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -8,10 +11,20 @@ import java.util.ArrayList;
  */
 public class MenuState implements State {
 
-    private ArrayList<String[]> options;
-    private int menupointer = 0;
+    private StateMachine statemachine;
 
-    public MenuState() {
+    private ArrayList<String[]> options;
+    private int menuPointer = 0;
+
+    private Font font;
+    private Color fontColor;
+    private Color fontColorActive;
+    private Font titleFont;
+    private Color titleColor;
+
+    public MenuState(StateMachine statemachine) {
+
+        this.statemachine = statemachine;
 
         // define menuoptions
         this.options = new ArrayList<String[]>();
@@ -31,32 +44,28 @@ public class MenuState implements State {
         options.add(gameoptions);
         options.add(gameexit);
 
+        // add star trek font
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
+        } catch (IOException |FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        // init menu fonts and colors
+        titleColor = new Color(238,221,130);
+        titleFont = new Font("Final Frontier Old Style", Font.PLAIN, 100);
+
+        fontColor = new Color(255,255,255);
+        fontColorActive = new Color(255,0,0);
+        font = new Font("Arial", Font.PLAIN, 40);
+
     }
 
 
     @Override
     public void input() {
-        if (false) {
-            if (menupointer != 0){
-                menupointer--;
-            }
-        }
-        if (false) {
-            if (menupointer != options.size()-1){
-                menupointer++;
-            }
-        }
-        if (false) {
-            System.out.println("entering " + options.get(menupointer)[0] + " state.");
-        }
 
-        try {
-            Thread.sleep(150);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(options.get(menupointer)[0] + " selected");
     }
 
     @Override
@@ -66,6 +75,22 @@ public class MenuState implements State {
 
     @Override
     public void draw(Graphics2D g) {
+
+        // draw title
+        g.setColor(titleColor);
+        g.setFont(titleFont);
+        g.drawString("Super Star Trek", 60, 100);
+
+        // draw menu options
+        g.setFont(font);
+        for (int i = 0; i < options.size(); i++) {
+            if (i == menuPointer) {
+                g.setColor(Color.RED);
+            } else {
+                g.setColor(fontColor);
+            }
+            g.drawString(options.get(i)[0], 200, 200 + i * font.getSize());
+        }
 
     }
 
@@ -79,9 +104,32 @@ public class MenuState implements State {
 
     }
 
+    private void select() {
+        if (!options.get(menuPointer)[1].equals("exit")) {
+            statemachine.change(options.get(menuPointer)[1]);
+        }
+        else{
+            System.exit(0);
+        }
+    }
+
     @Override
     public void keyPressed(int k) {
-
+        if (k == KeyEvent.VK_ENTER) {
+            select();
+        }
+        if (k == KeyEvent.VK_UP) {
+            menuPointer--;
+            if (menuPointer == -1) {
+                menuPointer = options.size() - 1;
+            }
+        }
+        if (k == KeyEvent.VK_DOWN) {
+            menuPointer++;
+            if (menuPointer == options.size()) {
+                menuPointer = 0;
+            }
+        }
     }
 
     @Override
