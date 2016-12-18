@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import ch.bfh.bti7301.superstartrek.model.MenuBackground;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -21,6 +23,8 @@ public class MenuState implements State {
     private Color fontColorActive;
     private Font titleFont;
     private Color titleColor;
+
+    private MenuBackground menuBackground;
 
     public MenuState(StateMachine statemachine) {
 
@@ -60,6 +64,10 @@ public class MenuState implements State {
         fontColorActive = new Color(255,0,0);
         font = new Font("Arial", Font.PLAIN, 40);
 
+        // init backgroundimage
+        menuBackground = new MenuBackground("images/Backgrounds/background_blue.jpg", 1000);
+        menuBackground.setVector(1,-1);
+
     }
 
 
@@ -70,11 +78,14 @@ public class MenuState implements State {
 
     @Override
     public void update() {
-
+        menuBackground.update();
     }
 
     @Override
     public void draw(Graphics2D g) {
+
+        // draw menuBackground
+        menuBackground.draw(g);
 
         // draw title
         g.setColor(titleColor);

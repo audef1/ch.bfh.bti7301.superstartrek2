@@ -11,7 +11,7 @@ public class Quadrant {
     private int quadrantnr;
     private Boolean cleared = false;
     private ArrayList<SpaceObject> spaceobjects;
-    private ArrayList<BackgroundTile> background;
+    private ArrayList<MenuBackground> background;
 
     public Quadrant(String name, int quadrantnr){
         this.name = name;
@@ -55,12 +55,12 @@ public class Quadrant {
         this.spaceobjects = spaceobjects;
     }
 
-    public ArrayList<BackgroundTile> getBackground() {
+    public ArrayList<MenuBackground> getBackground() {
         return background;
     }
 
-    public void setBackground(ArrayList<BackgroundTile> background) {
-        this.background = background;
+    public void setBackground(ArrayList<MenuBackground> menuBackground) {
+        this.background = menuBackground;
     }
 
 }

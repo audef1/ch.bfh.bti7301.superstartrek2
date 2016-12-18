@@ -54,6 +54,8 @@ public class StateMachine implements State{
      */
     public void initStates(int size){
         add("menu", new MenuState(this));
+        add("options", new OptionState(this));
+        add("paused", new PausedState(this));
         add("game", new GameState(size));
         change("menu");
     }

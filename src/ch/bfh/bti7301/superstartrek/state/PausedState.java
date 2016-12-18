@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by Florian on 18.12.2016.
  */
-public class OptionState implements State {
+public class PausedState implements State {
 
     private StateMachine statemachine;
 
@@ -17,8 +17,7 @@ public class OptionState implements State {
     private Font titleFont;
     private Color titleColor;
 
-    public OptionState(StateMachine statemachine) {
-
+    public PausedState(StateMachine statemachine) {
         this.statemachine = statemachine;
 
     }
