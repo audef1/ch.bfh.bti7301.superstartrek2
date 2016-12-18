@@ -1,6 +1,11 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -8,17 +13,33 @@ import java.util.ArrayList;
  */
 public class PausedState implements State {
 
-    private StateMachine statemachine;
+    private final StateMachine statemachine;
 
     private ArrayList<String[]> options;
     private int menuPointer = 0;
 
     private Font font;
+    private Color fontColor;
     private Font titleFont;
     private Color titleColor;
 
     public PausedState(StateMachine statemachine) {
         this.statemachine = statemachine;
+
+        // add star trek font
+        try {
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
+        } catch (IOException |FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        // init menu fonts and colors
+        titleColor = new Color(238,221,130);
+        titleFont = new Font("Final Frontier Old Style", Font.PLAIN, 75);
+
+        fontColor = new Color(255,255,255);
+        font = new Font("Arial", Font.PLAIN, 30);
 
     }
 
@@ -35,6 +56,13 @@ public class PausedState implements State {
     @Override
     public void draw(Graphics2D g) {
 
+        // set background
+        g.setBackground(Color.BLACK);
+
+        // draw title
+        g.setColor(titleColor);
+        g.setFont(titleFont);
+        g.drawString("GAME PAUSED", 160, 250);
     }
 
     @Override
@@ -49,7 +77,9 @@ public class PausedState implements State {
 
     @Override
     public void keyPressed(int k) {
-
+        if (k == KeyEvent.VK_P) {
+            statemachine.change("game");
+        }
     }
 
     @Override

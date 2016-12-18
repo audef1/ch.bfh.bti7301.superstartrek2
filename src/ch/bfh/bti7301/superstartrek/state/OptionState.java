@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class OptionState implements State {
 
-    private StateMachine statemachine;
+    private final StateMachine statemachine;
 
     private ArrayList<String[]> options;
     private int menuPointer = 0;
