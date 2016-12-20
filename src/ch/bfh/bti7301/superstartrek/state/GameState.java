@@ -13,9 +13,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-// import spaceobjects
-
-
 /**
  * Created by florianauderset on 02.12.16.
  */

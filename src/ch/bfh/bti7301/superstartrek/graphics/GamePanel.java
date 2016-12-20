@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
     public static final int SCALE = 1;
-    public static final int GAMESIZE = 1;
+    public static final int GAMESIZE = 4;
 
     private Thread thread;
     private boolean running;
@@ -26,14 +26,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private BufferedImage image;
     private Graphics2D g;
 
-    private int gamesize = 4;
-
     private StateMachine stateMachine;
 
-    public GamePanel(int size)
+    public GamePanel()
     {
         super();
-        this.gamesize = size;
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
         requestFocus();
@@ -56,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         g = (Graphics2D) image.getGraphics();
 
         stateMachine = new StateMachine();
-        stateMachine.initStates(gamesize);
+        stateMachine.initStates(GAMESIZE);
 
         /* Initializing done, set running to true */
         running = true;
@@ -132,10 +129,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public void keyReleased(KeyEvent key)
     {
         stateMachine.keyReleased(key.getKeyCode());
-    }
-
-    public int getGamesize() {
-        return gamesize;
     }
 
 }

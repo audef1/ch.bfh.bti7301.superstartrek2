@@ -27,7 +27,7 @@ public class GameWindow extends JFrame {
     }
 
     public void start(){
-        setContentPane(new GamePanel(4));
+        setContentPane(new GamePanel());
         setSize(640, 480);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
