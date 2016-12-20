@@ -105,6 +105,10 @@ public class GameState implements State {
         if (k == KeyEvent.VK_P) {
            statemachine.change("paused");
         }
+
+        if (k == KeyEvent.VK_M) {
+            statemachine.change("map");
+        }
     }
 
     @Override
