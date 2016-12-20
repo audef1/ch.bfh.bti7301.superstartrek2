@@ -20,8 +20,8 @@ public class SpaceObject {
     // position and direction
     protected double x;
     protected double y;
-    protected double dx;
-    protected double dy;
+    protected int dx = 0;
+    protected int dy = 1;
 
     private float inerta;
     private float speed;
@@ -83,5 +83,101 @@ public class SpaceObject {
     }
 
     */
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getCwidth() {
+        return cwidth;
+    }
+
+    public void setCwidth(int cwidth) {
+        this.cwidth = cwidth;
+    }
+
+    public int getCheight() {
+        return cheight;
+    }
+
+    public void setCheight(int cheight) {
+        this.cheight = cheight;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public int getDx() {
+        return dx;
+    }
+
+    public void setDx(int dx) {
+        this.dx = dx;
+    }
+
+    public int getDy() {
+        return dy;
+    }
+
+    public void setDy(int dy) {
+        this.dy = dy;
+    }
+
+    public float getInerta() {
+        return inerta;
+    }
+
+    public void setInerta(float inerta) {
+        this.inerta = inerta;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public float getMass() {
+        return mass;
+    }
+
+    public void setMass(float mass) {
+        this.mass = mass;
+    }
+
+    public ArrayList<BufferedImage[]> getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(ArrayList<BufferedImage[]> sprites) {
+        this.sprites = sprites;
+    }
 
 }

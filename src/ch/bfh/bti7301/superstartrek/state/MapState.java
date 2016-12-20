@@ -2,8 +2,6 @@ package ch.bfh.bti7301.superstartrek.state;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by florianauderset on 20.12.16.
@@ -21,14 +19,6 @@ public class MapState implements State {
     public MapState(StateMachine statemachine) {
 
         this.statemachine = statemachine;
-
-        // add star trek font
-        try {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
-        } catch (IOException |FontFormatException e) {
-            e.printStackTrace();
-        }
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);

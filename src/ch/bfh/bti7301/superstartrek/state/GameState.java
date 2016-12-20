@@ -4,6 +4,7 @@ import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
 import ch.bfh.bti7301.superstartrek.model.Level;
 import ch.bfh.bti7301.superstartrek.model.SpaceObject;
+import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -26,6 +27,7 @@ public class GameState implements State {
     private Level currentLevel;
     private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
     private int score = 0;
+    private StarFleetShip player;
 
     private BufferedImage background;
 
@@ -43,8 +45,8 @@ public class GameState implements State {
             e.printStackTrace();
         }
 
-
         /* Initialize game objects */
+        player = new StarFleetShip(30,30);
     }
 
     private void initlevels(int size) {
@@ -84,7 +86,7 @@ public class GameState implements State {
         for (SpaceObject so : spaceobjects) {
             //draw elements - so.draw(g);
         }
-        System.out.println("game running... - rendering...");
+        //System.out.println("game running... - rendering...");
     }
 
     @Override
@@ -108,6 +110,30 @@ public class GameState implements State {
 
         if (k == KeyEvent.VK_M) {
             statemachine.change("map");
+        }
+
+        if (k == KeyEvent.VK_ESCAPE) {
+            statemachine.change("menu");
+        }
+
+        if (k == KeyEvent.VK_SPACE){
+            player.fire();
+        }
+
+        if (k == KeyEvent.VK_UP){
+            player.speedUp();
+        }
+
+        if (k == KeyEvent.VK_DOWN){
+            player.slowDown();
+        }
+
+        if (k == KeyEvent.VK_LEFT){
+            player.turnLeft();
+        }
+
+        if (k == KeyEvent.VK_RIGHT){
+            player.turnRight();
         }
     }
 

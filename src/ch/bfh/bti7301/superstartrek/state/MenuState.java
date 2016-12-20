@@ -4,8 +4,6 @@ import ch.bfh.bti7301.superstartrek.model.MenuBackground;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -47,14 +45,6 @@ public class MenuState implements State {
         options.add(gamestart);
         options.add(gameoptions);
         options.add(gameexit);
-
-        // add star trek font
-        try {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
-        } catch (IOException |FontFormatException e) {
-            e.printStackTrace();
-        }
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
