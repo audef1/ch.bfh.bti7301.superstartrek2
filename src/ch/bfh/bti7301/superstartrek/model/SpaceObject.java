@@ -23,17 +23,27 @@ public class SpaceObject {
     protected int dx = 0;
     protected int dy = 1;
 
-    private float inerta;
-    private float speed;
-    private float maxSpeed;
-    private float mass;
+    protected float inerta;
+    protected double speed;
+    protected float maxSpeed;
+    protected float mass;
 
     // sprites
-    private ArrayList<BufferedImage[]> sprites;
+    protected ArrayList<BufferedImage[]> sprites;
 
     public SpaceObject(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public SpaceObject(int width, int height, int x, int y, int dx, int dy, double speed) {
+        this.width = width;
+        this.height = height;
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.speed = speed;
     }
 
     public void input() {
@@ -41,6 +51,10 @@ public class SpaceObject {
     }
 
     public void update() {
+
+        // TODO: calculate new position
+        x += dx*speed;
+        y += dy*speed;
 
     }
 
@@ -52,6 +66,10 @@ public class SpaceObject {
 
     public Rectangle getRectangle() {
         return new Rectangle((int) x - cwidth, (int) y - cheight, cwidth, cheight);
+    }
+
+    public void draw(Graphics2D g){
+        // TODO: write a generic draw method
     }
 
     /*
@@ -71,6 +89,7 @@ public class SpaceObject {
         bottomLeft = tileMap.isBlocking(bottomTile, leftTile);
         bottomRight = tileMap.isBlocking(bottomTile, rightTile);
     }
+
 
     public void draw(Graphics2D g){
         //do some stuff that has to be done before drawing
@@ -148,11 +167,11 @@ public class SpaceObject {
         this.inerta = inerta;
     }
 
-    public float getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
-    public void setSpeed(float speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 

@@ -3,6 +3,7 @@ package ch.bfh.bti7301.superstartrek.state;
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
 import ch.bfh.bti7301.superstartrek.model.Level;
+import ch.bfh.bti7301.superstartrek.model.Meteor;
 import ch.bfh.bti7301.superstartrek.model.SpaceObject;
 import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
 
@@ -44,6 +45,16 @@ public class GameState implements State {
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30);
+
+        // TODO: initialize spaceobjects with meteors, enemies and spacestations
+        Meteor m1 = new Meteor(10,10,50,100,-1, 1, 0.1);
+        Meteor m2 = new Meteor(10,10,100,200,1, -1, 0.2);
+        Meteor m3 = new Meteor(10,10,150,250,1, 0, 0.3);
+
+        spaceobjects.add(m1);
+        spaceobjects.add(m2);
+        spaceobjects.add(m3);
+
     }
 
     private void initlevels(int size) {
@@ -63,7 +74,7 @@ public class GameState implements State {
     public void update() {
         /* Update position */
         for(SpaceObject so : spaceobjects){
-            //check collisions - so.intersects(everyotherpossiblespaceobject);
+            so.update();
         }
         /* Check for collisions */
         for(SpaceObject so : spaceobjects){
@@ -81,7 +92,7 @@ public class GameState implements State {
 
         /* draw all specific spaceobjects */
         for (SpaceObject so : spaceobjects) {
-            //draw elements - so.draw(g);
+            so.draw(g);
         }
         //System.out.println("game running... - rendering...");
     }
