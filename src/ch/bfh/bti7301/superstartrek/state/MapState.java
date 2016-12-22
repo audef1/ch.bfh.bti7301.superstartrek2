@@ -61,14 +61,17 @@ public class MapState implements State {
     }
 
     @Override
-    public void keyPressed(int k) {
-        if (k == KeyEvent.VK_M) {
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_M) {
             statemachine.change("game");
         }
     }
 
     @Override
-    public void keyReleased(int k) {
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
 
     }
 

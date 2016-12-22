@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,14 +62,14 @@ public class StateMachine implements State{
         change("menu");
     }
 
-    public void keyPressed(int k)
+    public void keyPressed(KeyEvent e)
     {
-        currentState.keyPressed(k);
+        currentState.keyPressed(e);
     }
 
-    public void keyReleased(int k)
+    public void keyReleased(KeyEvent e)
     {
-        currentState.keyReleased(k);
+        currentState.keyReleased(e);
     }
 
     @Override

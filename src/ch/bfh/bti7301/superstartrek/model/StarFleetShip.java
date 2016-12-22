@@ -1,6 +1,11 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +16,18 @@ public class StarFleetShip extends SpaceShip {
 
     private ArrayList<Point> directions;
     private int directionPointer = 0;
+    public int dx;
+    public int dy;
+    public int x;
+    public int y;
 
-    public StarFleetShip(int width, int height){
+    public StarFleetShip(int width, int height, int x, int y, int dx, int dy, double speed){
         super(width, height);
+
+        this.dx = dx;
+        this.dy = dy;
+        this.x = x;
+        this.y = y;
 
         // init directions
         directions = new ArrayList<>();
@@ -25,13 +39,30 @@ public class StarFleetShip extends SpaceShip {
         directions.add(new Point(1, -1));
         directions.add(new Point(1, 0));
         directions.add(new Point(1, 1));
+
+        setSprites(new ArrayList<BufferedImage[]>());
+        try {
+            BufferedImage sprite = ImageIO.read(new File(getClass().getClassLoader().getResource("images/PNG/playerShip3_green.png").getFile()));
+            BufferedImage[] bi = new BufferedImage[1];
+            bi[0] = sprite;
+            sprites.add(bi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void move() {
+        x += dx;
+        y += dy;
+    }
+
+
 
     public void fire(){
         System.out.println("peng");
     }
 
-    public void turnLeft(){
+    /*public void turnLeft(){
         if (directionPointer == directions.size() -1)
             directionPointer = 0;
         else
@@ -66,5 +97,15 @@ public class StarFleetShip extends SpaceShip {
         this.setSpeed(this.getSpeed()-1);
         System.out.println("slowing down...");
 
+    }*/
+
+    public void draw(Graphics2D g){
+        //do some stuff that has to be done before drawing
+        g.drawImage(
+                sprites.get(0)[0],
+                (int) x,
+                (int) y,
+                null
+        );
     }
 }

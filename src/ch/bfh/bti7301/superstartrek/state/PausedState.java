@@ -64,14 +64,16 @@ public class PausedState implements State {
     }
 
     @Override
-    public void keyPressed(int k) {
-        if (k == KeyEvent.VK_P) {
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_P) {
             statemachine.change("game");
         }
     }
 
     @Override
-    public void keyReleased(int k) {
+    public void keyReleased(KeyEvent e) {
 
     }
 

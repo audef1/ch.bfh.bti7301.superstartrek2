@@ -47,7 +47,6 @@ public class SpaceShip extends SpaceObject {
         this.maxFuel = maxFuel;
     }
 
-
     public ArrayList<Weapon> getWeapons() {
         return weapons;
     }

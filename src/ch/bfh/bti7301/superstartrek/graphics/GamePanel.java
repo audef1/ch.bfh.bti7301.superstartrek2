@@ -123,12 +123,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void keyPressed(KeyEvent key)
     {
-        stateMachine.keyPressed(key.getKeyCode());
+        stateMachine.keyPressed(key);
     }
 
     public void keyReleased(KeyEvent key)
     {
-        stateMachine.keyReleased(key.getKeyCode());
+        stateMachine.keyReleased(key);
     }
 
 }

@@ -18,8 +18,8 @@ public class SpaceObject {
     protected int cheight;
 
     // position and direction
-    protected double x;
-    protected double y;
+    protected int x;
+    protected int y;
     protected int dx = 0;
     protected int dy = 1;
 
@@ -131,7 +131,7 @@ public class SpaceObject {
         return x;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
@@ -139,7 +139,7 @@ public class SpaceObject {
         return y;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 

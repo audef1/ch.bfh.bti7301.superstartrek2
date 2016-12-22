@@ -9,16 +9,21 @@ import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
+
 /**
  * Created by florianauderset on 02.12.16.
  */
 
-public class GameState implements State {
+public class GameState implements State, ActionListener {
 
     private final StateMachine statemachine;
     private Level[][] levels;
@@ -44,7 +49,7 @@ public class GameState implements State {
         }
 
         /* Initialize game objects */
-        player = new StarFleetShip(30,30);
+        player = new StarFleetShip(30,30,1,1,1,1,1);
 
         // TODO: initialize spaceobjects with meteors, enemies and spacestations
         Meteor m1 = new Meteor(10,10,50,100,-1, 1, 0.1);
@@ -54,7 +59,28 @@ public class GameState implements State {
         spaceobjects.add(m1);
         spaceobjects.add(m2);
         spaceobjects.add(m3);
+        spaceobjects.add(player);
 
+        addKeyListener(new TAdapter());
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        player.move();
+        update();
+    }
+
+    private class TAdapter extends KeyAdapter {
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+            this.keyReleased(e);
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            this.keyPressed(e);
+        }
     }
 
     private void initlevels(int size) {
@@ -109,45 +135,63 @@ public class GameState implements State {
     }
 
     @Override
-    public void keyPressed(int k) {
+    public void keyPressed(KeyEvent e) {
         /* do something with the input */
 
-        if (k == KeyEvent.VK_P) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_P) {
            statemachine.change("paused");
         }
 
-        if (k == KeyEvent.VK_M) {
+        if (key == KeyEvent.VK_M) {
             statemachine.change("map");
         }
 
-        if (k == KeyEvent.VK_ESCAPE) {
+        if (key == KeyEvent.VK_ESCAPE) {
             statemachine.change("menu");
         }
 
-        if (k == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_SPACE){
             player.fire();
         }
 
-        if (k == KeyEvent.VK_UP){
-            player.speedUp();
+        if (key == KeyEvent.VK_UP){
+            player.dy = -1;
         }
 
-        if (k == KeyEvent.VK_DOWN){
-            player.slowDown();
+        if (key == KeyEvent.VK_DOWN){
+            player.dy = 1;
         }
 
-        if (k == KeyEvent.VK_LEFT){
-            player.turnLeft();
+        if (key == KeyEvent.VK_LEFT){
+            player.dx = -1;
         }
 
-        if (k == KeyEvent.VK_RIGHT){
-            player.turnRight();
+        if (key == KeyEvent.VK_RIGHT){
+            player.dx = 1;
         }
     }
 
     @Override
-    public void keyReleased(int k) {
-        /* do something with the input */
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            player.dx = 0;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            player.dx = 0;
+        }
+
+        if (key == KeyEvent.VK_UP) {
+            player.dy = 0;
+        }
+
+        if (key == KeyEvent.VK_DOWN) {
+            player.dy = 0;
+        }
     }
 
     public int getScore() {

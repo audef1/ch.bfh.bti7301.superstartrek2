@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by buche on 01.12.2016.
@@ -34,10 +35,10 @@ public interface State {
     /**
      * Gets the pressed keys
      */
-    public void keyPressed(int k);
+    public void keyPressed(KeyEvent e);
 
     /**
      * Gets the released keys
      */
-    public void keyReleased(int k);
+    public void keyReleased(KeyEvent e);
 }

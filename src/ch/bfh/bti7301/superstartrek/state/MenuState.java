@@ -115,17 +115,20 @@ public class MenuState implements State {
     }
 
     @Override
-    public void keyPressed(int k) {
-        if (k == KeyEvent.VK_ENTER) {
+    public void keyPressed(KeyEvent e) {
+
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_ENTER) {
             select();
         }
-        if (k == KeyEvent.VK_UP) {
+        if (key == KeyEvent.VK_UP) {
             menuPointer--;
             if (menuPointer == -1) {
                 menuPointer = options.size() - 1;
             }
         }
-        if (k == KeyEvent.VK_DOWN) {
+        if (key == KeyEvent.VK_DOWN) {
             menuPointer++;
             if (menuPointer == options.size()) {
                 menuPointer = 0;
@@ -134,7 +137,7 @@ public class MenuState implements State {
     }
 
     @Override
-    public void keyReleased(int k) {
+    public void keyReleased(KeyEvent e) {
 
     }
 }

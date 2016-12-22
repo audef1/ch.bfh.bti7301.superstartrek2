@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -49,13 +50,13 @@ public class OptionState implements State {
     }
 
     @Override
-    public void keyPressed(int k) {
-
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
     }
 
     @Override
-    public void keyReleased(int k) {
-
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
     }
 
 }
