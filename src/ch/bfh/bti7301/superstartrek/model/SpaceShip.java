@@ -18,8 +18,8 @@ public class SpaceShip extends SpaceObject {
     protected int maxFuel;
     protected int money;
 
-    public SpaceShip(int width, int height){
-        super(width, height);
+    public SpaceShip(int width, int height, int x, int y, int dx, int dy, double speed){
+        super(width, height, x, y, dx, dy, speed);
     }
 
     public int getMoney() {

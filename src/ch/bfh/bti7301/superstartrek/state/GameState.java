@@ -9,21 +9,16 @@ import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-
 /**
  * Created by florianauderset on 02.12.16.
  */
 
-public class GameState implements State, ActionListener {
+public class GameState implements State {
 
     private final StateMachine statemachine;
     private Level[][] levels;
@@ -61,15 +56,10 @@ public class GameState implements State, ActionListener {
         spaceobjects.add(m3);
         spaceobjects.add(player);
 
-        addKeyListener(new TAdapter());
+       /* addKeyListener(new TAdapter());*/
     }
 
-    public void actionPerformed(ActionEvent e) {
-
-        player.move();
-        update();
-    }
-
+    /*
     private class TAdapter extends KeyAdapter {
 
         @Override
@@ -82,6 +72,7 @@ public class GameState implements State, ActionListener {
             this.keyPressed(e);
         }
     }
+    */
 
     private void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
@@ -98,13 +89,10 @@ public class GameState implements State, ActionListener {
 
     @Override
     public void update() {
-        /* Update position */
+        /* Check colliosions and update position */
         for(SpaceObject so : spaceobjects){
+            //so.intersects(everyotherpossiblespaceobject);
             so.update();
-        }
-        /* Check for collisions */
-        for(SpaceObject so : spaceobjects){
-            //check collisions - so.intersects(everyotherpossiblespaceobject);
         }
 
         /* Update scores etc if necessary */
@@ -157,19 +145,19 @@ public class GameState implements State, ActionListener {
         }
 
         if (key == KeyEvent.VK_UP){
-            player.dy = -1;
+            player.speedUp();
         }
 
         if (key == KeyEvent.VK_DOWN){
-            player.dy = 1;
+            player.slowDown();
         }
 
         if (key == KeyEvent.VK_LEFT){
-            player.dx = -1;
+            player.turnLeft();
         }
 
         if (key == KeyEvent.VK_RIGHT){
-            player.dx = 1;
+            player.turnRight();
         }
     }
 
@@ -177,21 +165,7 @@ public class GameState implements State, ActionListener {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_LEFT) {
-            player.dx = 0;
-        }
 
-        if (key == KeyEvent.VK_RIGHT) {
-            player.dx = 0;
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            player.dy = 0;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            player.dy = 0;
-        }
     }
 
     public int getScore() {

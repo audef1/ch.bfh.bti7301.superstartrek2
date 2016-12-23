@@ -29,7 +29,7 @@ public class SpaceObject {
     protected float mass;
 
     // sprites
-    protected ArrayList<BufferedImage[]> sprites;
+    protected ArrayList<BufferedImage[]> sprites = new ArrayList<BufferedImage[]>();
 
     public SpaceObject(int width, int height) {
         this.width = width;
@@ -52,7 +52,7 @@ public class SpaceObject {
 
     public void update() {
 
-        // TODO: calculate new position
+        // set new position
         x += dx*speed;
         y += dy*speed;
 
