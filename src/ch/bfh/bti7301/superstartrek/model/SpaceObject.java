@@ -18,8 +18,8 @@ public class SpaceObject {
     protected int cheight;
 
     // position and direction
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
     protected int dx = 0;
     protected int dy = 1;
 
@@ -32,7 +32,7 @@ public class SpaceObject {
     protected ArrayList<BufferedImage[]> sprites = new ArrayList<BufferedImage[]>();
 
     public SpaceObject(int width, int height) {
-        this.width = width;
+            this.width = width;
         this.height = height;
     }
 
@@ -51,11 +51,11 @@ public class SpaceObject {
     }
 
     public void update() {
+        double penalty = 1d/Math.sqrt(dx*dx+dy*dy);
 
         // set new position
-        x += dx*speed;
-        y += dy*speed;
-
+        x += (dy*speed)*penalty;
+        y -= (dx*speed)*penalty;
     }
 
     public boolean intersects(SpaceObject spaceobject) {

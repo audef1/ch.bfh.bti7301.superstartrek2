@@ -114,7 +114,7 @@ public class SpaceShip extends SpaceObject {
     }
 
     public void shipTakesDamage(int damage){
-        this.health = this.health - (damage - shield);
+        this.health = Math.max(this.health - (damage - shield), 0);
 
         this.shield -= (this.shield >= damage) ? damage : this.shield;
     }
