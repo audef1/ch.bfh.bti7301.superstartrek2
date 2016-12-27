@@ -46,19 +46,19 @@ public class Background {
 
     public void update() {
         if ((x > 0) || (x < 1024)){
-            x += dx * -moveScale;
+            x += dy * -moveScale;
         }
         if ((y > 0) || (y < 1024)){
-            y += dy * -moveScale;
+            y += dx * moveScale;
         }
     }
 
     public void update(SpaceObject so) {
         if ((x > 0) || (x < 1024)){
-            x += so.getDx() * -moveScale;
+            x += so.getDy() * -moveScale;
         }
         if ((y > 0) || (y < 1024)){
-            y += so.getDy() * -moveScale;
+            y += so.getDx() * moveScale;
         }
     }
 

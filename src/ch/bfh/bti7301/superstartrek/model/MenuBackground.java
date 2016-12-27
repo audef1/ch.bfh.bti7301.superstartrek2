@@ -7,6 +7,8 @@ public class MenuBackground extends Background{
 
     public MenuBackground(String filename, double ms) {
         super(filename, ms);
+        setX(0);
+        setY(0);
     }
 
     public void update() {

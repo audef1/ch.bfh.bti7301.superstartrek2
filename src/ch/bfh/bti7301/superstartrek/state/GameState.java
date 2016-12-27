@@ -33,11 +33,10 @@ public class GameState implements State {
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize variables defined on top of the class */
-        backgrounds.add(new Background("background_black.jpg", 0.6));
-        backgrounds.add(new Background("background_blue.jpg", 0.6));
-        backgrounds.add(new Background("background_purple.jpg", 0.6));
-        backgrounds.add(new Background("background_darkpurple.jpg", 0.6));
-        backgrounds.add(new Background("background_parallax.png", 0.1));
+        backgrounds.add(new Background("background_black.jpg", 0.4));
+        backgrounds.add(new Background("background_blue.jpg", 0.4));
+        backgrounds.add(new Background("background_purple.jpg", 0.4));
+        backgrounds.add(new Background("background_darkpurple.jpg", 0.4));
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
@@ -91,10 +90,8 @@ public class GameState implements State {
     @Override
     public void draw(Graphics2D g) {
 
-        /* draw level backgrounds */
+        /* draw level background */
         backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(g);
-        backgrounds.get(4).draw(g); // parallax
-
 
         /* draw all specific spaceobjects */
         for (SpaceObject so : spaceobjects) {
