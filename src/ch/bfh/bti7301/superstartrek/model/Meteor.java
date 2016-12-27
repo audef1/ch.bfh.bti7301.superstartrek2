@@ -17,7 +17,7 @@ public class Meteor extends SpaceObject {
 
         // TODO: different meteortypes according its sprite
         //super(width, height, x, y, dx, dy, speed);
-        super(89, 82, x, y, dx, dy, speed);
+        super(width, height, x, y, dx, dy, speed);
 
         setSprites(new ArrayList<BufferedImage[]>());
         try {
@@ -28,6 +28,10 @@ public class Meteor extends SpaceObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // set collision bounds
+        setCwidth(sprites.get(0)[0].getWidth());
+        setCheight(sprites.get(0)[0].getHeight());
     }
 
     public void draw(Graphics2D g){
