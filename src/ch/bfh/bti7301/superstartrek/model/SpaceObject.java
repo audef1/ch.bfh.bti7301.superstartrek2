@@ -35,9 +35,20 @@ public class SpaceObject {
     // sprites
     protected ArrayList<BufferedImage[]> sprites = new ArrayList<BufferedImage[]>();
 
-    public SpaceObject(int width, int height) {
-            this.width = width;
+    public SpaceObject(int width, int height){
+        this.width = width;
         this.height = height;
+        this.cwidth = width;
+        this.cheight = height;
+    }
+
+    public SpaceObject(int width, int height, int x, int y) {
+        this.width = width;
+        this.height = height;
+        this.cwidth = width;
+        this.cheight = height;
+        this.x = x;
+        this.y = y;
     }
 
     protected void getSprite(String path){
@@ -54,6 +65,8 @@ public class SpaceObject {
     public SpaceObject(int width, int height, double x, double y, int dx, int dy, double speed) {
         this.width = width;
         this.height = height;
+        this.cwidth = width;
+        this.cheight = height;
         this.x = x;
         this.y = y;
         this.dx = dx;
@@ -73,6 +86,11 @@ public class SpaceObject {
         y -= (dx*speed)*penalty;
     }
 
+    /**
+     * Method to check if two SpaceObjects collide
+     * @param spaceobject
+     * @return
+     */
     public boolean intersects(SpaceObject spaceobject) {
         Rectangle r1 = getRectangle();
         Rectangle r2 = spaceobject.getRectangle();

@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import java.awt.*;
+
 /**
  * Created by filip on 04.11.2016.
  */
@@ -13,9 +15,12 @@ public class SpaceStation extends SpaceObject {
     private int upgradeShieldMultiplier = 2;
     private int upgradeHealthMultiplier = 2;
 
-    public SpaceStation(int width, int height, double x, double y){
-        super(width, height,x,y,1,1,0);
-        this.getSprite("images/PNG/ufoBlue.png");
+    public SpaceStation(int width, int height){
+        super(width, height);
+    }
+
+    public SpaceStation(int width, int height, int x, int y){
+        super(width, height, x, y);
     }
 
     public int getFuelCost() {
