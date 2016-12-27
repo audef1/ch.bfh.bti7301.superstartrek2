@@ -1,7 +1,11 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +51,18 @@ public class SpaceObject {
         this.y = y;
     }
 
-    public SpaceObject(int width, int height, int x, int y, int dx, int dy, double speed) {
+    protected void getSprite(String path){
+        try {
+            BufferedImage sprite = ImageIO.read(new File(getClass().getClassLoader().getResource(path).getFile()));
+            BufferedImage[] bi = new BufferedImage[1];
+            bi[0] = sprite;
+            sprites.add(bi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public SpaceObject(int width, int height, double x, double y, int dx, int dy, double speed) {
         this.width = width;
         this.height = height;
         this.cwidth = width;
@@ -87,39 +102,17 @@ public class SpaceObject {
     }
 
     public void draw(Graphics2D g){
-        // TODO: write a generic draw method
-    }
+        double rangle = Math.toDegrees(Math.atan2(dy, dx));
+        AffineTransform transform = new AffineTransform();
+        transform.translate(x,y);
+        transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
 
-    /*
-    public void calculateCorners(double x, double y) {
-        int leftTile = (int) (x - cwidth / 2) / tileSize;
-        int rightTile = (int) (x + cwidth / 2 - 1) / tileSize;
-        int topTile = (int) (y - cheight / 2) / tileSize;
-        int bottomTile = (int) (y + cheight / 2 - 1) / tileSize;
-        if(topTile < 0 || bottomTile >= tileMap.getNumRows() ||
-                leftTile < 0 || rightTile >= tileMap.getNumCols()) {
-            topLeft = topRight = bottomLeft = bottomRight = false;
-            return;
-        }
-
-        topLeft = tileMap.isBlocking(topTile, leftTile);
-        topRight = tileMap.isBlocking(topTile, rightTile);
-        bottomLeft = tileMap.isBlocking(bottomTile, leftTile);
-        bottomRight = tileMap.isBlocking(bottomTile, rightTile);
-    }
-
-
-    public void draw(Graphics2D g){
-        //do some stuff that has to be done before drawing
         g.drawImage(
-            animation.getImage(),
-                (int) (x + xmap - width / 2),
-                (int) (y + ymap - height / 2),
+                sprites.get(0)[0],
+                transform,
                 null
         );
     }
-
-    */
 
     public int getWidth() {
         return width;
