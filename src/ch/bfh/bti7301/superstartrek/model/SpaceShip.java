@@ -1,5 +1,6 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -7,6 +8,9 @@ import java.util.ArrayList;
  */
 public class SpaceShip extends SpaceObject {
 
+    protected ArrayList<Bullet> firedBullets = new ArrayList<>();
+    protected ArrayList<Point> directions;
+    protected int directionPointer = 0;
     protected String name;
     protected int shield;
     protected int shieldMax;
@@ -17,9 +21,68 @@ public class SpaceShip extends SpaceObject {
     protected int fuel;
     protected int maxFuel;
     protected int money;
+    private int maxSpeed = 5;
 
-    public SpaceShip(int width, int height, int x, int y, int dx, int dy, double speed){
+    public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
         super(width, height, x, y, dx, dy, speed);
+
+        // init directions
+        directions = new ArrayList<>();
+        directions.add(new Point(1,0));
+        directions.add(new Point(1, 1));
+        directions.add(new Point(0, 1));
+        directions.add(new Point(-1, 1));
+        directions.add(new Point(-1, 0));
+        directions.add(new Point(-1, -1));
+        directions.add(new Point(0, -1));
+        directions.add(new Point(1, -1));
+    }
+
+    public void fire(){
+        firedBullets.add(new Bullet(10,10,this.x,this.y,this.dx,this.dy));
+        System.out.println("peng");
+    }
+
+    public void draw(Graphics2D g){
+        super.draw(g);
+        firedBullets.forEach(Bullet -> Bullet.draw(g));
+    }
+    public void update(){
+        super.update();
+        firedBullets.forEach(Bullet -> Bullet.update());
+
+    }
+
+    public void turnLeft(){
+        if (directionPointer == 0)
+            directionPointer = directions.size() -1;
+        else
+            directionPointer --;
+
+        // set new direction
+        this.setDx((int) directions.get(directionPointer).getX());
+        this.setDy((int) directions.get(directionPointer).getY());
+
+    }
+
+    public void turnRight(){
+        if (directionPointer == directions.size() -1)
+            directionPointer = 0;
+        else
+            directionPointer ++;
+
+        // set new direction
+        this.setDx((int) directions.get(directionPointer).getX());
+        this.setDy((int) directions.get(directionPointer).getY());
+
+    }
+
+    public void speedUp() {
+        this.setSpeed(Math.min(this.getSpeed()+1,this.maxSpeed));
+    }
+
+    public void slowDown() {
+        this.setSpeed(Math.max(this.getSpeed()-1, 0));
     }
 
     public int getMoney() {
