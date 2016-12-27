@@ -13,8 +13,9 @@ public class SpaceStation extends SpaceObject {
     private int upgradeShieldMultiplier = 2;
     private int upgradeHealthMultiplier = 2;
 
-    public SpaceStation(int width, int height){
-        super(width, height);
+    public SpaceStation(int width, int height, double x, double y){
+        super(width, height,x,y,1,1,0);
+        this.getSprite("images/PNG/ufoBlue.png");
     }
 
     public int getFuelCost() {
