@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import java.awt.*;
+
 /**
  * Created by filip on 04.11.2016.
  */
@@ -15,6 +17,10 @@ public class SpaceStation extends SpaceObject {
 
     public SpaceStation(int width, int height){
         super(width, height);
+    }
+
+    public SpaceStation(int width, int height, int x, int y){
+        super(width, height, x, y);
     }
 
     public int getFuelCost() {
