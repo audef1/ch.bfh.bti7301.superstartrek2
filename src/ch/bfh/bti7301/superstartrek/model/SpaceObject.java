@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class SpaceObject {
         this.height = height;
     }
 
-    public SpaceObject(int width, int height, int x, int y, int dx, int dy, double speed) {
+    public SpaceObject(int width, int height, double x, double y, int dx, int dy, double speed) {
         this.width = width;
         this.height = height;
         this.x = x;
@@ -69,7 +70,16 @@ public class SpaceObject {
     }
 
     public void draw(Graphics2D g){
-        // TODO: write a generic draw method
+        double rangle = Math.toDegrees(Math.atan2(dy, dx));
+        AffineTransform transform = new AffineTransform();
+        transform.translate(x,y);
+        transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
+
+        g.drawImage(
+                sprites.get(0)[0],
+                transform,
+                null
+        );
     }
 
     /*
