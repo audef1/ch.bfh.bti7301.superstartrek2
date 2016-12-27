@@ -19,6 +19,7 @@ public class GameState implements State {
     private Level[][] levels;
     private Level currentLevel;
     private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
+    private ArrayList<Background> backgrounds = new ArrayList<Background>();
     private int score = 0;
     private StarFleetShip player;
 
@@ -32,7 +33,11 @@ public class GameState implements State {
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize variables defined on top of the class */
-
+        backgrounds.add(new Background("background_black.jpg", 0.6));
+        backgrounds.add(new Background("background_blue.jpg", 0.6));
+        backgrounds.add(new Background("background_purple.jpg", 0.6));
+        backgrounds.add(new Background("background_darkpurple.jpg", 0.6));
+        backgrounds.add(new Background("background_parallax.png", 0.1));
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
@@ -77,14 +82,19 @@ public class GameState implements State {
         }
 
         /* Update scores etc if necessary */
-
+        // update backgrounds
+        for (Background bg : backgrounds){
+            bg.update(player);
+        }
     }
 
     @Override
     public void draw(Graphics2D g) {
 
         /* draw level backgrounds */
-        currentLevel.getCurrentquardant().draw(g);
+        backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(g);
+        backgrounds.get(4).draw(g); // parallax
+
 
         /* draw all specific spaceobjects */
         for (SpaceObject so : spaceobjects) {

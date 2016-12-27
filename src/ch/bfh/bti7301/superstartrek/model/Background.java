@@ -16,8 +16,8 @@ public class Background {
     private double x;
     private double y;
 
-    private double dx;
-    private double dy;
+    private double dx = 0;
+    private double dy = 0;
 
     private double moveScale;
 
@@ -28,6 +28,10 @@ public class Background {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // position background in the center of the viewpoint
+        x = ((background.getWidth() / 2) - (GamePanel.WIDTH / 2 )) * -1;
+        y = ((background.getHeight() / 2) - (GamePanel.HEIGHT / 2 )) * -1;
     }
 
     public void setPosition(double x, double y) {
@@ -41,8 +45,21 @@ public class Background {
     }
 
     public void update() {
-        x += dx;
-        y += dy;
+        if ((x > 0) || (x < 1024)){
+            x += dx * -moveScale;
+        }
+        if ((y > 0) || (y < 1024)){
+            y += dy * -moveScale;
+        }
+    }
+
+    public void update(SpaceObject so) {
+        if ((x > 0) || (x < 1024)){
+            x += so.getDx() * -moveScale;
+        }
+        if ((y > 0) || (y < 1024)){
+            y += so.getDy() * -moveScale;
+        }
     }
 
     public void draw(Graphics2D g) {
