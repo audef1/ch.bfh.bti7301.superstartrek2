@@ -23,7 +23,7 @@ public class Background {
 
     public Background(String filename, double ms) {
         try {
-            background = ImageIO.read(getClass().getClassLoader().getResourceAsStream(filename));
+            background = ImageIO.read(getClass().getClassLoader().getResourceAsStream("images/Backgrounds/" + filename));
             moveScale = ms;
         } catch (Exception e) {
             e.printStackTrace();
