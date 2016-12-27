@@ -2,6 +2,7 @@ package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
+import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 import ch.bfh.bti7301.superstartrek.model.Level;
 import ch.bfh.bti7301.superstartrek.model.Meteor;
 import ch.bfh.bti7301.superstartrek.model.SpaceObject;
@@ -29,6 +30,7 @@ public class GameState implements State {
 
     private BufferedImage background;
 
+
     /* private variables - ex. score */
 
     public GameState(StateMachine statemachine) {
@@ -45,34 +47,16 @@ public class GameState implements State {
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", 3));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", 1));
+
 
         // TODO: initialize spaceobjects with meteors, enemies and spacestations
-        Meteor m1 = new Meteor(10,10,50,100,-1, 1, 0.1);
-        Meteor m2 = new Meteor(10,10,100,200,1, -1, 0.2);
-        Meteor m3 = new Meteor(10,10,150,250,1, 0, 0.3);
 
-        spaceobjects.add(m1);
-        spaceobjects.add(m2);
-        spaceobjects.add(m3);
         spaceobjects.add(player);
 
        /* addKeyListener(new TAdapter());*/
     }
-
-    /*
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            this.keyReleased(e);
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            this.keyPressed(e);
-        }
-    }
-    */
 
     private void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
@@ -91,12 +75,13 @@ public class GameState implements State {
     public void update() {
         /* Check colliosions and update position */
         for(SpaceObject so : spaceobjects){
-            //so.intersects(everyotherpossiblespaceobject);
+            //so.intersects();
+
+
             so.update();
         }
 
         /* Update scores etc if necessary */
-
     }
 
     @Override
@@ -164,8 +149,6 @@ public class GameState implements State {
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-
-
     }
 
     public int getScore() {
