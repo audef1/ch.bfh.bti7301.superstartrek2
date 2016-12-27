@@ -69,7 +69,8 @@ public class GameState implements State {
         for(SpaceObject so : spaceobjects){
             //so.intersects(everyotherpossiblespaceobject);
             if(so instanceof EnemyShip){
-                so.update(player);
+                //so.update(player);
+                so.update();
             }else{
                 so.update();
             }

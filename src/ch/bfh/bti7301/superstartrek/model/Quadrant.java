@@ -12,37 +12,22 @@ public class Quadrant {
     private int quadrantnr;
     private Boolean cleared = false;
     private ArrayList<SpaceObject> spaceobjects;
-    private ArrayList<Background> background;
+    private ArrayList<Background> backgrounds;
 
-    public Quadrant(String name, int quadrantnr){
+    public Quadrant(String name, int quadrantnr, ArrayList<Background> backgrounds){
         this.name = name;
         this.quadrantnr = quadrantnr;
+        this.backgrounds = backgrounds;
         initQuadrant();
     }
 
     private void initQuadrant(){
         // fill spaceobjects with rocks and stuff
 
-        String color;
-        if (quadrantnr % 4 == 0){
-            color = "black";
-        }
-        else if (quadrantnr % 4 == 1){
-            color = "blue";
-        }
-        else if (quadrantnr % 4 == 2){
-            color = "purple";
-        }
-        else{
-            color = "darkpurple";
-        }
-        background.add(new Background("background_" + color + ".jpg", 1));
-        background.add(new Background("background_parallax.png", 0.5));
-
     }
 
     public void draw(Graphics2D g){
-        for (Background bg : background){
+        for (Background bg : backgrounds){
             bg.draw(g);
         }
     }
@@ -68,11 +53,11 @@ public class Quadrant {
         this.spaceobjects = spaceobjects;
     }
 
-    public ArrayList<Background> getBackground() {
-        return background;
+    public ArrayList<Background> getBackgrounds() {
+        return backgrounds;
     }
-    public void setBackground(ArrayList<Background> background) {
-        this.background = background;
+    public void setBackgrounds(ArrayList<Background> backgrounds) {
+        this.backgrounds = backgrounds;
     }
 
 }

@@ -55,7 +55,7 @@ public class MenuState implements State {
         font = new Font("Arial", Font.PLAIN, 40);
 
         // init backgroundimage
-        menuBackground = new MenuBackground("images/Backgrounds/background_blue.jpg", 1000);
+        menuBackground = new MenuBackground("background_blue.jpg", 1000);
         menuBackground.setVector(1,-1);
 
     }
