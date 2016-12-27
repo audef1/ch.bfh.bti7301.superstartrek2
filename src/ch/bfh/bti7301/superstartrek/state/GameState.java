@@ -2,16 +2,11 @@ package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
-import ch.bfh.bti7301.superstartrek.model.Level;
-import ch.bfh.bti7301.superstartrek.model.Meteor;
-import ch.bfh.bti7301.superstartrek.model.SpaceObject;
-import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
+import ch.bfh.bti7301.superstartrek.model.*;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -37,11 +32,7 @@ public class GameState implements State {
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize variables defined on top of the class */
-        try {
-            background = ImageIO.read(getClass().getClassLoader().getResourceAsStream("images/Backgrounds/background_black.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
@@ -58,21 +49,6 @@ public class GameState implements State {
 
        /* addKeyListener(new TAdapter());*/
     }
-
-    /*
-    private class TAdapter extends KeyAdapter {
-
-        @Override
-        public void keyReleased(KeyEvent e) {
-            this.keyReleased(e);
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e) {
-            this.keyPressed(e);
-        }
-    }
-    */
 
     private void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
@@ -92,7 +68,12 @@ public class GameState implements State {
         /* Check colliosions and update position */
         for(SpaceObject so : spaceobjects){
             //so.intersects(everyotherpossiblespaceobject);
-            so.update();
+            if(so instanceof EnemyShip){
+                //so.update(player);
+                so.update();
+            }else{
+                so.update();
+            }
         }
 
         /* Update scores etc if necessary */
@@ -102,7 +83,8 @@ public class GameState implements State {
     @Override
     public void draw(Graphics2D g) {
 
-        g.drawImage(background, 0, 0, null);
+        /* draw level backgrounds */
+        currentLevel.getCurrentquardant().draw(g);
 
         /* draw all specific spaceobjects */
         for (SpaceObject so : spaceobjects) {
