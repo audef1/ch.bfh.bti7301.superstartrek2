@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
  */
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
+    public static final int WIDTH = 1024;
+    public static final int HEIGHT = 768;
     public static final int SCALE = 1;
     public static final int GAMESIZE = 4;
 
@@ -22,9 +22,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     private boolean running;
     private int FPS = 60;
     private long targetTime = 1000 / FPS;
-
-    private BufferedImage image;
-    private Graphics2D g;
 
     private StateMachine stateMachine;
 
@@ -49,10 +46,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private void init()
     {
-        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        g = (Graphics2D) image.getGraphics();
-
-        stateMachine = new StateMachine();
+        stateMachine = new StateMachine(this);
         stateMachine.initStates(GAMESIZE);
 
         /* Initializing done, set running to true */
@@ -72,14 +66,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     private void draw()
     {
-        stateMachine.draw(g);
+        stateMachine.draw();
     }
 
     private void drawToScreen()
     {
-        Graphics g2 = getGraphics();
-        g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
-        g2.dispose();
+        stateMachine.drawToScreen();
     }
 
     /**
@@ -97,6 +89,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
             update();
             draw();
             drawToScreen();
+
+            // revalidate so that every part of the layout is updated
+            revalidate();
 
             elapsed = System.nanoTime() - start;
 

@@ -1,14 +1,25 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by buche on 01.12.2016.
  */
-public class StateMachine implements State{
+public class StateMachine {
+
+    /**
+     * Contains the GamePanel for layout changes.
+     */
+    private GamePanel gamePanel;
+
     /**
      * Contains all states of this state machine.
      */
@@ -21,7 +32,8 @@ public class StateMachine implements State{
     /**
      * Creates a state machine.
      */
-    public StateMachine() {
+    public StateMachine(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
         states = new HashMap<>();
         currentState = new MenuState(this); // initial state
         states.put(null, currentState);
@@ -72,29 +84,38 @@ public class StateMachine implements State{
         currentState.keyReleased(e);
     }
 
-    @Override
     public void input() {
         currentState.input();
     }
 
-    @Override
     public void update() {
         currentState.update();
     }
 
-    @Override
-    public void draw(Graphics2D g) {
-        currentState.draw(g);
+    public void draw() {
+        for (SubPanel subPanel : currentState.getPanels()){
+            subPanel.draw();
+        }
     }
 
-    @Override
+    public void drawToScreen() {
+        for (SubPanel subPanel : currentState.getPanels()){
+            subPanel.drawToScreen();
+        }
+    }
+
     public void enter() {
         currentState.enter();
     }
 
-    @Override
+
     public void exit() {
         currentState.exit();
     }
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
 
 }

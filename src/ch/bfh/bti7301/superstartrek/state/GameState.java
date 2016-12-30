@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
 import ch.bfh.bti7301.superstartrek.model.*;
 
@@ -13,9 +14,15 @@ import java.util.ArrayList;
  * Created by florianauderset on 02.12.16.
  */
 
-public class GameState implements State {
+public class GameState extends State {
 
-    private final StateMachine statemachine;
+    private SubPanel mainPanel;
+    private SubPanel weaponPanel;
+    private SubPanel statusPanel;
+    private SubPanel messagePanel;
+    private SubPanel levelinfoPanel;
+
+    private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
     private Level currentLevel;
     private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
@@ -27,9 +34,22 @@ public class GameState implements State {
 
     /* private variables - ex. score */
 
-    public GameState(StateMachine statemachine) {
+    public GameState(StateMachine stateMachine) {
 
-        this.statemachine = statemachine;
+        super(stateMachine);
+
+        mainPanel = new SubPanel(this, 640, 480);
+        weaponPanel = new SubPanel(this, 172, 480);
+        statusPanel = new SubPanel(this, 172, 480);
+        messagePanel = new SubPanel(this, 1024, 200);
+        levelinfoPanel = new SubPanel(this, 1024, 88);
+
+        getPanels().add(mainPanel);
+        getPanels().add(weaponPanel);
+        getPanels().add(statusPanel);
+        getPanels().add(messagePanel);
+        getPanels().add(levelinfoPanel);
+
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize variables defined on top of the class */
@@ -88,14 +108,14 @@ public class GameState implements State {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw() {
 
         /* draw level background */
-        backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(g);
+        backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(mainPanel.getG());
 
         /* draw all specific spaceobjects */
         for (SpaceObject so : spaceobjects) {
-            so.draw(g);
+            so.draw(mainPanel.getG());
         }
         //System.out.println("game running... - rendering...");
     }
@@ -103,7 +123,12 @@ public class GameState implements State {
     @Override
     public void enter() {
         /* do stuff when entering this state */
-
+        getGamePanel().setLayout(layout);
+        getGamePanel().add(mainPanel, BorderLayout.CENTER);
+        getGamePanel().add(statusPanel, BorderLayout.LINE_START);
+        getGamePanel().add(weaponPanel, BorderLayout.LINE_END);
+        getGamePanel().add(levelinfoPanel, BorderLayout.PAGE_START);
+        getGamePanel().add(messagePanel, BorderLayout.PAGE_END);
     }
 
     @Override
@@ -118,15 +143,15 @@ public class GameState implements State {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_P) {
-           statemachine.change("paused");
+           getStateMachine().change("paused");
         }
 
         if (key == KeyEvent.VK_M) {
-            statemachine.change("map");
+            getStateMachine().change("map");
         }
 
         if (key == KeyEvent.VK_ESCAPE) {
-            statemachine.change("menu");
+            getStateMachine().change("menu");
         }
 
         if (key == KeyEvent.VK_SPACE){
@@ -153,8 +178,6 @@ public class GameState implements State {
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-
-
     }
 
     public int getScore() {

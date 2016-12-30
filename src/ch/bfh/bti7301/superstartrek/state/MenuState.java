@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.model.MenuBackground;
 
 import java.awt.*;
@@ -9,9 +11,10 @@ import java.util.ArrayList;
 /**
  * Created by florianauderset on 16.12.16.
  */
-public class MenuState implements State {
+public class MenuState extends State {
 
-    private final StateMachine statemachine;
+    private SubPanel mainPanel;
+    private BorderLayout layout = new BorderLayout();
 
     private ArrayList<String[]> options;
     private int menuPointer = 0;
@@ -24,9 +27,13 @@ public class MenuState implements State {
 
     private MenuBackground menuBackground;
 
-    public MenuState(StateMachine statemachine) {
+    public MenuState(StateMachine stateMachine) {
 
-        this.statemachine = statemachine;
+        super(stateMachine);
+
+        mainPanel = new SubPanel(this, GamePanel.WIDTH, GamePanel.HEIGHT);
+        getGamePanel().add(mainPanel);
+        getPanels().add(mainPanel);
 
         // define menuoptions
         this.options = new ArrayList<String[]>();
@@ -71,33 +78,32 @@ public class MenuState implements State {
         menuBackground.update();
     }
 
-    @Override
-    public void draw(Graphics2D g) {
-
+    public void draw() {
         // draw menuBackground
-        menuBackground.draw(g);
+        menuBackground.draw(mainPanel.getG());
 
         // draw title
-        g.setColor(titleColor);
-        g.setFont(titleFont);
-        g.drawString("Super Star Trek", 60, 100);
+        mainPanel.getG().setColor(titleColor);
+        mainPanel.getG().setFont(titleFont);
+        mainPanel.getG().drawString("Super Star Trek", 60, 100);
 
         // draw menu options
-        g.setFont(font);
+        mainPanel.getG().setFont(font);
         for (int i = 0; i < options.size(); i++) {
             if (i == menuPointer) {
-                g.setColor(Color.RED);
+                mainPanel.getG().setColor(Color.RED);
             } else {
-                g.setColor(fontColor);
+                mainPanel.getG().setColor(fontColor);
             }
-            g.drawString(options.get(i)[0], 200, 200 + i * font.getSize());
+            mainPanel.getG().drawString(options.get(i)[0], 200, 200 + i * font.getSize());
         }
 
     }
 
     @Override
     public void enter() {
-
+        getGamePanel().setLayout(layout);
+        getGamePanel().add(mainPanel, BorderLayout.CENTER);
     }
 
     @Override
@@ -107,7 +113,7 @@ public class MenuState implements State {
 
     private void select() {
         if (!options.get(menuPointer)[1].equals("exit")) {
-            statemachine.change(options.get(menuPointer)[1]);
+            getStateMachine().change(options.get(menuPointer)[1]);
         }
         else{
             System.exit(0);
@@ -140,4 +146,5 @@ public class MenuState implements State {
     public void keyReleased(KeyEvent e) {
 
     }
+
 }

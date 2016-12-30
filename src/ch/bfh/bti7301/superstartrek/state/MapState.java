@@ -1,24 +1,33 @@
 package ch.bfh.bti7301.superstartrek.state;
 
+import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 /**
  * Created by florianauderset on 20.12.16.
  */
 
-public class MapState implements State {
+public class MapState extends State {
 
-    private final StateMachine statemachine;
+    private SubPanel mainPanel;
+    private BorderLayout layout = new BorderLayout();
 
     private Font font;
     private Color fontColor;
     private Font titleFont;
     private Color titleColor;
 
-    public MapState(StateMachine statemachine) {
+    public MapState(StateMachine stateMachine) {
 
-        this.statemachine = statemachine;
+        super(stateMachine);
+
+        mainPanel = new SubPanel(this, GamePanel.WIDTH, GamePanel.HEIGHT);
+        getGamePanel().add(mainPanel, BorderLayout.CENTER);
+        getPanels().add(mainPanel);
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
@@ -40,19 +49,20 @@ public class MapState implements State {
     }
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw() {
         // set background
-        g.setBackground(Color.BLACK);
+        mainPanel.getG().setBackground(Color.BLACK);
 
         // draw title
-        g.setColor(titleColor);
-        g.setFont(titleFont);
-        g.drawString("MAP", 20, 75);
+        mainPanel.getG().setColor(titleColor);
+        mainPanel.getG().setFont(titleFont);
+        mainPanel.getG().drawString("MAP", 20, 75);
     }
 
     @Override
     public void enter() {
-
+        getGamePanel().setLayout(layout);
+        getGamePanel().add(mainPanel, BorderLayout.CENTER);
     }
 
     @Override
@@ -65,7 +75,7 @@ public class MapState implements State {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_M) {
-            statemachine.change("game");
+            getStateMachine().change("game");
         }
     }
 
