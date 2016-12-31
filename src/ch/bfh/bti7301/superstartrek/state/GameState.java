@@ -3,6 +3,7 @@ package ch.bfh.bti7301.superstartrek.state;
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
+import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 import ch.bfh.bti7301.superstartrek.model.*;
 
 import java.awt.*;
@@ -61,14 +62,10 @@ public class GameState extends State {
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
 
-        // TODO: initialize spaceobjects with meteors, enemies and spacestations
-        Meteor m1 = new Meteor(10,10,50,100,-1, 1, 0.1);
-        Meteor m2 = new Meteor(10,10,100,200,1, -1, 0.2);
-        Meteor m3 = new Meteor(10,10,150,250,1, 0, 0.3);
-
-        spaceobjects.add(m1);
-        spaceobjects.add(m2);
-        spaceobjects.add(m3);
+        // initialize spaceobjects with meteors, enemies and spacestations
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", 3));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("enemy", 2));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", 1));
         spaceobjects.add(player);
 
        /* addKeyListener(new TAdapter());*/

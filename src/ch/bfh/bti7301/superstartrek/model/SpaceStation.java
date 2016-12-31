@@ -21,6 +21,8 @@ public class SpaceStation extends SpaceObject {
 
     public SpaceStation(int width, int height, int x, int y){
         super(width, height, x, y);
+
+        this.getSprite("images/PNG/ufoGreen.png");
     }
 
     public int getFuelCost() {
