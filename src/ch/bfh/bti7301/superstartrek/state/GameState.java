@@ -1,10 +1,10 @@
 package ch.bfh.bti7301.superstartrek.state;
 
-import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
-import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+import ch.bfh.bti7301.superstartrek.graphics.*;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
 import ch.bfh.bti7301.superstartrek.model.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 public class GameState extends State {
 
     private SubPanel mainPanel;
-    private SubPanel weaponPanel;
-    private SubPanel statusPanel;
-    private SubPanel messagePanel;
-    private SubPanel levelinfoPanel;
+    private WeaponPanel weaponPanel;
+    private StatusPanel statusPanel;
+    private MessagePanel messagePanel;
+    private InfoPanel levelinfoPanel;
 
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
@@ -39,10 +39,16 @@ public class GameState extends State {
         super(stateMachine);
 
         mainPanel = new SubPanel(this, 640, 480);
-        weaponPanel = new SubPanel(this, 172, 480);
-        statusPanel = new SubPanel(this, 172, 480);
-        messagePanel = new SubPanel(this, 1024, 200);
-        levelinfoPanel = new SubPanel(this, 1024, 88);
+        weaponPanel = new WeaponPanel(this, 192, 480);
+        statusPanel = new StatusPanel(this, 192, 480);
+        messagePanel = new MessagePanel(this, 1024, 200);
+        levelinfoPanel = new InfoPanel(this, 1024, 88);
+
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        statusPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        weaponPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        levelinfoPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        messagePanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         getPanels().add(mainPanel);
         getPanels().add(weaponPanel);
@@ -123,6 +129,7 @@ public class GameState extends State {
     @Override
     public void enter() {
         /* do stuff when entering this state */
+        layout.setVgap(0);
         getGamePanel().setLayout(layout);
         getGamePanel().add(mainPanel, BorderLayout.CENTER);
         getGamePanel().add(statusPanel, BorderLayout.LINE_START);

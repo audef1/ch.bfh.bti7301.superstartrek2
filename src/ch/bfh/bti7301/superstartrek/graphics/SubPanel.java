@@ -1,5 +1,6 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
+import ch.bfh.bti7301.superstartrek.model.Background;
 import ch.bfh.bti7301.superstartrek.state.State;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class SubPanel extends JPanel {
     private int height;
 
     private State state;
+    private Background background;
     private BufferedImage image;
     private Graphics2D g;
 
@@ -43,6 +45,14 @@ public class SubPanel extends JPanel {
 
     public Graphics2D getG() {
         return g;
+    }
+
+    public Background getB(){
+        return background;
+    }
+
+    public void setBackground(Background background) {
+        this.background = background;
     }
 
 }

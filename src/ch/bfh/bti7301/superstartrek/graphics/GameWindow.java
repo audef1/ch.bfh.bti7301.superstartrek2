@@ -29,11 +29,12 @@ public class GameWindow extends JFrame {
     public void start(){
         setContentPane(new GamePanel());
         setSize(1024, 768);
+        setBounds(0, 0, 1024, 768);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setVisible(true);
         setResizable(false);
+        setVisible(true);
+        pack();
     }
 
 }
