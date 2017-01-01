@@ -53,12 +53,14 @@ public class PausedState extends State {
     public void draw() {
 
         // set background
-        mainPanel.getG().setBackground(Color.BLACK);
+        Graphics2D g = mainPanel.getG();
+        g.setBackground(Color.BLACK);
 
         // draw title
-        mainPanel.getG().setColor(titleColor);
-        mainPanel.getG().setFont(titleFont);
-        mainPanel.getG().drawString("GAME PAUSED", 160, 250);
+        g.setColor(titleColor);
+        g.setFont(titleFont);
+        String paused = "GAME PAUSED";
+        g.drawString(paused, ((GamePanel.WIDTH/2)-(g.getFontMetrics().stringWidth(paused)/2)), ((GamePanel.HEIGHT/2)-(font.getSize()/2)));
     }
 
     @Override

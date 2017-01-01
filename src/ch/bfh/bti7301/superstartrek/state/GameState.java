@@ -26,12 +26,14 @@ public class GameState extends State {
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
     private Level currentLevel;
+
     private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
     private ArrayList<Background> backgrounds = new ArrayList<Background>();
     private int score = 0;
     private StarFleetShip player;
 
     private BufferedImage background;
+    private Boolean initialized = false;
 
     /* private variables - ex. score */
 
@@ -60,10 +62,10 @@ public class GameState extends State {
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize variables defined on top of the class */
-        backgrounds.add(new Background("background_black.jpg", 0.4));
-        backgrounds.add(new Background("background_blue.jpg", 0.4));
-        backgrounds.add(new Background("background_purple.jpg", 0.4));
-        backgrounds.add(new Background("background_darkpurple.jpg", 0.4));
+        backgrounds.add(new Background("background_black.jpg", 0.1));
+        backgrounds.add(new Background("background_blue.jpg", 0.1));
+        backgrounds.add(new Background("background_purple.jpg", 0.1));
+        backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         /* Initialize game objects */
         player = new StarFleetShip(30,30,1,1,1,1,1);
@@ -126,6 +128,8 @@ public class GameState extends State {
     @Override
     public void enter() {
         /* do stuff when entering this state */
+        initialized = true;
+
         layout.setVgap(0);
         getGamePanel().setLayout(layout);
         getGamePanel().add(mainPanel, BorderLayout.CENTER);
@@ -190,6 +194,34 @@ public class GameState extends State {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Level[][] getLevels() {
+        return levels;
+    }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+
+    public ArrayList<SpaceObject> getSpaceobjects() {
+        return spaceobjects;
+    }
+
+    public ArrayList<Background> getBackgrounds() {
+        return backgrounds;
+    }
+
+    public StarFleetShip getPlayer() {
+        return player;
+    }
+
+    public BufferedImage getBackground() {
+        return background;
+    }
+
+    public Boolean isInitialized() {
+        return initialized;
     }
 
 }

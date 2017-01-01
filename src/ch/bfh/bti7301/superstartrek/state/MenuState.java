@@ -55,11 +55,11 @@ public class MenuState extends State {
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
-        titleFont = new Font("Final Frontier Old Style", Font.PLAIN, 100);
+        titleFont = new Font("Final Frontier Old Style", Font.PLAIN, 150);
 
         fontColor = new Color(255,255,255);
         fontColorActive = new Color(255,0,0);
-        font = new Font("Arial", Font.PLAIN, 40);
+        font = new Font("Arial", Font.PLAIN, 75);
 
         // init backgroundimage
         menuBackground = new MenuBackground("background_blue.jpg", 1000);
@@ -80,22 +80,25 @@ public class MenuState extends State {
 
     public void draw() {
         // draw menuBackground
-        menuBackground.draw(mainPanel.getG());
+        Graphics2D g = mainPanel.getG();
+        menuBackground.draw(g);
 
         // draw title
-        mainPanel.getG().setColor(titleColor);
-        mainPanel.getG().setFont(titleFont);
-        mainPanel.getG().drawString("Super Star Trek", 60, 100);
+        g.setColor(titleColor);
+        g.setFont(titleFont);
+        String title = "Super Star Trek";
+        g.drawString(title, (GamePanel.WIDTH/2)-(g.getFontMetrics().stringWidth(title)/2), 200);
 
         // draw menu options
-        mainPanel.getG().setFont(font);
+        g.setFont(font);
+        int padding = 100;
         for (int i = 0; i < options.size(); i++) {
             if (i == menuPointer) {
-                mainPanel.getG().setColor(Color.RED);
+                g.setColor(Color.RED);
             } else {
-                mainPanel.getG().setColor(fontColor);
+                g.setColor(fontColor);
             }
-            mainPanel.getG().drawString(options.get(i)[0], 200, 200 + i * font.getSize());
+            g.drawString(options.get(i)[0], (GamePanel.WIDTH/2)-(g.getFontMetrics().stringWidth(options.get(i)[0])/2), 370 + i * font.getSize());
         }
 
     }
@@ -104,6 +107,11 @@ public class MenuState extends State {
     public void enter() {
         getGamePanel().setLayout(layout);
         getGamePanel().add(mainPanel, BorderLayout.CENTER);
+
+        GameState gs = (GameState) getStateMachine().getStates().get("game");
+        if (gs.isInitialized()){
+            options.get(0)[0] = "Resume game";
+        }
     }
 
     @Override
