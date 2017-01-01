@@ -1,7 +1,10 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.InfoPanel;
+import ch.bfh.bti7301.superstartrek.graphics.MapPanel;
 import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+import ch.bfh.bti7301.superstartrek.model.Level;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,8 +16,11 @@ import java.util.ArrayList;
 
 public class MapState extends State {
 
-    private SubPanel mainPanel;
+    private InfoPanel infoPanel;
+    private MapPanel mapPanel;
     private BorderLayout layout = new BorderLayout();
+
+    private Level currentLevel;
 
     private Font font;
     private Color fontColor;
@@ -25,9 +31,11 @@ public class MapState extends State {
 
         super(stateMachine);
 
-        mainPanel = new SubPanel(this, GamePanel.WIDTH, GamePanel.HEIGHT);
-        getGamePanel().add(mainPanel, BorderLayout.CENTER);
-        getPanels().add(mainPanel);
+        infoPanel = new InfoPanel(this, 1024, 88);
+        mapPanel = new MapPanel(this, 1024, 680);
+
+        getPanels().add(infoPanel);
+        getPanels().add(mapPanel);
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
@@ -50,19 +58,28 @@ public class MapState extends State {
 
     @Override
     public void draw() {
+        Graphics2D g1 = infoPanel.getG();
+        Graphics2D g2 = mapPanel.getG();
+
         // set background
-        mainPanel.getG().setBackground(Color.BLACK);
+        //mainPanel.getG().setBackground(Color.BLACK);
 
         // draw title
-        mainPanel.getG().setColor(titleColor);
-        mainPanel.getG().setFont(titleFont);
-        mainPanel.getG().drawString("MAP", 20, 75);
+        //mainPanel.getG().setColor(titleColor);
+        //mainPanel.getG().setFont(titleFont);
+        //mainPanel.getG().drawString("MAP", 20, 75);
     }
 
     @Override
     public void enter() {
+        // get data from current level
+        GameState gs = (GameState) getStateMachine().getStates().get("game");
+        currentLevel = gs.getCurrentLevel();
+
+        // set layout and add different panels
         getGamePanel().setLayout(layout);
-        getGamePanel().add(mainPanel, BorderLayout.CENTER);
+        getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
+        getGamePanel().add(mapPanel, BorderLayout.CENTER);
     }
 
     @Override
@@ -77,6 +94,10 @@ public class MapState extends State {
         if (key == KeyEvent.VK_M) {
             getStateMachine().change("game");
         }
+
+        if (key == KeyEvent.VK_ESCAPE) {
+            getStateMachine().change("menu");
+        }
     }
 
     @Override
@@ -84,5 +105,10 @@ public class MapState extends State {
         int key = e.getKeyCode();
 
     }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+
 
 }

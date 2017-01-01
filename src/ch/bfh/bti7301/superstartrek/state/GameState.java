@@ -21,7 +21,7 @@ public class GameState extends State {
     private WeaponPanel weaponPanel;
     private StatusPanel statusPanel;
     private MessagePanel messagePanel;
-    private InfoPanel levelinfoPanel;
+    private InfoPanel infoPanel;
 
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
@@ -45,19 +45,19 @@ public class GameState extends State {
         weaponPanel = new WeaponPanel(this, 192, 480);
         statusPanel = new StatusPanel(this, 192, 480);
         messagePanel = new MessagePanel(this, 1024, 200);
-        levelinfoPanel = new InfoPanel(this, 1024, 88);
+        infoPanel = new InfoPanel(this, 1024, 88);
 
         mainPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         statusPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         weaponPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        levelinfoPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         messagePanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
         getPanels().add(mainPanel);
         getPanels().add(weaponPanel);
         getPanels().add(statusPanel);
         getPanels().add(messagePanel);
-        getPanels().add(levelinfoPanel);
+        getPanels().add(infoPanel);
 
         initlevels(GamePanel.GAMESIZE);
 
@@ -68,12 +68,12 @@ public class GameState extends State {
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         /* Initialize game objects */
-        player = new StarFleetShip(30,30,1,1,1,1,1);
+        player = new StarFleetShip(98,75,((640/2)-(98/2)),480/3*2,1,0,0);
 
         // initialize spaceobjects with meteors, enemies and spacestations
-        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", 3));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", 10));
         spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("enemy", 2));
-        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", 1));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", 0));
         spaceobjects.add(player);
 
        /* addKeyListener(new TAdapter());*/
@@ -135,7 +135,7 @@ public class GameState extends State {
         getGamePanel().add(mainPanel, BorderLayout.CENTER);
         getGamePanel().add(statusPanel, BorderLayout.LINE_START);
         getGamePanel().add(weaponPanel, BorderLayout.LINE_END);
-        getGamePanel().add(levelinfoPanel, BorderLayout.PAGE_START);
+        getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
         getGamePanel().add(messagePanel, BorderLayout.PAGE_END);
     }
 

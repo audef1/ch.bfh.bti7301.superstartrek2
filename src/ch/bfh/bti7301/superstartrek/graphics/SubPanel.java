@@ -55,4 +55,9 @@ public class SubPanel extends JPanel {
         this.background = background;
     }
 
+    public State getState() {
+        return state;
+    }
+
+
 }

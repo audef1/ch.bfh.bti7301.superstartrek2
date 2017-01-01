@@ -81,6 +81,10 @@ public class PausedState extends State {
         if (key == KeyEvent.VK_P) {
             getStateMachine().change("game");
         }
+
+        if (key == KeyEvent.VK_ESCAPE) {
+            getStateMachine().change("menu");
+        }
     }
 
     @Override
