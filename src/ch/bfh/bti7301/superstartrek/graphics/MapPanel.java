@@ -23,7 +23,7 @@ public class MapPanel extends SubPanel {
         Graphics2D g = getG();
 
         // draw background
-        getB().draw(getG());
+        getB().draw(g);
 
         MapState ms = (MapState) getState();
         Level level = ms.getCurrentLevel();

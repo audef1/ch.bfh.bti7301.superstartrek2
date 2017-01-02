@@ -21,7 +21,6 @@ public class SpaceShip extends SpaceObject {
     protected int fuel;
     protected int maxFuel;
     protected int money;
-    private int maxSpeed = 5;
 
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
         super(width, height, x, y, dx, dy, speed);
@@ -36,6 +35,7 @@ public class SpaceShip extends SpaceObject {
         directions.add(new Point(-1, -1));
         directions.add(new Point(0, -1));
         directions.add(new Point(1, -1));
+        setMaxSpeed(5);
     }
 
     public void fire(){

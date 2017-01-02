@@ -29,7 +29,7 @@ public class SpaceObject {
 
     protected float inerta;
     protected double speed;
-    protected float maxSpeed;
+    protected int maxSpeed;
     protected float mass;
 
     // sprites
@@ -186,11 +186,11 @@ public class SpaceObject {
         this.speed = speed;
     }
 
-    public float getMaxSpeed() {
+    public int getMaxSpeed() {
         return maxSpeed;
     }
 
-    public void setMaxSpeed(float maxSpeed) {
+    public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
