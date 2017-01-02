@@ -43,7 +43,7 @@ public class SpaceObjectFactory {
             case "enemy":
             {
                 for (int i = 0; i < amount; i++) {
-                    EnemyShip es = new EnemyShip(10, 10,random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.5 - 0.1) + 0.1));
+                    EnemyShip es = new EnemyShip(10, 10,random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
                     so.add(es);
                 }
             }

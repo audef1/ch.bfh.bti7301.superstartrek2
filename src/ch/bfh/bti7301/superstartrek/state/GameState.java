@@ -96,8 +96,7 @@ public class GameState extends State {
         for(SpaceObject so : spaceobjects){
             //so.intersects(everyotherpossiblespaceobject);
             if(so instanceof EnemyShip){
-                //so.update(player);
-                so.update();
+                ((EnemyShip) so).update(player);
             }else{
                 so.update();
             }

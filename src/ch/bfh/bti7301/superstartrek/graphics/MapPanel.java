@@ -73,13 +73,14 @@ public class MapPanel extends SubPanel {
 
                     if(so instanceof SpaceStation){
                         g.setColor(Color.GREEN);
-                        g.fillOval(xMap + i * qWidth + (int)(so.getX()/2.66), yMap + j * qHeight + (int)(so.getY()/3.3),10,10);
+                        g.fillOval(xMap + i * qWidth + (int)(so.getX()/2.75), yMap + j * qHeight + (int)(so.getY()/3.3),15,15);
                     }
 
+                    // draw only enemies which we have seen already
                     if (q.getVisited()){
                         if(so instanceof EnemyShip){
                             g.setColor(Color.RED);
-                            g.fillOval(xMap + i * qWidth + (int)(so.getX()/2.66), yMap + j * qHeight + (int)(so.getY()/3.3),10,10);
+                            g.fillOval(xMap + i * qWidth + (int)(so.getX()/2.75), yMap + j * qHeight + (int)(so.getY()/3.3),10,10);
                         }
                     }
                 }

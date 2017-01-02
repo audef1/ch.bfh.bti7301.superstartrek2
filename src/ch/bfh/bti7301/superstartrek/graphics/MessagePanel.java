@@ -1,7 +1,6 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
-import ch.bfh.bti7301.superstartrek.model.Background;
-import ch.bfh.bti7301.superstartrek.model.StarFleetShip;
+import ch.bfh.bti7301.superstartrek.model.*;
 import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
@@ -32,6 +31,7 @@ public class MessagePanel extends SubPanel{
         Graphics2D g = getG();
         GameState gs = (GameState) getState().getStateMachine().getStates().get("game");
         StarFleetShip p = gs.getPlayer();
+        ArrayList<SpaceObject> spaceobjects = gs.getSpaceobjects();
 
         // draw background
         getB().draw(getG());
@@ -55,9 +55,29 @@ public class MessagePanel extends SubPanel{
 
         }
 
-
-
         // draw minimap
+        int mapWidth = 233;
+        int mapHeight = 145;
+        int xMapStart = 760;
+        int yMapStart = 25;
+
+        g.setStroke(new BasicStroke(3));
+        g.setColor(Color.GREEN);
+        g.drawRect(xMapStart, yMapStart, mapWidth, mapHeight);
+
+        for(SpaceObject so : spaceobjects){
+            if (so instanceof EnemyShip){
+                if (xMapStart + (int)(so.getX()/2.66) >= xMapStart && xMapStart + (int)(so.getX()/2.66) <= xMapStart+mapWidth && yMapStart + (int)(so.getY()/3.3) >= yMapStart && yMapStart + (int)(so.getY()/3.3) <= yMapStart+mapHeight - so.getHeight()){
+                    g.setColor(Color.RED);
+                    g.fillOval(xMapStart + (int)(so.getX()/2.66), yMapStart + (int)(so.getY()/3.3),10,10);
+                }
+            }
+
+            if (so instanceof SpaceStation){
+                g.setColor(Color.GREEN);
+                g.fillOval(xMapStart + (int)(so.getX()/2.66), yMapStart + (int)(so.getY()/3.3),15,15);
+            }
+        }
 
         // draw messageterminal
 
