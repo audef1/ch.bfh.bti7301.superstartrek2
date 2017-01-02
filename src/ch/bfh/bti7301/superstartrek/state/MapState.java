@@ -58,16 +58,7 @@ public class MapState extends State {
 
     @Override
     public void draw() {
-        Graphics2D g1 = infoPanel.getG();
-        Graphics2D g2 = mapPanel.getG();
 
-        // set background
-        //mainPanel.getG().setBackground(Color.BLACK);
-
-        // draw title
-        //mainPanel.getG().setColor(titleColor);
-        //mainPanel.getG().setFont(titleFont);
-        //mainPanel.getG().drawString("MAP", 20, 75);
     }
 
     @Override
@@ -75,6 +66,10 @@ public class MapState extends State {
         // get data from current level
         GameState gs = (GameState) getStateMachine().getStates().get("game");
         currentLevel = gs.getCurrentLevel();
+
+        // TODO: for testing
+        currentLevel.getCurrentquardant().setCleared(true);
+        currentLevel.getCurrentquardant().setVisited(true);
 
         // set layout and add different panels
         getGamePanel().setLayout(layout);

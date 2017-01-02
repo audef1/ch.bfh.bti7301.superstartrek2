@@ -71,9 +71,7 @@ public class GameState extends State {
         player = new StarFleetShip(98,75,((640/2)-(98/2)),480/3*2,1,0,0);
 
         // initialize spaceobjects with meteors, enemies and spacestations
-        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", 10));
-        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("enemy", 2));
-        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", 0));
+        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
         spaceobjects.add(player);
 
        /* addKeyListener(new TAdapter());*/
@@ -129,6 +127,8 @@ public class GameState extends State {
     public void enter() {
         /* do stuff when entering this state */
         initialized = true;
+
+        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
 
         layout.setVgap(0);
         getGamePanel().setLayout(layout);
