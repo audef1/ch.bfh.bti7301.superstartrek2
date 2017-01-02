@@ -21,6 +21,7 @@ public class SpaceObjectFactory {
      */
     public  static ArrayList<SpaceObject> createSpaceObject(String objectType , int amount) {
         Random random = new Random();
+        so = new ArrayList<SpaceObject>();
 
         switch (objectType) {
             case "meteor":

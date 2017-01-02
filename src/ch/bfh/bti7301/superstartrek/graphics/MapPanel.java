@@ -66,10 +66,14 @@ public class MapPanel extends SubPanel {
                 // draw spacestations, enemies
 
                 for (SpaceObject so : spaceObjects ){
+                    if (so instanceof StarFleetShip){
+                        g.setColor(Color.ORANGE);
+                        g.drawImage(so.getSprites().get(0)[0], xMap + i * qWidth + (int)(so.getX()/2.66), yMap + j * qHeight + (int)(so.getY()/3.3), so.getWidth()/2, so.getHeight()/2, null);
+                    }
+
                     if(so instanceof SpaceStation){
                         g.setColor(Color.GREEN);
                         g.fillOval(xMap + i * qWidth + (int)(so.getX()/2.66), yMap + j * qHeight + (int)(so.getY()/3.3),10,10);
-                        System.out.println("spacestation " + i + " - " + j + " is drawn");
                     }
 
                     if (q.getVisited()){
