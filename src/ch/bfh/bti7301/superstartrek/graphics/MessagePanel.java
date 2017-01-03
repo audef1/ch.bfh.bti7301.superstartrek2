@@ -4,7 +4,11 @@ import ch.bfh.bti7301.superstartrek.model.*;
 import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -51,8 +55,6 @@ public class MessagePanel extends SubPanel{
                 g.setStroke(new BasicStroke(4));
                 g.drawRect(684, 153 - (i * singleHeight), 26, singleHeight);
             }
-
-
         }
 
         // draw minimap
@@ -80,8 +82,42 @@ public class MessagePanel extends SubPanel{
         }
 
         // draw messageterminal
+        int messageWidth = 405;
+        int messageHeight = 130;
+        int xMessageStart = 200;
+        int yMessageStart = 30;
 
-        // draw other stuff here
+        g.setStroke(new BasicStroke(3));
+        g.setColor(Color.GREEN);
+        g.drawRect(xMessageStart, yMessageStart, messageWidth, messageHeight);
+
+        // draw picture box
+        int pictureWidth = 130;
+        int pictureHeight = 130;
+        int xPictureStart = 55;
+        int yPictureStart = 30;
+
+        g.setStroke(new BasicStroke(3));
+        g.setColor(Color.GREEN);
+        g.drawRect(xPictureStart, yPictureStart, pictureWidth, pictureHeight);
+
+        /*try {
+            BufferedImage img = ImageIO.read(new File(getClass().getClassLoader().getResource("images/Backgrounds/starfleetlogo.png").getFile()));
+
+            drawMessage("", img);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
+    public void drawMessage(String message, BufferedImage image) {
+        Graphics2D g = getG();
+        int fontSize = 20;
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
+        g.setColor(Color.WHITE);
+        g.drawString(message, 220, 80);
+
+        g.drawImage(image, 56, 31, this);
+    }
 }

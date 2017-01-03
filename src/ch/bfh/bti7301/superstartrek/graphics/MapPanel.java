@@ -33,7 +33,7 @@ public class MapPanel extends SubPanel {
         int xMap = 32; // x startposition of map on panel
         int yMap = 40; // y startposition of map on panel
 
-        int qWidth = 240; // quardant width
+        int qWidth = 240; // quadrant width
         int qHeight = 147; // quadrant height
 
         // draw map
