@@ -36,6 +36,11 @@ public class SpaceShip extends SpaceObject {
         directions.add(new Point(0, -1));
         directions.add(new Point(1, -1));
         setMaxSpeed(5);
+        setHealth(60);
+        setHealthMax(100);
+        setShield(30);
+        setShieldMax(100);
+
     }
 
     public void fire(){
