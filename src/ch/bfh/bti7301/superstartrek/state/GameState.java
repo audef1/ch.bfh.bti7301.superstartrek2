@@ -1,7 +1,9 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.*;
+import ch.bfh.bti7301.superstartrek.misc.Character;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
+import ch.bfh.bti7301.superstartrek.misc.Message;
 import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 import ch.bfh.bti7301.superstartrek.model.*;
 
@@ -22,6 +24,7 @@ public class GameState extends State {
     private StatusPanel statusPanel;
     private MessagePanel messagePanel;
     private InfoPanel infoPanel;
+    private Message msg;
 
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
@@ -74,6 +77,8 @@ public class GameState extends State {
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
         spaceobjects.add(player);
 
+        msg = new Message(this, 1024, 200);
+
        /* addKeyListener(new TAdapter());*/
     }
 
@@ -107,6 +112,7 @@ public class GameState extends State {
         for (Background bg : backgrounds){
             bg.update(player);
         }
+
     }
 
     @Override
@@ -120,6 +126,8 @@ public class GameState extends State {
             so.draw(mainPanel.getG());
         }
         //System.out.println("game running... - rendering...");
+
+
     }
 
     @Override
@@ -163,6 +171,9 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE){
             player.fire();
+
+
+            msg.createMessage(Character.KIRK);
         }
 
         if (key == KeyEvent.VK_UP){

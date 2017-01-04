@@ -16,13 +16,11 @@ public class Quadrant {
     private Boolean cleared = false;
     private Boolean visited = false;
     private ArrayList<SpaceObject> spaceobjects;
-    private SpaceObjectFactory soFactory;
 
     public Quadrant(String name, int quadrantnr){
         this.name = name;
         this.quadrantnr = quadrantnr;
         spaceobjects = new ArrayList<SpaceObject>();
-        soFactory = new SpaceObjectFactory();
         initQuadrant();
     }
 
@@ -37,9 +35,9 @@ public class Quadrant {
         int amountMeteors = ThreadLocalRandom.current().nextInt(min, maxMeteors + 1);
         int amountEnemies = ThreadLocalRandom.current().nextInt(min, maxEnemies + 1);
 
-        spaceobjects.addAll(soFactory.createSpaceObject("spaceStation", amountSpaceStation));
-        spaceobjects.addAll(soFactory.createSpaceObject("meteor", amountMeteors));
-        spaceobjects.addAll(soFactory.createSpaceObject("enemy", amountEnemies));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("spaceStation", amountSpaceStation));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("meteor", amountMeteors));
+        spaceobjects.addAll(SpaceObjectFactory.createSpaceObject("enemy", amountEnemies));
     }
 
     public String getName() {
