@@ -4,11 +4,8 @@ import ch.bfh.bti7301.superstartrek.model.*;
 import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -101,13 +98,6 @@ public class MessagePanel extends SubPanel{
         g.setColor(Color.GREEN);
         g.drawRect(xPictureStart, yPictureStart, pictureWidth, pictureHeight);
 
-        /*try {
-            BufferedImage img = ImageIO.read(new File(getClass().getClassLoader().getResource("images/Backgrounds/starfleetlogo.png").getFile()));
-
-            drawMessage("", img);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void drawMessage(String message, BufferedImage image) {

@@ -49,6 +49,7 @@ public class EnemyShip extends SpaceShip {
             this.setDx((int) directions.get(directionPointer).getX());
             this.setDy((int) directions.get(directionPointer).getY());
 
+            /*
             if(distance <= 50){
                 long curSpeedUp = System.currentTimeMillis();
                 if(curSpeedUp - lastSpeedUp > 200){
@@ -56,6 +57,7 @@ public class EnemyShip extends SpaceShip {
                     lastSpeedUp = curSpeedUp;
                 }
             }
+            */
 
             if(distance > 200){
                 long curShot = System.currentTimeMillis();

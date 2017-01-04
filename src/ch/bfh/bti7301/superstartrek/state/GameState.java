@@ -3,8 +3,8 @@ package ch.bfh.bti7301.superstartrek.state;
 import ch.bfh.bti7301.superstartrek.graphics.*;
 import ch.bfh.bti7301.superstartrek.misc.Character;
 import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
+import ch.bfh.bti7301.superstartrek.misc.LevelStateMachine;
 import ch.bfh.bti7301.superstartrek.misc.Message;
-import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 import ch.bfh.bti7301.superstartrek.model.*;
 
 import javax.swing.*;
@@ -38,11 +38,14 @@ public class GameState extends State {
     private BufferedImage background;
     private Boolean initialized = false;
 
+    private LevelStateMachine lsm;
+
     /* private variables - ex. score */
 
     public GameState(StateMachine stateMachine) {
 
         super(stateMachine);
+        lsm = new LevelStateMachine(this);
 
         mainPanel = new SubPanel(this, 640, 480);
         weaponPanel = new WeaponPanel(this, 192, 480);
@@ -97,17 +100,50 @@ public class GameState extends State {
 
     @Override
     public void update() {
+
         /* Check colliosions and update position */
         for(SpaceObject so : spaceobjects){
-            //so.intersects(everyotherpossiblespaceobject);
+
+             /* Check for enemy attacks and collisions */
+            so.checkAttackCollisions(spaceobjects);
+
             if(so instanceof EnemyShip){
                 ((EnemyShip) so).update(player);
+                //if((EnemyShip)so.isDead()){
+                //    spaceobjects.remove(so);
+                //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
+                //}
+            }else if (so instanceof Meteor){
+                so.update();
             }else{
                 so.update();
             }
+
+
+
+         }
+
+        // check if levels user leaves quadrant
+        if (player.getX() >= 640){
+            player.setX(0);
+
+            int nr = currentLevel.getCurrentquardant().getQuadrantnr();
+
+            if (nr % GamePanel.GAMESIZE == 1){
+                msg.createMessage(Character.SPOCK);
+                player.setSpeed(0);
+                player.setX(580);
+            }
+            else{
+                Quadrant rightQuadrant = currentLevel.getQuadrants()[nr / GamePanel.GAMESIZE][nr % GamePanel.GAMESIZE];
+                lsm.changeQuadrant(rightQuadrant);
+            }
         }
 
+
         /* Update scores etc if necessary */
+
+
         // update backgrounds
         for (Background bg : backgrounds){
             bg.update(player);
@@ -126,8 +162,6 @@ public class GameState extends State {
             so.draw(mainPanel.getG());
         }
         //System.out.println("game running... - rendering...");
-
-
     }
 
     @Override
@@ -212,6 +246,10 @@ public class GameState extends State {
 
     public Level getCurrentLevel() {
         return currentLevel;
+    }
+
+    public void setCurrentLevel(Level currentLevel) {
+        this.currentLevel = currentLevel;
     }
 
     public ArrayList<SpaceObject> getSpaceobjects() {
