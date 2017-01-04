@@ -1,10 +1,8 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.*;
+import ch.bfh.bti7301.superstartrek.misc.*;
 import ch.bfh.bti7301.superstartrek.misc.Character;
-import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
-import ch.bfh.bti7301.superstartrek.misc.LevelStateMachine;
-import ch.bfh.bti7301.superstartrek.misc.Message;
 import ch.bfh.bti7301.superstartrek.model.*;
 
 import javax.swing.*;
@@ -24,7 +22,8 @@ public class GameState extends State {
     private StatusPanel statusPanel;
     private MessagePanel messagePanel;
     private InfoPanel infoPanel;
-    private Message msg;
+
+    private MessageGenerator msgGenerator;
 
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
@@ -80,7 +79,7 @@ public class GameState extends State {
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
         spaceobjects.add(player);
 
-        msg = new Message(this, 1024, 200);
+        msgGenerator = new MessageGenerator();
 
        /* addKeyListener(new TAdapter());*/
     }
@@ -100,7 +99,6 @@ public class GameState extends State {
 
     @Override
     public void update() {
-
         /* Check colliosions and update position */
         for(SpaceObject so : spaceobjects){
 
@@ -140,7 +138,6 @@ public class GameState extends State {
             }
         }
 
-
         /* Update scores etc if necessary */
 
 
@@ -162,6 +159,8 @@ public class GameState extends State {
             so.draw(mainPanel.getG());
         }
         //System.out.println("game running... - rendering...");
+
+
     }
 
     @Override
@@ -206,8 +205,7 @@ public class GameState extends State {
         if (key == KeyEvent.VK_SPACE){
             player.fire();
 
-
-            msg.createMessage(Character.KIRK);
+            msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 5);
         }
 
         if (key == KeyEvent.VK_UP){
@@ -272,4 +270,10 @@ public class GameState extends State {
         return initialized;
     }
 
+}   public MessageGenerator getMsg() {
+    return msgGenerator;
 }
+
+    public void setMsg(MessageGenerator msg) {
+        this.msgGenerator = msg;
+    }
