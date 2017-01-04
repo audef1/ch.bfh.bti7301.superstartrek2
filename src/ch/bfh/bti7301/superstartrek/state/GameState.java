@@ -164,7 +164,7 @@ public class GameState extends State {
             } else {
                 currentLevel.getCurrentquardant().setVisited(true);
                 lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() - GamePanel.GAMESIZE));
-                player.setY(640);
+                player.setY(479);
             }
         }
 
