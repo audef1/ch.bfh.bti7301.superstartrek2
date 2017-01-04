@@ -29,7 +29,7 @@ public class GameState extends State {
     private Level[][] levels;
     private Level currentLevel;
 
-    private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
+    private ArrayList<SpaceObject> spaceobjects;
     private ArrayList<Background> backgrounds = new ArrayList<Background>();
     private int score = 0;
     private StarFleetShip player;
@@ -52,11 +52,11 @@ public class GameState extends State {
         messagePanel = new MessagePanel(this, 1024, 200);
         infoPanel = new InfoPanel(this, 1024, 88);
 
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        statusPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        weaponPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        messagePanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        statusPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        weaponPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         getPanels().add(mainPanel);
         getPanels().add(weaponPanel);
@@ -73,11 +73,10 @@ public class GameState extends State {
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         /* Initialize game objects */
-        player = new StarFleetShip(98,75,((640/2)-(98/2)),480/3*2,1,0,0);
+        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0);
 
         // initialize spaceobjects with meteors, enemies and spacestations
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
-        spaceobjects.add(player);
 
         msgGenerator = new MessageGenerator();
 
@@ -91,8 +90,10 @@ public class GameState extends State {
 
     @Override
     public void input() {
-        /* check input of all spaceobjects - specificspaceobject.input() */
-        for(SpaceObject so : spaceobjects){
+        /* check input of all spaceobjects */
+        player.input();
+
+        for (SpaceObject so : spaceobjects) {
             so.input();
         }
     }
@@ -100,41 +101,85 @@ public class GameState extends State {
     @Override
     public void update() {
         /* Check colliosions and update position */
-        for(SpaceObject so : spaceobjects){
+
+        player.update();
+
+        for (SpaceObject so : spaceobjects) {
 
              /* Check for enemy attacks and collisions */
             so.checkAttackCollisions(spaceobjects);
 
-            if(so instanceof EnemyShip){
+            if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
                 //if((EnemyShip)so.isDead()){
                 //    spaceobjects.remove(so);
                 //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
                 //}
-            }else if (so instanceof Meteor){
+            } else if (so instanceof Meteor) {
                 so.update();
-            }else{
+            } else {
                 so.update();
             }
 
 
-
-         }
+        }
 
         // check if levels user leaves quadrant
-        if (player.getX() >= 640){
-            player.setX(0);
-
-            int nr = currentLevel.getCurrentquardant().getQuadrantnr();
-
-            if (nr % GamePanel.GAMESIZE == 1){
-                msg.createMessage(Character.SPOCK);
+        // check if player leaves right
+        if (player.getX() >= 640) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 0) {
+                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                System.out.println("you cant leave here");
                 player.setSpeed(0);
                 player.setX(580);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + 1));
+                player.setX(0);
             }
-            else{
-                Quadrant rightQuadrant = currentLevel.getQuadrants()[nr / GamePanel.GAMESIZE][nr % GamePanel.GAMESIZE];
-                lsm.changeQuadrant(rightQuadrant);
+        }
+
+        // check if player leaves left
+        if (player.getX() < -20) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 1) {
+                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                System.out.println("you cant leave here");
+                player.setSpeed(0);
+                player.setX(20);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() -1));
+                player.setX(640);
+
+            }
+        }
+
+        // check if player leaves top
+        if (player.getY() < -50) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() <= GamePanel.GAMESIZE) {
+                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                System.out.println("you cant leave here");
+                player.setSpeed(0);
+                player.setY(30);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() - GamePanel.GAMESIZE));
+                player.setY(640);
+            }
+        }
+
+        // check if player leaves bottom
+        if (player.getY() >= 480) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() > (GamePanel.GAMESIZE * (GamePanel.GAMESIZE -1))) {
+                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                System.out.println("you cant leave here");
+                player.setSpeed(0);
+                player.setY(460);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + GamePanel.GAMESIZE));
+                player.setY(0);
+
             }
         }
 
@@ -142,7 +187,7 @@ public class GameState extends State {
 
 
         // update backgrounds
-        for (Background bg : backgrounds){
+        for (Background bg : backgrounds) {
             bg.update(player);
         }
 
@@ -154,12 +199,13 @@ public class GameState extends State {
         /* draw level background */
         backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(mainPanel.getG());
 
-        /* draw all specific spaceobjects */
+        /* draw player */
+        player.draw(mainPanel.getG());
+
+        /* draw all all other spaceobjects on screen */
         for (SpaceObject so : spaceobjects) {
             so.draw(mainPanel.getG());
         }
-        //System.out.println("game running... - rendering...");
-
 
     }
 
@@ -191,7 +237,7 @@ public class GameState extends State {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_P) {
-           getStateMachine().change("paused");
+            getStateMachine().change("paused");
         }
 
         if (key == KeyEvent.VK_M) {
@@ -202,25 +248,24 @@ public class GameState extends State {
             getStateMachine().change("menu");
         }
 
-        if (key == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_SPACE) {
             player.fire();
-
             msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 5);
         }
 
-        if (key == KeyEvent.VK_UP){
+        if (key == KeyEvent.VK_UP) {
             player.speedUp();
         }
 
-        if (key == KeyEvent.VK_DOWN){
+        if (key == KeyEvent.VK_DOWN) {
             player.slowDown();
         }
 
-        if (key == KeyEvent.VK_LEFT){
+        if (key == KeyEvent.VK_LEFT) {
             player.turnLeft();
         }
 
-        if (key == KeyEvent.VK_RIGHT){
+        if (key == KeyEvent.VK_RIGHT) {
             player.turnRight();
         }
     }
@@ -254,6 +299,10 @@ public class GameState extends State {
         return spaceobjects;
     }
 
+    public void setSpaceobjects(ArrayList<SpaceObject> spaceobjects) {
+        this.spaceobjects = spaceobjects;
+    }
+
     public ArrayList<Background> getBackgrounds() {
         return backgrounds;
     }
@@ -270,10 +319,12 @@ public class GameState extends State {
         return initialized;
     }
 
-}   public MessageGenerator getMsg() {
-    return msgGenerator;
-}
+    public MessageGenerator getMsg() {
+        return msgGenerator;
+    }
 
     public void setMsg(MessageGenerator msg) {
         this.msgGenerator = msg;
     }
+
+}

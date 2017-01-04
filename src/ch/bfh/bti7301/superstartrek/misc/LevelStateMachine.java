@@ -38,8 +38,9 @@ public class LevelStateMachine {
      * @param quadrant the new quadrant to go to.
      */
     public void changeQuadrant(Quadrant quadrant) {
+        gameState.setSpaceobjects(quadrant.getSpaceobjects());
         gameState.getCurrentLevel().setCurrentquardant(quadrant);
-        gameState.setSpaceObjects()
+
     }
 
 

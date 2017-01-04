@@ -30,7 +30,7 @@ public class InfoPanel extends SubPanel{
         Font font = new Font("Arial", Font.PLAIN, 20);
 
 
-        GameState gs = (GameState) getState();
+        GameState gs = (GameState) getState().getStateMachine().getStates().get("game");
         Level level = gs.getCurrentLevel();
 
         Quadrant[][] quadrants = level.getQuadrants();

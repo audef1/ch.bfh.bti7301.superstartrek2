@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
 import ch.bfh.bti7301.superstartrek.model.*;
+import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.MapState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
@@ -26,6 +27,9 @@ public class MapPanel extends SubPanel {
         getB().draw(g);
 
         MapState ms = (MapState) getState();
+        GameState gs = (GameState) getState().getStateMachine().getStates().get("game");
+        StarFleetShip player = gs.getPlayer();
+
         Level level = ms.getCurrentLevel();
 
         Quadrant[][] quadrants = level.getQuadrants();
@@ -63,13 +67,13 @@ public class MapPanel extends SubPanel {
 
                 g.drawRect(xMap + i * qWidth, yMap + j * qHeight, qWidth - linewidth, qHeight - linewidth);
 
-                // draw spacestations, enemies
+                // draw player
+                if (level.getCurrentquardant().getQuadrantnr() == (i+1)+(j*GamePanel.GAMESIZE)){
+                    g.drawImage(player.getSprites().get(0)[0], xMap + i * qWidth + (int)(player.getX()/2.66), yMap + j * qHeight + (int)(player.getY()/3.3), player.getWidth()/2, player.getHeight()/2, null);
+                }
 
+                // draw spacestations, enemies
                 for (SpaceObject so : spaceObjects ){
-                    if (so instanceof StarFleetShip){
-                        g.setColor(Color.ORANGE);
-                        g.drawImage(so.getSprites().get(0)[0], xMap + i * qWidth + (int)(so.getX()/2.66), yMap + j * qHeight + (int)(so.getY()/3.3), so.getWidth()/2, so.getHeight()/2, null);
-                    }
 
                     if(so instanceof SpaceStation){
                         g.setColor(Color.GREEN);
