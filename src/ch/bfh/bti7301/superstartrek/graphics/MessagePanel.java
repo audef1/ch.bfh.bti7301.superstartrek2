@@ -1,14 +1,13 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
+import ch.bfh.bti7301.superstartrek.misc.MessageGenerator;
+import ch.bfh.bti7301.superstartrek.misc.MessageType;
 import ch.bfh.bti7301.superstartrek.model.*;
 import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -81,14 +80,41 @@ public class MessagePanel extends SubPanel{
             }
         }
 
-        // draw messageterminal
+        MessageGenerator m = gs.getMsg();
+
+        m.update();
+        drawMessage(m.msg, m.img, m.messageType);
+    }
+
+    /**
+     * draws the message and picture onto the panel
+     * @param message the to displayed message
+     * @param image whose picture should be presented
+     */
+    private void drawMessage(String message, BufferedImage image, MessageType msgType) {
+
+        Graphics2D g = getG();
+
+        // draw messageTerminal
         int messageWidth = 405;
         int messageHeight = 130;
         int xMessageStart = 200;
         int yMessageStart = 30;
 
         g.setStroke(new BasicStroke(3));
-        g.setColor(Color.GREEN);
+
+        switch (msgType){
+            case ALERT:
+                g.setColor(Color.RED);
+                break;
+            case NORMAL:
+                g.setColor(Color.GREEN);
+                break;
+            default:
+                g.setColor(Color.GREEN);
+                break;
+        }
+
         g.drawRect(xMessageStart, yMessageStart, messageWidth, messageHeight);
 
         // draw picture box
@@ -98,20 +124,20 @@ public class MessagePanel extends SubPanel{
         int yPictureStart = 30;
 
         g.setStroke(new BasicStroke(3));
-        g.setColor(Color.GREEN);
+
+        switch (msgType){
+            case ALERT:
+                g.setColor(Color.RED);
+                break;
+            case NORMAL:
+                g.setColor(Color.GREEN);
+                break;
+            default:
+                g.setColor(Color.GREEN);
+                break;
+        }
         g.drawRect(xPictureStart, yPictureStart, pictureWidth, pictureHeight);
 
-        /*try {
-            BufferedImage img = ImageIO.read(new File(getClass().getClassLoader().getResource("images/Backgrounds/starfleetlogo.png").getFile()));
-
-            drawMessage("", img);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    public void drawMessage(String message, BufferedImage image) {
-        Graphics2D g = getG();
         int fontSize = 20;
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
@@ -119,5 +145,7 @@ public class MessagePanel extends SubPanel{
         g.drawString(message, 220, 80);
 
         g.drawImage(image, 56, 31, this);
+
+
     }
 }
