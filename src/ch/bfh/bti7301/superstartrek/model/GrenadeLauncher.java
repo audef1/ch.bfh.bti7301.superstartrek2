@@ -1,0 +1,23 @@
+package ch.bfh.bti7301.superstartrek.model;
+
+/**
+ * Created by Florian on 03.01.2017.
+ */
+public class GrenadeLauncher extends Weapon {
+
+    public GrenadeLauncher(){
+        setName("GrenadeLauncher");
+        setCapacity(10);
+        setMaxCapacity(10);
+        setDamage(30);
+        setAreaOfDamage(50);
+        setSpeed(6);
+    }
+
+    @Override
+    public Bullet fire(double x, double y, int dx, int dy){
+        setCapacity(getCapacity()-1);
+        return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserBlue01.png");
+    }
+
+}

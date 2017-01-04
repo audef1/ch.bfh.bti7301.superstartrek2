@@ -28,7 +28,7 @@ public class StatusPanel extends SubPanel{
         StarFleetShip p = gs.getPlayer();
 
         // draw background
-        getB().draw(getG());
+        getB().draw(g);
 
         // draw power
         int power = p.getHealth();

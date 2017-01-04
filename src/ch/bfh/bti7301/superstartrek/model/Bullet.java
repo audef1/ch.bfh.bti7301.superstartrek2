@@ -11,11 +11,19 @@ public class Bullet extends SpaceObject{
 
     private int damage;
     private float areaOfDamage;
-    int timeToExplode = 0;
+    private int timeToExplode = 0;
 
-    public Bullet(int width, int height, double x, double y, int dx, int dy ){
-        super(width, height,x,y,dx,dy,10);
+    public Bullet(int width, int height, double x, double y, int dx, int dy){
+        super(width, height,x,y,dx,dy, 10);
         this.getSprite("images/PNG/Lasers/laserBlue01.png");
+    }
+
+    public Bullet(int width, int height, double x, double y, int dx, int dy, int damage, float areaOfDamage, int timeToExplode, int speed, String filename ){
+        super(width, height,x,y,dx,dy,speed);
+        setDamage(damage);
+        setAreaOfDamage(areaOfDamage);
+        setTimeToExplode(timeToExplode);
+        this.getSprite("images/PNG/Lasers/"+filename);
     }
 
     public void update(){

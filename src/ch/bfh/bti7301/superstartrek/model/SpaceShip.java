@@ -10,6 +10,7 @@ public class SpaceShip extends SpaceObject {
 
     protected ArrayList<Bullet> firedBullets = new ArrayList<>();
     protected ArrayList<Point> directions;
+    protected ArrayList<Weapon> weapons;
     protected int directionPointer = 0;
     protected String name;
     protected int shield;
@@ -24,6 +25,11 @@ public class SpaceShip extends SpaceObject {
 
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
         super(width, height, x, y, dx, dy, speed);
+
+        // init weapons
+        weapons = new ArrayList<Weapon>();
+        weapons.add(new Phaser());
+        weapons.add(new GrenadeLauncher());
 
         // init directions
         directions = new ArrayList<>();
@@ -122,8 +128,6 @@ public class SpaceShip extends SpaceObject {
     public void setWeapons(ArrayList<Weapon> weapons) {
         this.weapons = weapons;
     }
-
-    private ArrayList<Weapon> weapons;
 
     public String getName() {
         return name;
