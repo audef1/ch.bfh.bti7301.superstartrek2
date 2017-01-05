@@ -27,15 +27,10 @@ public class MessageGenerator {
      * default constructor
      */
     public MessageGenerator() {
-        map.put(Character.SPOCK, "This is not part of our mission, Captain!");
-        //map.put(Character.SPOCK, "Watch out! We're under attack!");
-        //map.put(Character.SPOCK, "Enemies ahead!");
-        map.put(Character.KIRK, "Well done!");
-        map.put(Character.KIRK, "All cleared!");
-        map.put(Character.SCOTT, "Shield low!");
-        map.put(Character.SCOTT, "Better look for a space station!");
-        map.put(Character.KLINGON, "You're under attack!");
-        map.put(Character.KLINGON, "This is your end!");
+        map.put(Character.SPOCK, "Spock: ");
+        map.put(Character.KIRK, "Kirk: ");
+        map.put(Character.SCOTT, "Scotty: ");
+        map.put(Character.KLINGON, "Klingon: ");
 
         msg = "";
         try {
@@ -49,7 +44,7 @@ public class MessageGenerator {
     /**
      * @param chara which character sends the message
      */
-    public void createMessage(Character chara, MessageType msgType, int msgShowTime) {
+    public void createMessage(Character chara, MessageType msgType, int msgShowTime, String text) {
         timer = 0;
         ttl = msgShowTime * GamePanel.FPS;
 
@@ -57,7 +52,7 @@ public class MessageGenerator {
 
             switch (chara) {
                 case SCOTT:
-                    setMsg(map.get(chara));
+                    setMsg(map.get(chara) + text);
                     try {
                         setImg(ImageIO.read(new File(getClass().getClassLoader().getResource("images/Characters/scotty.jpg").getFile())));
                     } catch (IOException e) {
@@ -65,7 +60,7 @@ public class MessageGenerator {
                     }
                     break;
                 case SPOCK:
-                    setMsg(map.get(chara));
+                    setMsg(map.get(chara) + text);
                     try {
                         setImg(ImageIO.read(new File(getClass().getClassLoader().getResource("images/Characters/spock.jpg").getFile())));
                     } catch (IOException e) {
@@ -73,7 +68,7 @@ public class MessageGenerator {
                     }
                     break;
                 case KIRK:
-                    setMsg(map.get(chara));
+                    setMsg(map.get(chara) + text);
                     try {
                         setImg(ImageIO.read(new File(getClass().getClassLoader().getResource("images/Characters/kirk.jpg").getFile())));
                     } catch (IOException e) {
@@ -81,7 +76,7 @@ public class MessageGenerator {
                     }
                     break;
                 case KLINGON:
-                    setMsg(map.get(chara));
+                    setMsg(map.get(chara) + text);
                     try {
                         setImg(ImageIO.read(new File(getClass().getClassLoader().getResource("images/Characters/klingon.jpg").getFile())));
                     } catch (IOException e) {

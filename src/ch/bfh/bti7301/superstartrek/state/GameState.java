@@ -39,6 +39,8 @@ public class GameState extends State {
 
     private LevelStateMachine lsm;
 
+    private int msgTimer = 0;
+
     /* private variables - ex. score */
 
     public GameState(StateMachine stateMachine) {
@@ -100,9 +102,10 @@ public class GameState extends State {
 
     @Override
     public void update() {
-        /* Check colliosions and update position */
+        /* Check collisions and update position */
 
         player.update();
+        player.checkAttackCollisions(spaceobjects);
 
         for (SpaceObject so : spaceobjects) {
 
@@ -115,6 +118,14 @@ public class GameState extends State {
                 //    spaceobjects.remove(so);
                 //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
                 //}
+
+                if(msgTimer < 10)
+                {
+                    msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3, "You're under attack!");
+                }
+                msgTimer++;
+
+
             } else if (so instanceof Meteor) {
                 so.update();
             } else {
@@ -128,20 +139,22 @@ public class GameState extends State {
         // check if player leaves right
         if (player.getX() >= 640) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 0) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
                 player.setSpeed(0);
                 player.setX(580);
             } else {
                 currentLevel.getCurrentquardant().setVisited(true);
                 lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + 1));
                 player.setX(0);
+
+                msgTimer = 0;
             }
         }
 
         // check if player leaves left
         if (player.getX() < -20) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 1) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
                 player.setSpeed(0);
                 player.setX(20);
             } else {
@@ -149,26 +162,29 @@ public class GameState extends State {
                 lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() -1));
                 player.setX(640);
 
+                msgTimer = 0;
             }
         }
 
         // check if player leaves top
         if (player.getY() < -50) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() <= GamePanel.GAMESIZE) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
                 player.setSpeed(0);
                 player.setY(30);
             } else {
                 currentLevel.getCurrentquardant().setVisited(true);
                 lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() - GamePanel.GAMESIZE));
                 player.setY(479);
+
+                msgTimer = 0;
             }
         }
 
         // check if player leaves bottom
         if (player.getY() >= 480) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() > (GamePanel.GAMESIZE * (GamePanel.GAMESIZE -1))) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
                 player.setSpeed(0);
                 player.setY(460);
             } else {
@@ -176,6 +192,7 @@ public class GameState extends State {
                 lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + GamePanel.GAMESIZE));
                 player.setY(0);
 
+                msgTimer = 0;
             }
         }
 
@@ -186,7 +203,6 @@ public class GameState extends State {
         for (Background bg : backgrounds) {
             bg.update(player);
         }
-
     }
 
     @Override
@@ -246,7 +262,6 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE) {
             player.fire();
-            msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3);
         }
 
         if (key == KeyEvent.VK_UP) {

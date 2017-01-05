@@ -17,7 +17,7 @@ public class Meteor extends SpaceObject {
 
         // TODO: different meteortypes according its sprite
         //super(width, height, x, y, dx, dy, speed);
-        super(89, 82, x, y, dx, dy, speed);
+        super(width, height, x, y, dx, dy, speed);
 
         setSprites(new ArrayList<BufferedImage[]>());
         BufferedImage sprite = loadSprite((int) (Math.random() * (8 - 1) + 1));

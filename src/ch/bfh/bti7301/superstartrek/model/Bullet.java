@@ -14,7 +14,7 @@ public class Bullet extends SpaceObject{
     private int timeToExplode = 0;
 
     public Bullet(int width, int height, double x, double y, int dx, int dy){
-        super(width, height,x,y,dx,dy, 10);
+        super(9, 54,x,y,dx,dy, 10);
         this.getSprite("images/PNG/Lasers/laserBlue01.png");
     }
 

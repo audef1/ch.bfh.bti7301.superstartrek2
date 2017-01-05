@@ -101,7 +101,6 @@ public class SpaceObject {
         else{
             return false;
         }
-
     }
 
     public Rectangle getRectangle() {
@@ -114,6 +113,8 @@ public class SpaceObject {
         AffineTransform transform = new AffineTransform();
         transform.translate(x,y);
         transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
+
+        g.draw(getRectangle());
 
         g.drawImage(
                 sprites.get(0)[0],
