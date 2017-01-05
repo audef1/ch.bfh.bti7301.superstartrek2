@@ -27,8 +27,9 @@ public class MessageGenerator {
      * default constructor
      */
     public MessageGenerator() {
-        map.put(Character.SPOCK, "Watch out! We're under attack!");
-        map.put(Character.SPOCK, "Enemies ahead!");
+        map.put(Character.SPOCK, "This is not part of our mission, Captain!");
+        //map.put(Character.SPOCK, "Watch out! We're under attack!");
+        //map.put(Character.SPOCK, "Enemies ahead!");
         map.put(Character.KIRK, "Well done!");
         map.put(Character.KIRK, "All cleared!");
         map.put(Character.SCOTT, "Shield low!");
@@ -50,8 +51,9 @@ public class MessageGenerator {
      */
     public void createMessage(Character chara, MessageType msgType, int msgShowTime) {
         timer = 0;
+        ttl = msgShowTime * GamePanel.FPS;
 
-        while(timer < (msgShowTime * GamePanel.FPS)) {
+        if (timer < ttl) {
 
             switch (chara) {
                 case SCOTT:
@@ -89,12 +91,13 @@ public class MessageGenerator {
             }
             setMessageType(msgType);
         }
-
-        removeMessage();
     }
 
     public void update() {
         timer ++;
+        if (timer > ttl){
+            removeMessage();
+        }
     }
 
     public void removeMessage() {

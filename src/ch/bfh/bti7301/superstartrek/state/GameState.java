@@ -128,8 +128,7 @@ public class GameState extends State {
         // check if player leaves right
         if (player.getX() >= 640) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 0) {
-                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
-                System.out.println("you cant leave here");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
                 player.setSpeed(0);
                 player.setX(580);
             } else {
@@ -142,8 +141,7 @@ public class GameState extends State {
         // check if player leaves left
         if (player.getX() < -20) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 1) {
-                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
-                System.out.println("you cant leave here");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
                 player.setSpeed(0);
                 player.setX(20);
             } else {
@@ -157,8 +155,7 @@ public class GameState extends State {
         // check if player leaves top
         if (player.getY() < -50) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() <= GamePanel.GAMESIZE) {
-                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
-                System.out.println("you cant leave here");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
                 player.setSpeed(0);
                 player.setY(30);
             } else {
@@ -171,8 +168,7 @@ public class GameState extends State {
         // check if player leaves bottom
         if (player.getY() >= 480) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() > (GamePanel.GAMESIZE * (GamePanel.GAMESIZE -1))) {
-                //msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
-                System.out.println("you cant leave here");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3);
                 player.setSpeed(0);
                 player.setY(460);
             } else {
@@ -250,7 +246,7 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE) {
             player.fire();
-            msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 5);
+            msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3);
         }
 
         if (key == KeyEvent.VK_UP) {
