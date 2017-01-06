@@ -16,6 +16,8 @@ public enum SoundBoard {
     BOSS("music/boss.wav", true),
     LASER("soundeffects/lasers/1.wav", false);
 
+    private Boolean loop = false;
+
     public static enum Volume {
         MUTE, LOW, MEDIUM, HIGH
     }
@@ -27,6 +29,7 @@ public enum SoundBoard {
 
     // Constructor to construct each element of the enum with its own sound file.
     SoundBoard(String soundFileName, Boolean loop) {
+        this.loop = loop;
         try {
             URL url = this.getClass().getClassLoader().getResource("sounds/" + soundFileName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
@@ -48,7 +51,13 @@ public enum SoundBoard {
             if (clip.isRunning())
                 clip.stop();   // Stop the player if it is still running
             clip.setFramePosition(0); // rewind to the beginning
-            clip.start();     // Start playing
+
+            if (loop){
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
+            else{
+                clip.start();
+            }
         }
     }
 
