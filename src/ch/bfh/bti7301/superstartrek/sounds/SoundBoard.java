@@ -1,167 +1,65 @@
 package ch.bfh.bti7301.superstartrek.sounds;
 
 import java.io.*;
-
-import javax.sound.midi.InvalidMidiDataException;
-import javax.sound.midi.MetaEventListener;
-import javax.sound.midi.MetaMessage;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Sequence;
-import javax.sound.midi.Sequencer;
+import java.net.URL;
+import javax.sound.sampled.*;
 
 /**
  * Created by Florian on 06.01.2017.
  */
-public class SoundBoard implements MetaEventListener {
 
-        public static final int END_OF_TRACK_MESSAGE = 47;
-        private Sequencer sequencer;
-        private Sequence sequence;
-        private Boolean loop;
-        private int loops = 1;
-        private Boolean paused;
+public enum SoundBoard {
 
-        /**
-         * Creates a new SoundBoard object.
-         */
-        public SoundBoard() {
-            try {
-                sequencer = MidiSystem.getSequencer();
-                sequencer.open();
-                sequencer.addMetaEventListener(this);
-            } catch (MidiUnavailableException ex) {
-                sequencer = null;
-            }
+    MENU("music/menu.wav", true),
+    ENDING("music/ending.wav", true),
+    BACKGROUND("music/backgroundmusic.wav", true),
+    BOSS("music/boss.wav", true),
+    LASER("soundeffects/lasers/1.wav", false);
 
+    public static enum Volume {
+        MUTE, LOW, MEDIUM, HIGH
+    }
 
-        }
+    public static Volume volume = Volume.MEDIUM;
 
-        /**
-         * Loads a sequence from the file system. Returns null if an error occurs.
-         */
-        public Sequence getSequence(String filename) {
-            try {
-                return getSequence(new FileInputStream(new File(getClass().getClassLoader().getResource("sounds/" + filename).getFile())));
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return null;
-            }
-        }
+    // Each sound effect has its own clip, loaded with its own sound file.
+    private Clip clip;
 
-        /**
-         * Loads a sequence from an input stream. Returns null if an error occurs.
-         */
-        public Sequence getSequence(InputStream is) {
-            try {
-                if (!is.markSupported()) {
-                    is = new BufferedInputStream(is);
-                }
-                Sequence s = MidiSystem.getSequence(is);
-                is.close();
-                return s;
-            } catch (InvalidMidiDataException ex) {
-                ex.printStackTrace();
-                return null;
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                return null;
-            }
-        }
-
-        /**
-         * Plays a sequence, optionally looping. This method returns immediately.
-         * The sequence is not played if it is invalid.
-         */
-        public void play() {
-
-            if (sequencer != null && sequence != null && sequencer.isOpen()) {
-                try {
-                    sequencer.setSequence(sequence);
-                    sequencer.setLoopCount(loops);
-                    sequencer.start();
-                    this.loop = loop;
-                } catch (InvalidMidiDataException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }
-
-    public void setSound(String filename) {
-
+    // Constructor to construct each element of the enum with its own sound file.
+    SoundBoard(String soundFileName, Boolean loop) {
         try {
-            sequence = getSequence(new FileInputStream(new File(getClass().getClassLoader().getResource("sounds/" + filename).getFile())));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            sequence = null;
+            URL url = this.getClass().getClassLoader().getResource("sounds/" + soundFileName);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+            System.out.println(soundFileName);
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
         }
     }
 
-    public void setLoop(Boolean loop) {
-        this.loop = loop;
-        if (loop){
-            loops = 9999;
+    // Play or Re-play the sound effect from the beginning, by rewinding.
+    public void play() {
+        if (volume != Volume.MUTE) {
+            if (clip.isRunning())
+                clip.stop();   // Stop the player if it is still running
+            clip.setFramePosition(0); // rewind to the beginning
+            clip.start();     // Start playing
         }
     }
 
-        /**
-         * This method is called by the sound system when a meta event occurs. In
-         * this case, when the end-of-track meta event is received, the sequence is
-         * restarted if looping is on.
-         */
-        public void meta(MetaMessage event) {
-            if (event.getType() == END_OF_TRACK_MESSAGE) {
-                if (sequencer != null && sequencer.isOpen() && loop) {
-                    sequencer.start();
-                }
-            }
-        }
-
-        /**
-         * Stops the sequencer and resets its position to 0.
-         */
-        public void stop() {
-            if (sequencer != null && sequencer.isOpen()) {
-                sequencer.stop();
-                sequencer.setMicrosecondPosition(0);
-            }
-        }
-
-        /**
-         * Closes the sequencer.
-         */
-        public void close() {
-            if (sequencer != null && sequencer.isOpen()) {
-                sequencer.close();
-            }
-        }
-
-        /**
-         * Gets the sequencer.
-         */
-        public Sequencer getSequencer() {
-            return sequencer;
-        }
-
-        /**
-         * Sets the paused state. Music may not immediately pause.
-         */
-        public void setPaused(boolean paused) {
-            if (this.paused != paused && sequencer != null && sequencer.isOpen()) {
-                this.paused = paused;
-                if (paused) {
-                    sequencer.stop();
-                } else {
-                    sequencer.start();
-                }
-            }
-        }
-
-        /**
-         * Returns the paused state.
-         */
-        public boolean isPaused() {
-            return paused;
-        }
-
+    public void stop() {
+        if (clip.isRunning())
+            clip.stop();   // Stop the player if it is still running
+        clip.setFramePosition(0); // rewind to the beginning
     }
+
+    // Optional static method to pre-load all the sound files.
+    public static void init() {
+        values(); // calls the constructor for all the elements
+    }
+}

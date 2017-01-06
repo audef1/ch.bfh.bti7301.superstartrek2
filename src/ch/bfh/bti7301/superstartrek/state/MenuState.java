@@ -28,8 +28,6 @@ public class MenuState extends State {
 
     private MenuBackground menuBackground;
 
-    private SoundBoard sounds = new SoundBoard();
-
     public MenuState(StateMachine stateMachine) {
 
         super(stateMachine);
@@ -69,10 +67,7 @@ public class MenuState extends State {
         menuBackground.setVector(1,-1);
 
         // init background music
-        sounds.setSound("menu.mid");
-        sounds.setLoop(true);
-        sounds.play();
-
+        SoundBoard.MENU.play();
     }
 
 
@@ -121,12 +116,12 @@ public class MenuState extends State {
             options.get(0)[0] = "Resume game";
         }
 
-        sounds.play();
+        SoundBoard.MENU.play();
     }
 
     @Override
     public void exit() {
-        sounds.stop();
+        SoundBoard.MENU.stop();
     }
 
     private void select() {

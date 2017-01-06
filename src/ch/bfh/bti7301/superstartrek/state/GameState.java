@@ -4,6 +4,7 @@ import ch.bfh.bti7301.superstartrek.graphics.*;
 import ch.bfh.bti7301.superstartrek.misc.*;
 import ch.bfh.bti7301.superstartrek.misc.Character;
 import ch.bfh.bti7301.superstartrek.model.*;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -224,11 +225,14 @@ public class GameState extends State {
         getGamePanel().add(weaponPanel, BorderLayout.LINE_END);
         getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
         getGamePanel().add(messagePanel, BorderLayout.PAGE_END);
+
+        SoundBoard.BACKGROUND.play();
     }
 
     @Override
     public void exit() {
         /* do stuff when exiting this state */
+        SoundBoard.BACKGROUND.stop();
     }
 
     @Override
@@ -251,6 +255,7 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE) {
             player.fire();
+            SoundBoard.LASER.play();
         }
 
         if (key == KeyEvent.VK_UP) {

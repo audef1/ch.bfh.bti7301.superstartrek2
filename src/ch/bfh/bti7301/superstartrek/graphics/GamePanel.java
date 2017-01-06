@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
 import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 import ch.bfh.bti7301.superstartrek.state.StateMachine;
 
 import javax.swing.*;
@@ -32,6 +33,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         setFocusable(true);
         requestFocus();
+
+        // initialize all sounds
+        SoundBoard.init();
     }
 
     public void addNotify()
