@@ -3,6 +3,7 @@ package ch.bfh.bti7301.superstartrek.state;
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.model.MenuBackground;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,8 @@ public class MenuState extends State {
     private Color titleColor;
 
     private MenuBackground menuBackground;
+
+    private SoundBoard sounds = new SoundBoard();
 
     public MenuState(StateMachine stateMachine) {
 
@@ -64,6 +67,11 @@ public class MenuState extends State {
         // init backgroundimage
         menuBackground = new MenuBackground("background_blue.jpg", 1000);
         menuBackground.setVector(1,-1);
+
+        // init background music
+        sounds.setSound("menu.mid");
+        sounds.setLoop(true);
+        sounds.play();
 
     }
 
@@ -112,11 +120,13 @@ public class MenuState extends State {
         if (gs.isInitialized()){
             options.get(0)[0] = "Resume game";
         }
+
+        sounds.play();
     }
 
     @Override
     public void exit() {
-
+        sounds.stop();
     }
 
     private void select() {

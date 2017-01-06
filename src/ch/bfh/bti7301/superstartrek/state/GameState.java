@@ -48,7 +48,7 @@ public class GameState extends State {
         super(stateMachine);
         lsm = new LevelStateMachine(this);
 
-        mainPanel = new SubPanel(this, 640, 480);
+        mainPanel = new MainPanel(this, 640, 480);
         weaponPanel = new WeaponPanel(this, 192, 480);
         statusPanel = new StatusPanel(this, 192, 480);
         messagePanel = new MessagePanel(this, 1024, 200);
@@ -139,7 +139,7 @@ public class GameState extends State {
         // check if player leaves right
         if (player.getX() >= 640) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 0) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
                 player.setSpeed(0);
                 player.setX(580);
             } else {
@@ -154,7 +154,7 @@ public class GameState extends State {
         // check if player leaves left
         if (player.getX() < -20) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 1) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
                 player.setSpeed(0);
                 player.setX(20);
             } else {
@@ -169,7 +169,7 @@ public class GameState extends State {
         // check if player leaves top
         if (player.getY() < -50) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() <= GamePanel.GAMESIZE) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
                 player.setSpeed(0);
                 player.setY(30);
             } else {
@@ -184,7 +184,7 @@ public class GameState extends State {
         // check if player leaves bottom
         if (player.getY() >= 480) {
             if (currentLevel.getCurrentquardant().getQuadrantnr() > (GamePanel.GAMESIZE * (GamePanel.GAMESIZE -1))) {
-                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our mission, Captain!");
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of\nour mission, Captain!");
                 player.setSpeed(0);
                 player.setY(460);
             } else {
@@ -207,17 +207,6 @@ public class GameState extends State {
 
     @Override
     public void draw() {
-
-        /* draw level background */
-        backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(mainPanel.getG());
-
-        /* draw player */
-        player.draw(mainPanel.getG());
-
-        /* draw all all other spaceobjects on screen */
-        for (SpaceObject so : spaceobjects) {
-            so.draw(mainPanel.getG());
-        }
 
     }
 

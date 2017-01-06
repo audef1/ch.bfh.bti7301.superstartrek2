@@ -142,10 +142,23 @@ public class MessagePanel extends SubPanel{
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
         g.setColor(Color.WHITE);
-        g.drawString(message, 220, 80);
+
+        // draw messages with linebreaks
+        drawString(g, message, 210, 30);
 
         g.drawImage(image, 56, 31, this);
 
+    }
 
+    /**
+     *
+     * @param g Graphics2D instance
+     * @param text Message to draw
+     * @param x Startposition of X
+     * @param y Starposition of y
+     */
+    private void drawString(Graphics g, String text, int x, int y) {
+        for (String line : text.split("\n"))
+            g.drawString(line, x, y += g.getFontMetrics().getHeight());
     }
 }
