@@ -120,6 +120,8 @@ public class GameState extends State {
                 //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
                 //}
 
+
+
                 if(msgTimer < 10)
                 {
                     msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3, "You're under attack!");
@@ -128,6 +130,10 @@ public class GameState extends State {
 
 
             } else if (so instanceof Meteor) {
+
+               // player.get
+
+
                 so.update();
             } else {
                 so.update();
