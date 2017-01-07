@@ -51,7 +51,7 @@ public class MenuState extends State {
         gameexit[1] = "exit";    //statename
 
         options.add(gamestart);
-        options.add(gameoptions);
+        //options.add(gameoptions);
         options.add(gameexit);
 
         // init menu fonts and colors
@@ -140,19 +140,24 @@ public class MenuState extends State {
 
         if (key == KeyEvent.VK_ENTER) {
             select();
+            SoundBoard.BUTTONSELECT.play();
         }
+
         if (key == KeyEvent.VK_UP) {
             menuPointer--;
             if (menuPointer == -1) {
                 menuPointer = options.size() - 1;
             }
+            SoundBoard.BUTTON.play();
         }
         if (key == KeyEvent.VK_DOWN) {
             menuPointer++;
             if (menuPointer == options.size()) {
                 menuPointer = 0;
             }
+            SoundBoard.BUTTON.play();
         }
+
     }
 
     @Override
