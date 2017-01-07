@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
+
 /**
  * Created by filip on 02.12.2016.
  */
@@ -65,6 +67,7 @@ public class EnemyShip extends SpaceShip {
                     fire(0);
                     lastShot = curShot;
                     timeToNextShot = 100 + (int)(Math.random() * (2000 - 100));
+                    SoundBoard.LASER3.play();
                 }
             }
         }
