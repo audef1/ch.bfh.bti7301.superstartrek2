@@ -2,6 +2,7 @@ package ch.bfh.bti7301.superstartrek.misc;
 
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -85,6 +86,17 @@ public class MessageGenerator {
                     break;
             }
             setMessageType(msgType);
+
+            // play sound according messagetype
+            if (msgType == MessageType.ALERT){
+                SoundBoard.ALARM.play();
+            }
+            else if (msgType == MessageType.NORMAL){
+                SoundBoard.NOTIFICATION.play();
+            }
+            else {
+                SoundBoard.ERROR.play();
+            }
         }
     }
 

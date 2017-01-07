@@ -35,11 +35,16 @@ public class SpaceObject {
     // sprites
     protected ArrayList<BufferedImage[]> sprites = new ArrayList<BufferedImage[]>();
 
+    boolean isDebug;
+
     public SpaceObject(int width, int height){
         this.width = width;
         this.height = height;
         this.cwidth = width;
         this.cheight = height;
+
+        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
     public SpaceObject(int width, int height, int x, int y) {
@@ -49,17 +54,9 @@ public class SpaceObject {
         this.cheight = height;
         this.x = x;
         this.y = y;
-    }
 
-    protected void getSprite(String path){
-        try {
-            BufferedImage sprite = ImageIO.read(new File(getClass().getClassLoader().getResource(path).getFile()));
-            BufferedImage[] bi = new BufferedImage[1];
-            bi[0] = sprite;
-            sprites.add(bi);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
     public SpaceObject(int width, int height, double x, double y, int dx, int dy, double speed) {
@@ -72,6 +69,20 @@ public class SpaceObject {
         this.dx = dx;
         this.dy = dy;
         this.speed = speed;
+
+        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
+    }
+
+    protected void getSprite(String path){
+        try {
+            BufferedImage sprite = ImageIO.read(new File(getClass().getClassLoader().getResource(path).getFile()));
+            BufferedImage[] bi = new BufferedImage[1];
+            bi[0] = sprite;
+            sprites.add(bi);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void input() {
@@ -114,7 +125,10 @@ public class SpaceObject {
         transform.translate(x,y);
         transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
 
-        g.draw(getRectangle());
+        // check if game has been started in debug mode
+        if(isDebug){
+            g.draw(getRectangle());
+        }
 
         g.drawImage(
                 sprites.get(0)[0],

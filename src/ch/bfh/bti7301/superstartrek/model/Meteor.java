@@ -12,9 +12,10 @@ import java.util.ArrayList;
  */
 public class Meteor extends SpaceObject {
 
+    boolean isDebug;
+
     public Meteor(int width, int height, int x, int y, int dx, int dy, double speed) {
 
-        //super(width, height, x, y, dx, dy, speed);
         super(width, height, x, y, dx, dy, speed);
 
         setSprites(new ArrayList<BufferedImage[]>());
@@ -24,6 +25,9 @@ public class Meteor extends SpaceObject {
         BufferedImage[] bi = new BufferedImage[1];
         bi[0] = sprite;
         sprites.add(bi);
+
+        isDebug = java.lang.management.ManagementFactory.getRuntimeMXBean().
+                getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
     public void draw(Graphics2D g){
@@ -34,8 +38,17 @@ public class Meteor extends SpaceObject {
                 (int) y,
                 null
         );
+
+        if(isDebug){
+            g.drawRect((int)x,(int) y, getCwidth(), getCheight());
+        }
     }
 
+    /**
+     * Loads random meteor sprite
+     * @param randomNumber which meteor sprite should be loaded
+     * @return loaded sprite
+     */
     private BufferedImage loadSprite(int randomNumber){
         BufferedImage sprite = null;
 
