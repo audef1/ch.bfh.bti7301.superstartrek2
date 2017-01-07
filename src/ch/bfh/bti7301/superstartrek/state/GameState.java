@@ -170,7 +170,14 @@ public class GameState extends State {
         }
 
         if (key == KeyEvent.VK_SPACE){
-            player.fire();
+            player.fire(0);
+
+
+            msg.createMessage(Character.KIRK);
+        }
+
+        if (key == KeyEvent.VK_G){
+            player.fire(1);
 
 
             msg.createMessage(Character.KIRK);

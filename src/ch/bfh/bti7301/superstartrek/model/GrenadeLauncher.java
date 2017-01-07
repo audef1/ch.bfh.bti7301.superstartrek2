@@ -16,7 +16,7 @@ public class GrenadeLauncher extends Weapon {
 
     @Override
     public Bullet fire(double x, double y, int dx, int dy){
-        setCapacity(getCapacity()-1);
+        setCapacity(Math.max(getCapacity()-1,0));
         return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserBlue01.png");
     }
 

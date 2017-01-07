@@ -12,6 +12,7 @@ public class Bullet extends SpaceObject{
     private int damage;
     private float areaOfDamage;
     private int timeToExplode = 0;
+    private long shotMicroTime = 0;
 
     public Bullet(int width, int height, double x, double y, int dx, int dy){
         super(width, height,x,y,dx,dy, 10);
@@ -21,13 +22,22 @@ public class Bullet extends SpaceObject{
     public Bullet(int width, int height, double x, double y, int dx, int dy, int damage, float areaOfDamage, int timeToExplode, int speed, String filename ){
         super(width, height,x,y,dx,dy,speed);
         setDamage(damage);
+        shotMicroTime = System.currentTimeMillis();
         setAreaOfDamage(areaOfDamage);
         setTimeToExplode(timeToExplode);
         this.getSprite("images/PNG/Lasers/"+filename);
     }
 
     public void update(){
+        if(shotMicroTime > 0 && System.currentTimeMillis() - shotMicroTime <= timeToExplode){
+            explode();
+        }
+
         super.update();
+    }
+
+    private void explode(){
+
     }
 
     public int getDamage() {

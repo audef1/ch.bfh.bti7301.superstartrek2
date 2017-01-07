@@ -60,7 +60,7 @@ public class EnemyShip extends SpaceShip {
             if(distance > 200){
                 long curShot = System.currentTimeMillis();
                 if(curShot - lastShot > timeToNextShot){
-                    fire();
+                    fire(0);
                     lastShot = curShot;
                     timeToNextShot = 100 + (int)(Math.random() * (2000 - 100));
                 }

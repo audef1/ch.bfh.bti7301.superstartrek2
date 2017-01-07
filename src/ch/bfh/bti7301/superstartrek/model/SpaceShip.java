@@ -29,7 +29,6 @@ public class SpaceShip extends SpaceObject {
         // init weapons
         weapons = new ArrayList<Weapon>();
         weapons.add(new Phaser());
-        weapons.add(new GrenadeLauncher());
 
         // init directions
         directions = new ArrayList<>();
@@ -49,9 +48,14 @@ public class SpaceShip extends SpaceObject {
 
     }
 
-    public void fire(){
-        firedBullets.add(new Bullet(10,10,this.x,this.y,this.dx,this.dy));
-        System.out.println("peng");
+    public void fire(int index){
+        if(weapons.get(index).getCapacity() > 0) {
+            //firedBullets.add(weapons.get(index).fire(this.x + sprites.get(0)[0].getWidth()* this.dx / 2, this.y + sprites.get(0)[0].getHeight() * this.dy / 2, this.dx, this.dy));
+            firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2) * this.dy, this.y + (sprites.get(0)[0].getWidth()/2) * this.dx, this.dx, this.dy));
+            System.out.println("peng");
+        }else{
+            System.out.println("kein peng");
+        }
     }
 
     public void draw(Graphics2D g){
