@@ -87,6 +87,12 @@ public class SpaceShip extends SpaceObject {
 
     }
 
+    public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
+        super.checkAttackCollisions(spaceobjects);
+
+        firedBullets.forEach(Bullet -> Bullet.checkAttackCollisions(spaceobjects));
+    }
+
     public void turnRight(){
         if (directionPointer == directions.size() -1)
             directionPointer = 0;

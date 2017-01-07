@@ -110,8 +110,13 @@ public class GameState extends State {
 
         for (SpaceObject so : spaceobjects) {
 
-             /* Check for enemy attacks and collisions */
-            so.checkAttackCollisions(spaceobjects);
+            if(so instanceof SpaceShip){
+                /* Check for enemy attacks and collisions */
+                ((SpaceShip) so).checkAttackCollisions(spaceobjects);
+            }else{
+                /* Check for enemy attacks and collisions */
+                so.checkAttackCollisions(spaceobjects);
+            }
 
             if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
@@ -260,7 +265,12 @@ public class GameState extends State {
         }
 
         if (key == KeyEvent.VK_SPACE) {
-            player.fire();
+            player.fire(0);
+            SoundBoard.LASER.play();
+        }
+
+        if (key == KeyEvent.VK_G) {
+            player.fire(1);
             SoundBoard.LASER.play();
         }
 

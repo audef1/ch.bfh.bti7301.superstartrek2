@@ -37,7 +37,7 @@ public class WeaponPanel extends SubPanel{
         // draw weapon 1
         Weapon w1 = p.getWeapons().get(0);
         int w1capacity = w1.getCapacity();
-        int w1maxCapacity = w1.getCapacity();
+        int w1maxCapacity = w1.getMaxCapacity();
         int w1height = 100;
         int w1singleHeight = w1height / (w1maxCapacity/10);
 
@@ -64,7 +64,7 @@ public class WeaponPanel extends SubPanel{
         if (p.getWeapons().size() > 1){
             Weapon w2 = p.getWeapons().get(1);
             int w2capacity = w2.getCapacity();
-            int w2maxCapacity = w2.getCapacity();
+            int w2maxCapacity = w2.getMaxCapacity();
             int w2height = 100;
             int w2singleHeight = w2height / (w2maxCapacity);
 
