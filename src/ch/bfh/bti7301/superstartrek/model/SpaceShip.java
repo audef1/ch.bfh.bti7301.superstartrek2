@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class SpaceShip extends SpaceObject {
 
-    protected ArrayList<Bullet> firedBullets = new ArrayList<>();
+    protected ArrayList<Bullet> firedBullets = new ArrayList<>(25);
     protected ArrayList<Point> directions;
     protected ArrayList<Weapon> weapons;
     protected int directionPointer = 0;
@@ -45,7 +45,6 @@ public class SpaceShip extends SpaceObject {
         setHealthMax(100);
         setShield(30);
         setShieldMax(100);
-
     }
 
     public void fire(int index){
@@ -65,6 +64,14 @@ public class SpaceShip extends SpaceObject {
     public void update(){
         super.update();
         firedBullets.forEach(Bullet -> Bullet.update());
+
+        /*if(!firedBullets.isEmpty()){
+            for(Bullet bullet : firedBullets){
+                if(bullet.x > 400 || bullet.y > 400){
+                    firedBullets.remove(bullet);
+                }
+            }
+        }*/
 
     }
 
@@ -107,7 +114,6 @@ public class SpaceShip extends SpaceObject {
     public void setMoney(int money) {
         this.money = money;
     }
-
 
     public int getFuel() {
         return fuel;

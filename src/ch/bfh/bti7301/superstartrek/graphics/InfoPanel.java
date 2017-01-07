@@ -1,6 +1,9 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
 import ch.bfh.bti7301.superstartrek.model.Background;
+import ch.bfh.bti7301.superstartrek.model.Level;
+import ch.bfh.bti7301.superstartrek.model.Quadrant;
+import ch.bfh.bti7301.superstartrek.state.GameState;
 import ch.bfh.bti7301.superstartrek.state.State;
 
 import java.awt.*;
@@ -19,8 +22,24 @@ public class InfoPanel extends SubPanel{
     @Override
     public void draw()
     {
+        Graphics2D g = getG();
         // draw background
         getB().draw(getG());
+
+        // draw quadrant info
+        Font font = new Font("Arial", Font.PLAIN, 20);
+
+
+        GameState gs = (GameState) getState().getStateMachine().getStates().get("game");
+        Level level = gs.getCurrentLevel();
+
+        Quadrant[][] quadrants = level.getQuadrants();
+        Quadrant currentquadrant = level.getCurrentquardant();
+
+        g.setFont(font);
+        g.setColor(new Color(238,221,130));
+        g.drawString("Level: "+ level.getName(), 395, 33);
+        g.drawString("Quadrant: " + currentquadrant.getName(), 395, 63);
 
         // draw other stuff here
     }

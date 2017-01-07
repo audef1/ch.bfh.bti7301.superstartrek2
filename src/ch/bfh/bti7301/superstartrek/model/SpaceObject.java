@@ -92,13 +92,20 @@ public class SpaceObject {
      * @return
      */
     public boolean intersects(SpaceObject spaceobject) {
-        Rectangle r1 = getRectangle();
-        Rectangle r2 = spaceobject.getRectangle();
-        return r1.intersects(r2);
+
+        if (this != spaceobject){
+            Rectangle r1 = getRectangle();
+            Rectangle r2 = spaceobject.getRectangle();
+            return r1.intersects(r2);
+        }
+        else{
+            return false;
+        }
     }
 
     public Rectangle getRectangle() {
-        return new Rectangle((int) x - cwidth, (int) y - cheight, cwidth, cheight);
+        //return new Rectangle((int) x - cwidth, (int) y - cheight, cwidth, cheight);
+        return new Rectangle((int) x, (int) y, cwidth, cheight);
     }
 
     public void draw(Graphics2D g){
@@ -106,6 +113,8 @@ public class SpaceObject {
         AffineTransform transform = new AffineTransform();
         transform.translate(x,y);
         transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
+
+        g.draw(getRectangle());
 
         g.drawImage(
                 sprites.get(0)[0],
@@ -210,4 +219,32 @@ public class SpaceObject {
         this.sprites = sprites;
     }
 
+    public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects) {
+
+        // loop spaceobjects
+        for(SpaceObject so : spaceobjects){
+
+            // check collision
+            if(intersects(so)){
+                int idx = getDx() * -1;
+                int idy = getDy();
+
+                int sodx = so.getDx() * -1;
+                int sody = so.getDy();
+
+                if (this instanceof StarFleetShip){
+                    so.setDx(idx);
+                    so.setDy(idy);
+                    setSpeed(0);
+                }
+                else{
+                    setDx(sodx);
+                    setDy(sody);
+
+                    so.setDx(idx);
+                    so.setDy(idy);
+                }
+            }
+        }
+    }
 }

@@ -1,11 +1,10 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.*;
+import ch.bfh.bti7301.superstartrek.misc.*;
 import ch.bfh.bti7301.superstartrek.misc.Character;
-import ch.bfh.bti7301.superstartrek.misc.LevelGenerator;
-import ch.bfh.bti7301.superstartrek.misc.Message;
-import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 import ch.bfh.bti7301.superstartrek.model.*;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,13 +23,14 @@ public class GameState extends State {
     private StatusPanel statusPanel;
     private MessagePanel messagePanel;
     private InfoPanel infoPanel;
-    private Message msg;
+
+    private MessageGenerator msgGenerator;
 
     private BorderLayout layout = new BorderLayout();
     private Level[][] levels;
     private Level currentLevel;
 
-    private ArrayList<SpaceObject> spaceobjects = new ArrayList<SpaceObject>();
+    private ArrayList<SpaceObject> spaceobjects;
     private ArrayList<Background> backgrounds = new ArrayList<Background>();
     private int score = 0;
     private StarFleetShip player;
@@ -38,23 +38,28 @@ public class GameState extends State {
     private BufferedImage background;
     private Boolean initialized = false;
 
+    private LevelStateMachine lsm;
+
+    private int msgTimer = 0;
+
     /* private variables - ex. score */
 
     public GameState(StateMachine stateMachine) {
 
         super(stateMachine);
+        lsm = new LevelStateMachine(this);
 
-        mainPanel = new SubPanel(this, 640, 480);
+        mainPanel = new MainPanel(this, 640, 480);
         weaponPanel = new WeaponPanel(this, 192, 480);
         statusPanel = new StatusPanel(this, 192, 480);
         messagePanel = new MessagePanel(this, 1024, 200);
         infoPanel = new InfoPanel(this, 1024, 88);
 
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        statusPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        weaponPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-        messagePanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        statusPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        weaponPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         getPanels().add(mainPanel);
         getPanels().add(weaponPanel);
@@ -71,13 +76,12 @@ public class GameState extends State {
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         /* Initialize game objects */
-        player = new StarFleetShip(98,75,((640/2)-(98/2)),480/3*2,1,0,0);
+        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0);
 
         // initialize spaceobjects with meteors, enemies and spacestations
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
-        spaceobjects.add(player);
 
-        msg = new Message(this, 1024, 200);
+        msgGenerator = new MessageGenerator();
 
        /* addKeyListener(new TAdapter());*/
     }
@@ -89,44 +93,121 @@ public class GameState extends State {
 
     @Override
     public void input() {
-        /* check input of all spaceobjects - specificspaceobject.input() */
-        for(SpaceObject so : spaceobjects){
+        /* check input of all spaceobjects */
+        player.input();
+
+        for (SpaceObject so : spaceobjects) {
             so.input();
         }
     }
 
     @Override
     public void update() {
-        /* Check colliosions and update position */
-        for(SpaceObject so : spaceobjects){
-            //so.intersects(everyotherpossiblespaceobject);
-            if(so instanceof EnemyShip){
+        /* Check collisions and update position */
+
+        player.update();
+        player.checkAttackCollisions(spaceobjects);
+
+        for (SpaceObject so : spaceobjects) {
+
+             /* Check for enemy attacks and collisions */
+            so.checkAttackCollisions(spaceobjects);
+
+            if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
-            }else{
+                //if((EnemyShip)so.isDead()){
+                //    spaceobjects.remove(so);
+                //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
+                //}
+
+                if(msgTimer < 10)
+                {
+                    msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3, "You're under attack!");
+                }
+                msgTimer++;
+
+
+            } else if (so instanceof Meteor) {
                 so.update();
+            } else {
+                so.update();
+            }
+
+
+        }
+
+        // check if levels user leaves quadrant
+        // check if player leaves right
+        if (player.getX() >= 640) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 0) {
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
+                player.setSpeed(0);
+                player.setX(580);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + 1));
+                player.setX(0);
+
+                msgTimer = 0;
+            }
+        }
+
+        // check if player leaves left
+        if (player.getX() < -20) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() % GamePanel.GAMESIZE == 1) {
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
+                player.setSpeed(0);
+                player.setX(20);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() -1));
+                player.setX(640);
+
+                msgTimer = 0;
+            }
+        }
+
+        // check if player leaves top
+        if (player.getY() < -50) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() <= GamePanel.GAMESIZE) {
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of our\nmission, Captain!");
+                player.setSpeed(0);
+                player.setY(30);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() - GamePanel.GAMESIZE));
+                player.setY(479);
+
+                msgTimer = 0;
+            }
+        }
+
+        // check if player leaves bottom
+        if (player.getY() >= 480) {
+            if (currentLevel.getCurrentquardant().getQuadrantnr() > (GamePanel.GAMESIZE * (GamePanel.GAMESIZE -1))) {
+                msgGenerator.createMessage(Character.SPOCK, MessageType.ALERT, 3, "This is not part of\nour mission, Captain!");
+                player.setSpeed(0);
+                player.setY(460);
+            } else {
+                currentLevel.getCurrentquardant().setVisited(true);
+                lsm.changeQuadrant(currentLevel.getQuadrantByNr(currentLevel.getCurrentquardant().getQuadrantnr() + GamePanel.GAMESIZE));
+                player.setY(0);
+
+                msgTimer = 0;
             }
         }
 
         /* Update scores etc if necessary */
+
+
         // update backgrounds
-        for (Background bg : backgrounds){
+        for (Background bg : backgrounds) {
             bg.update(player);
         }
-
     }
 
     @Override
     public void draw() {
-
-        /* draw level background */
-        backgrounds.get(currentLevel.getCurrentquardant().getQuadrantnr() % 4).draw(mainPanel.getG());
-
-        /* draw all specific spaceobjects */
-        for (SpaceObject so : spaceobjects) {
-            so.draw(mainPanel.getG());
-        }
-        //System.out.println("game running... - rendering...");
-
 
     }
 
@@ -144,11 +225,14 @@ public class GameState extends State {
         getGamePanel().add(weaponPanel, BorderLayout.LINE_END);
         getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
         getGamePanel().add(messagePanel, BorderLayout.PAGE_END);
+
+        SoundBoard.BACKGROUND.play();
     }
 
     @Override
     public void exit() {
         /* do stuff when exiting this state */
+        SoundBoard.BACKGROUND.stop();
     }
 
     @Override
@@ -158,7 +242,7 @@ public class GameState extends State {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_P) {
-           getStateMachine().change("paused");
+            getStateMachine().change("paused");
         }
 
         if (key == KeyEvent.VK_M) {
@@ -169,33 +253,24 @@ public class GameState extends State {
             getStateMachine().change("menu");
         }
 
-        if (key == KeyEvent.VK_SPACE){
-            player.fire(0);
-
-
-            msg.createMessage(Character.KIRK);
+        if (key == KeyEvent.VK_SPACE) {
+            player.fire();
+            SoundBoard.LASER.play();
         }
 
-        if (key == KeyEvent.VK_G){
-            player.fire(1);
-
-
-            msg.createMessage(Character.KIRK);
-        }
-
-        if (key == KeyEvent.VK_UP){
+        if (key == KeyEvent.VK_UP) {
             player.speedUp();
         }
 
-        if (key == KeyEvent.VK_DOWN){
+        if (key == KeyEvent.VK_DOWN) {
             player.slowDown();
         }
 
-        if (key == KeyEvent.VK_LEFT){
+        if (key == KeyEvent.VK_LEFT) {
             player.turnLeft();
         }
 
-        if (key == KeyEvent.VK_RIGHT){
+        if (key == KeyEvent.VK_RIGHT) {
             player.turnRight();
         }
     }
@@ -221,8 +296,16 @@ public class GameState extends State {
         return currentLevel;
     }
 
+    public void setCurrentLevel(Level currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
     public ArrayList<SpaceObject> getSpaceobjects() {
         return spaceobjects;
+    }
+
+    public void setSpaceobjects(ArrayList<SpaceObject> spaceobjects) {
+        this.spaceobjects = spaceobjects;
     }
 
     public ArrayList<Background> getBackgrounds() {
@@ -239,6 +322,14 @@ public class GameState extends State {
 
     public Boolean isInitialized() {
         return initialized;
+    }
+
+    public MessageGenerator getMsg() {
+        return msgGenerator;
+    }
+
+    public void setMsg(MessageGenerator msg) {
+        this.msgGenerator = msg;
     }
 
 }

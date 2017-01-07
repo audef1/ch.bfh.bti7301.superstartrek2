@@ -1,5 +1,6 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.QuadrantGenerator;
 
 /**
@@ -31,6 +32,17 @@ public class Level {
                 System.out.println(name + " : " + quadrants[i][j].getName());
             }
         }
+    }
+
+    public Quadrant getQuadrantByNr(int nr){
+        for (int i = 0; i < quadrants.length; i++){
+            for (int j = 0; j < quadrants[i].length; j++){
+                if (nr == (i+1)+(j* GamePanel.GAMESIZE)){
+                    return quadrants[i][j];
+                }
+            }
+        }
+        return quadrants[0][0];
     }
 
     public String getName() {

@@ -27,13 +27,13 @@ public class SpaceObjectFactory {
             case "meteor":
                 for (int i = 0; i < amount; i++){
 
-                    Meteor m = new Meteor(10, 10,random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.01) + 0.01));
+                    Meteor m = new Meteor(100, 80, random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.01) + 0.01));
 
                     for(SpaceObject object: so) {
                         if(m.intersects(object))
                         {
-                            m.setX((int) object.getX() + 10);
-                            m.setY((int) object.getY() + 10);
+                            m.setX((int) object.getX() + 100);
+                            m.setY((int) object.getY() + 100);
                         }
                     }
                     so.add(m);
@@ -43,7 +43,14 @@ public class SpaceObjectFactory {
             case "enemy":
             {
                 for (int i = 0; i < amount; i++) {
-                    EnemyShip es = new EnemyShip(10, 10,random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
+                    EnemyShip es = new EnemyShip(112, 75,random.nextInt(600), random.nextInt(450),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
+                    for(SpaceObject object: so) {
+                        if(es.intersects(object))
+                        {
+                            es.setX((int) object.getX() + 100);
+                            es.setY((int) object.getY() + 100);
+                        }
+                    }
                     so.add(es);
                 }
             }
@@ -52,7 +59,14 @@ public class SpaceObjectFactory {
             case "spaceStation":
             {
                 for (int i = 0; i < amount; i++) {
-                    SpaceStation ss = new SpaceStation(10, 10, random.nextInt(600), random.nextInt(450));
+                    SpaceStation ss = new SpaceStation(91, 91, random.nextInt(600), random.nextInt(450));
+                    for(SpaceObject object: so) {
+                        if(ss.intersects(object))
+                        {
+                            ss.setX((int) object.getX() + 100);
+                            ss.setY((int) object.getY() + 100);
+                        }
+                    }
                     so.add(ss);
                 }
             }
