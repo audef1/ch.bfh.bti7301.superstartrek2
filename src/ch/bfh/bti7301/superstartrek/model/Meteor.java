@@ -12,15 +12,15 @@ import java.util.ArrayList;
  */
 public class Meteor extends SpaceObject {
 
-
     public Meteor(int width, int height, int x, int y, int dx, int dy, double speed) {
 
-        // TODO: different meteortypes according its sprite
         //super(width, height, x, y, dx, dy, speed);
         super(width, height, x, y, dx, dy, speed);
 
         setSprites(new ArrayList<BufferedImage[]>());
         BufferedImage sprite = loadSprite((int) (Math.random() * (8 - 1) + 1));
+        setCwidth(sprite.getWidth());
+        setCheight(sprite.getHeight());
         BufferedImage[] bi = new BufferedImage[1];
         bi[0] = sprite;
         sprites.add(bi);
