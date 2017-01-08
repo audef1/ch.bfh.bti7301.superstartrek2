@@ -249,7 +249,7 @@ public class SpaceObject {
                 if (this instanceof StarFleetShip){
                     so.setDx(idx);
                     so.setDy(idy);
-                    setSpeed(0);
+                    //setSpeed(0);
                 }
                 else{
                     setDx(sodx);
