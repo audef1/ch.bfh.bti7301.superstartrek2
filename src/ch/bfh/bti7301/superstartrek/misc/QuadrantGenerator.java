@@ -10,6 +10,10 @@ public class QuadrantGenerator {
     private Quadrant[][] quadrants;
     private NameGenerator ngen;
 
+    /**
+     * Generates the given amount of quadrants
+     * @param size how many quadrants should be created
+     */
     public QuadrantGenerator(int size){
         quadrants = new Quadrant[size][size];
         ngen = new NameGenerator();
