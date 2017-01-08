@@ -1,15 +1,20 @@
 package ch.bfh.bti7301.superstartrek.sounds;
 
-import java.io.*;
-import java.net.URL;
 import javax.sound.sampled.*;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * Created by Florian on 06.01.2017.
+ * A Soundboard which provides different sounds,
+ * which can be played all over the project by simply calling
+ * "SoundBoard.SOUNDNAME.play()"
  */
-
 public enum SoundBoard {
 
+    /**
+     * The definition of the different sounds
+     */
     MENU("music/menu.wav", true),
     ENDING("music/ending.wav", true),
     BACKGROUND("music/backgroundmusic.wav", true),
@@ -35,19 +40,29 @@ public enum SoundBoard {
     BUTTONSELECT("soundeffects/buttonselect/7.wav", false),
     ACTION("soundeffects/powerups/2.wav", false);
 
+    /**
+     * Sound should loop.
+     */
     private Boolean loop = false;
+
+    /**
+     * Sound should be paused.
+     */
     private Boolean paused = false;
 
-    public static enum Volume {
-        MUTE, LOW, MEDIUM, HIGH
-    }
-
-    public static Volume volume = Volume.MEDIUM;
-
-    // Each sound effect has its own clip, loaded with its own sound file.
+    /**
+     * A sound clip.
+     * Each sound effect has its own clip, loaded with its own sound file.
+     */
     private Clip clip;
 
-    // Constructor to construct each element of the enum with its own sound file.
+    /**
+     * Class Constructor
+     * Constructs each element of the enum with its own sound file.
+     *
+     * @param soundFileName The path and filename of the sound file, starting from Resources/sounds/.
+     * @param loop          Sound should loop.
+     */
     SoundBoard(String soundFileName, Boolean loop) {
         this.loop = loop;
         try {
@@ -64,43 +79,55 @@ public enum SoundBoard {
         }
     }
 
-    // Play or Re-play the sound effect from the beginning, by rewinding.
+    /**
+     *  Optional static method to pre-load all the sound files.
+     *  values() calls the constructor for all the elements.
+     */
+    public static void init() {
+        values();
+    }
+
+    /**
+     * Play or replay the sound clip from the beginning, by rewinding.
+     */
     public void play() {
-        if (volume != Volume.MUTE) {
-            if (clip.isRunning()){
-                clip.stop();   // Stop the player if it is still running
-
-            }
-
-            if (!paused){
-                clip.setFramePosition(0); // rewind to the beginning
-            }
-
-            if (loop){
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            else{
-                clip.start();
-            }
-
-            paused = false;
+        /* Stop the player if it is still running */
+        if (clip.isRunning()) {
+            clip.stop();
         }
+
+        /* rewind to the beginning, play coming from paused mode */
+        if (!paused) {
+            clip.setFramePosition(0);
+        }
+
+        /* set playback to loop if defined */
+        if (loop) {
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } else {
+            clip.start();
+        }
+
+        paused = false;
     }
 
+    /**
+     * Stop sound clip and rewind to beginning.
+     */
     public void stop() {
-        if (clip.isRunning())
-            clip.stop();   // Stop the player if it is still running
-        clip.setFramePosition(0); // rewind to the beginning
+        if (clip.isRunning()) {
+            clip.stop();
+        }
+        clip.setFramePosition(0);
     }
 
+    /**
+     * Pause playback without rewinding it.
+     */
     public void pause() {
         paused = true;
-        if (clip.isRunning())
-            clip.stop();   // Stop the player if it is still running
-    }
-
-    // Optional static method to pre-load all the sound files.
-    public static void init() {
-        values(); // calls the constructor for all the elements
+        if (clip.isRunning()){
+            clip.stop();
+        }
     }
 }
