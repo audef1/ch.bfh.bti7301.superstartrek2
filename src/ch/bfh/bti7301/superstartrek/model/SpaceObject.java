@@ -35,6 +35,8 @@ public class SpaceObject {
     protected int maxSpeed;
     protected float mass;
 
+    protected Boolean remove = false;
+
     // sprites
     protected ArrayList<BufferedImage[]> sprites = new ArrayList<BufferedImage[]>();
 
@@ -273,6 +275,14 @@ public class SpaceObject {
 
     public void setShape(Shape shape) {
         this.shape = shape;
+    }
+
+    public Boolean shouldRemove() {
+        return remove;
+    }
+
+    public void remove() {
+        remove = true;
     }
 
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects) {

@@ -120,22 +120,16 @@ public class GameState extends State {
         player.update();
         player.checkAttackCollisions(spaceobjects);
 
-        for (SpaceObject so : spaceobjects) {
-
-            if(so instanceof SpaceShip){
-                /* Check for enemy attacks and collisions */
-                ((SpaceShip) so).checkAttackCollisions(spaceobjects);
-            }else{
-                /* Check for enemy attacks and collisions */
-                so.checkAttackCollisions(spaceobjects);
-            }
+       for (int i = 0; i < spaceobjects.size(); i++){
+           SpaceObject so = spaceobjects.get(i);
+           so.checkAttackCollisions(spaceobjects);
 
             if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
-                //if((EnemyShip)so.isDead()){
-                //    spaceobjects.remove(so);
-                //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
-                //}
+                if(((EnemyShip) so).isDead()){
+                    spaceobjects.add(new Explosion(so.getX(), so.getY()));
+                    spaceobjects.remove(so);
+                }
 
                 if (missionTold){
                     if (msgTimer < 10)
@@ -144,12 +138,15 @@ public class GameState extends State {
                     }
                     msgTimer++;
                 }
-
             } else if (so instanceof Meteor) {
-
-                // player.get
                 so.update();
-            } else {
+            } else if (so instanceof Explosion) {
+                so.update();
+                if(so.shouldRemove()){
+                    spaceobjects.remove(so);
+                    i--;
+                }
+            }else {
                 so.update();
             }
         }

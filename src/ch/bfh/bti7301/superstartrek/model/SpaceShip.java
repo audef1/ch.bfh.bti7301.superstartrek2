@@ -18,10 +18,11 @@ public class SpaceShip extends SpaceObject {
     protected int health;
     protected int healthMax;
     protected int selfrepair;
-    protected boolean warp;
+    protected Boolean warp;
     protected int fuel;
     protected int maxFuel;
     protected int money;
+    protected Boolean dead = false;
 
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
         super(width, height, x, y, dx, dy, speed);
@@ -64,6 +65,10 @@ public class SpaceShip extends SpaceObject {
     public void update(){
         super.update();
         firedBullets.forEach(Bullet -> Bullet.update());
+
+        if (health == 0){
+            dead = true;
+        }
 
         /*if(!firedBullets.isEmpty()){
             for(Bullet bullet : firedBullets){
@@ -209,6 +214,10 @@ public class SpaceShip extends SpaceObject {
 
     public int shipHasDamage(){
         return (this.healthMax - this.health) + (this.shieldMax - this.shield);
+    }
+
+    public Boolean isDead() {
+        return dead;
     }
 
 }

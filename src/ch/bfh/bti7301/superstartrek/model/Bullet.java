@@ -3,6 +3,7 @@ package ch.bfh.bti7301.superstartrek.model;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by filip on 02.12.2016.
@@ -45,6 +46,7 @@ public class Bullet extends SpaceObject{
             if(intersects(so)){
                 if(so instanceof SpaceShip){
                     ((SpaceShip) so).shipTakesDamage(this.getDamage());
+                    this.remove();
                 }
             }
         }
