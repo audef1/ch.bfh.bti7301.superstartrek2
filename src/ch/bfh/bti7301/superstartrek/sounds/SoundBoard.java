@@ -36,6 +36,7 @@ public enum SoundBoard {
     ACTION("soundeffects/powerups/2.wav", false);
 
     private Boolean loop = false;
+    private Boolean paused = false;
 
     public static enum Volume {
         MUTE, LOW, MEDIUM, HIGH
@@ -52,7 +53,6 @@ public enum SoundBoard {
         try {
             URL url = this.getClass().getClassLoader().getResource("sounds/" + soundFileName);
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
-            System.out.println(soundFileName);
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
         } catch (UnsupportedAudioFileException e) {
@@ -67,9 +67,14 @@ public enum SoundBoard {
     // Play or Re-play the sound effect from the beginning, by rewinding.
     public void play() {
         if (volume != Volume.MUTE) {
-            if (clip.isRunning())
+            if (clip.isRunning()){
                 clip.stop();   // Stop the player if it is still running
-            clip.setFramePosition(0); // rewind to the beginning
+
+            }
+
+            if (!paused){
+                clip.setFramePosition(0); // rewind to the beginning
+            }
 
             if (loop){
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -77,6 +82,8 @@ public enum SoundBoard {
             else{
                 clip.start();
             }
+
+            paused = false;
         }
     }
 
@@ -84,6 +91,12 @@ public enum SoundBoard {
         if (clip.isRunning())
             clip.stop();   // Stop the player if it is still running
         clip.setFramePosition(0); // rewind to the beginning
+    }
+
+    public void pause() {
+        paused = true;
+        if (clip.isRunning())
+            clip.stop();   // Stop the player if it is still running
     }
 
     // Optional static method to pre-load all the sound files.

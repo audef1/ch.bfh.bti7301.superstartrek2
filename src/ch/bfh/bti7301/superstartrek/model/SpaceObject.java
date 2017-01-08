@@ -293,6 +293,13 @@ public class SpaceObject {
                     so.setDy(idy);
                     setSpeed(0);
                 }
+                else if (this instanceof Bullet){
+                    int damage = ((Bullet) this).getDamage();
+                    if (so instanceof StarFleetShip){
+                        int health = ((StarFleetShip) so).getHealth();
+                        ((StarFleetShip) so).setHealth(health - damage);
+                    }
+                }
                 else{
                     setDx(sodx);
                     setDy(sody);

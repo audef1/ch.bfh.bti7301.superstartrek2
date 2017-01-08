@@ -243,7 +243,7 @@ public class GameState extends State {
     @Override
     public void exit() {
         /* do stuff when exiting this state */
-        SoundBoard.BACKGROUND.stop();
+        SoundBoard.BACKGROUND.pause();
     }
 
     @Override
