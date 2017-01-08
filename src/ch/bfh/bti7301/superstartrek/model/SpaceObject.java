@@ -291,7 +291,7 @@ public class SpaceObject {
                 if (this instanceof StarFleetShip){
                     so.setDx(idx);
                     so.setDy(idy);
-                    setSpeed(0);
+                    //setSpeed(0);
                 }
                 else if (this instanceof Bullet){
                     int damage = ((Bullet) this).getDamage();

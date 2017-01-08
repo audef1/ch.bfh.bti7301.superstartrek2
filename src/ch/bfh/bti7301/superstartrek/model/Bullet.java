@@ -3,8 +3,6 @@ package ch.bfh.bti7301.superstartrek.model;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 
 /**
  * Created by filip on 02.12.2016.
@@ -34,7 +32,22 @@ public class Bullet extends SpaceObject{
         if(shotMicroTime > 0 && System.currentTimeMillis() - shotMicroTime <= timeToExplode){
             explode();
         }
+
         super.update();
+    }
+
+    public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
+
+        // loop spaceobjects
+        for(SpaceObject so : spaceobjects){
+
+            // check collision
+            if(intersects(so)){
+                if(so instanceof SpaceShip){
+                    ((SpaceShip) so).shipTakesDamage(this.getDamage());
+                }
+            }
+        }
     }
 
     /**
