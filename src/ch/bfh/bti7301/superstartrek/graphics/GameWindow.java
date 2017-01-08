@@ -7,10 +7,14 @@ import java.io.IOException;
 
 /**
  * Created by florianauderset on 16.12.16.
+ * The main game window.
  */
 public class GameWindow extends JFrame {
 
-    public GameWindow(){
+    /**
+     * Class Constructor
+     */
+    public GameWindow() {
 
         super("Super Star Trek");
 
@@ -19,14 +23,17 @@ public class GameWindow extends JFrame {
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
-        } catch (IOException |FontFormatException e) {
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
 
         start();
     }
 
-    public void start(){
+    /**
+     * Start up the game window.
+     */
+    public void start() {
         setContentPane(new GamePanel());
         setSize(1024, 768);
         setBounds(0, 0, 1024, 768);

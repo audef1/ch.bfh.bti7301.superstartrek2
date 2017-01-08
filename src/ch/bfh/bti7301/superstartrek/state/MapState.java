@@ -5,6 +5,7 @@ import ch.bfh.bti7301.superstartrek.graphics.InfoPanel;
 import ch.bfh.bti7301.superstartrek.graphics.MapPanel;
 import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.model.Level;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -75,11 +76,17 @@ public class MapState extends State {
         getGamePanel().setLayout(layout);
         getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
         getGamePanel().add(mapPanel, BorderLayout.CENTER);
+
+        // play backgroundmusic and toggle sound
+        SoundBoard.BACKGROUND.play();
+        SoundBoard.ERROR.play();
+
     }
 
     @Override
     public void exit() {
-
+        SoundBoard.BACKGROUND.pause();
+        SoundBoard.ERROR.play();
     }
 
     @Override
