@@ -3,6 +3,8 @@ package ch.bfh.bti7301.superstartrek.model;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 /**
  * Created by filip on 02.12.2016.
@@ -32,8 +34,16 @@ public class Bullet extends SpaceObject{
         if(shotMicroTime > 0 && System.currentTimeMillis() - shotMicroTime <= timeToExplode){
             explode();
         }
-
         super.update();
+    }
+
+    /**
+     * Sets the Collisionbox to the shape of the image.
+     * Polygon has to be generated manually.
+     */
+    @Override
+    public void setPolygon(){
+        shape = new Rectangle(0,0,getWidth(), getHeight());
     }
 
     private void explode(){
