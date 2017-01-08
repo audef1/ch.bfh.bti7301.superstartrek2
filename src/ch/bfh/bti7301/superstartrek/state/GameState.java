@@ -41,6 +41,9 @@ public class GameState extends State {
     private LevelStateMachine lsm;
 
     private int msgTimer = 0;
+    private int missionTimer = 0;
+
+    private Boolean missionTold = false;
 
     /* private variables - ex. score */
 
@@ -103,8 +106,17 @@ public class GameState extends State {
 
     @Override
     public void update() {
-        /* Check collisions and update position */
 
+        /* check if mission has already told */
+        if (!missionTold){
+            if (missionTimer < 35*GamePanel.FPS){
+                missionTimer++;
+            } else{
+                missionTold = true;
+            }
+        }
+
+        /* Check collisions and update position */
         player.update();
         player.checkAttackCollisions(spaceobjects);
 
@@ -125,26 +137,21 @@ public class GameState extends State {
                 //    spaceobjects.add(new Explosion(so.getX(), so.getY()));
                 //}
 
-
-
-                if(msgTimer < 10)
-                {
-                    msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 3, "You're under attack!");
+                if (missionTold){
+                    if (msgTimer < 10)
+                    {
+                        msgGenerator.createMessage(Character.KLINGON, MessageType.ALERT, 5, "bortaS bIr jablu'DI' reH\nQaQqu' nay'!");
+                    }
+                    msgTimer++;
                 }
-                msgTimer++;
-
 
             } else if (so instanceof Meteor) {
 
-               // player.get
-
-
+                // player.get
                 so.update();
             } else {
                 so.update();
             }
-
-
         }
 
         // check if levels user leaves quadrant
@@ -217,10 +224,15 @@ public class GameState extends State {
         }
     }
 
+    public void tellMission(){
+        msgGenerator.createMessage(Character.SCOTT, MessageType.NORMAL, 30, "Captain, we have to neutralize\nall Klingons in the Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
+    }
+    /*
     @Override
     public void draw() {
 
     }
+    */
 
     @Override
     public void enter() {
@@ -238,6 +250,8 @@ public class GameState extends State {
         getGamePanel().add(messagePanel, BorderLayout.PAGE_END);
 
         SoundBoard.BACKGROUND.play();
+
+        tellMission();
     }
 
     @Override
