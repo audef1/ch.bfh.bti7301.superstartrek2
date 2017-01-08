@@ -1,22 +1,30 @@
 package ch.bfh.bti7301.superstartrek.graphics;
 
-import ch.bfh.bti7301.superstartrek.model.*;
+import ch.bfh.bti7301.superstartrek.model.SpaceObject;
 import ch.bfh.bti7301.superstartrek.state.GameState;
-import ch.bfh.bti7301.superstartrek.state.MapState;
-import ch.bfh.bti7301.superstartrek.state.State;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by Florian on 06.01.2017.
+ * Main partial of the Cockpit HUD View.
  */
 public class MainPanel extends SubPanel {
 
+    /**
+     * Class Constructor
+     *
+     * @param state  The current state of the state machine.
+     * @param width  Width of the Panel.
+     * @param height Height of the Panel.
+     */
     public MainPanel(GameState state, int width, int height) {
         super(state, width, height);
     }
 
+    /**
+     * Draw to buffered image.
+     */
     @Override
     public void draw() {
         Graphics2D g = getG();
@@ -32,7 +40,7 @@ public class MainPanel extends SubPanel {
         for (SpaceObject so : gs.getSpaceobjects()) {
             so.draw(g);
         }
-        // draw other stuff here
 
+        /* draw other stuff here */
     }
 }

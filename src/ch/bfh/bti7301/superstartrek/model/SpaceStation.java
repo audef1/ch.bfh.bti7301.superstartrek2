@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * Created by filip on 04.11.2016.
@@ -23,6 +24,15 @@ public class SpaceStation extends SpaceObject {
         super(width, height, x, y);
 
         this.getSprite("images/PNG/ufoGreen.png");
+    }
+
+    /**
+     * Sets the Collisionbox to the shape of the image.
+     * Polygon has to be generated manually.
+     */
+    @Override
+    public void setPolygon(){
+        shape = new Ellipse2D.Double(0, 0, getWidth(), getHeight());
     }
 
     public int getFuelCost() {

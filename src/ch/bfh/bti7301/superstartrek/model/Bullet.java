@@ -3,7 +3,6 @@ package ch.bfh.bti7301.superstartrek.model;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Created by filip on 02.12.2016.
@@ -49,6 +48,15 @@ public class Bullet extends SpaceObject{
                 }
             }
         }
+    }
+
+    /**
+     * Sets the Collisionbox to the shape of the image.
+     * Polygon has to be generated manually.
+     */
+    @Override
+    public void setPolygon(){
+        shape = new Rectangle(0,0,getWidth(), getHeight());
     }
 
     private void explode(){

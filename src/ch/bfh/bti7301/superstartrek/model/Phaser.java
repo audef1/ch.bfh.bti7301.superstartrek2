@@ -12,6 +12,8 @@ public class Phaser extends Weapon {
         setDamage(10);
         setAreaOfDamage(15);
         setSpeed(10);
+        setWidth(9);
+        setHeight(54);
     }
 
     @Override

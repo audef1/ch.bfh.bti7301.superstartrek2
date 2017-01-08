@@ -2,6 +2,8 @@ package ch.bfh.bti7301.superstartrek.model;
 
 import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
+import java.awt.*;
+
 /**
  * Created by filip on 02.12.2016.
  */
@@ -19,6 +21,17 @@ public class EnemyShip extends SpaceShip {
     public void update(StarFleetShip player){
         this.detectEnemyDirection(player.getX(), player.getY());
         super.update();
+    }
+
+    /**
+     * Sets the Collisionbox to the shape of the image.
+     * Polygon has to be generated manually.
+     */
+    @Override
+    public void setPolygon(){
+        int xPoly[] = {0,46,52,60,64,110,92,72,68,46,40,38,16};
+        int yPoly[] = {42,16,0,0,16,42,70,66,74,74,62,66,72};
+        shape = new Polygon(xPoly, yPoly, xPoly.length);
     }
 
     public void detectEnemyDirection(double enemyX, double enemyY){

@@ -3,6 +3,8 @@ package ch.bfh.bti7301.superstartrek.model;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.FlatteningPathIterator;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +22,7 @@ public class SpaceObject {
     // collisionbox dimensions
     protected int cwidth;
     protected int cheight;
+    protected Shape shape;
 
     // position and direction
     protected double x;
@@ -80,6 +83,7 @@ public class SpaceObject {
             BufferedImage[] bi = new BufferedImage[1];
             bi[0] = sprite;
             sprites.add(bi);
+            setPolygon();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,6 +123,35 @@ public class SpaceObject {
         return new Rectangle((int) x, (int) y, cwidth, cheight);
     }
 
+    public boolean intersects2(SpaceObject spaceobject) {
+        if (this != spaceobject){
+            Area areaA = new Area(getPolygon());
+            areaA.intersect(new Area(spaceobject.getPolygon()));
+            return !areaA.isEmpty();
+        }
+        else{
+            return false;
+        }
+    }
+
+    public void setPolygon(){
+        int xPoly[] = {0,width,width, 0};
+        int yPoly[] = {0,0,height,height};
+        shape = new Polygon(xPoly, yPoly, xPoly.length);
+    }
+
+    public Shape getPolygon() {
+        if (shape == null) {
+            throw new IllegalArgumentException("Null 'shape' argument.");
+        }
+
+        double rangle = Math.toDegrees(Math.atan2(dy, dx));
+        AffineTransform transform = new AffineTransform();
+        transform.translate(x,y);
+        transform.rotate((rangle/180)*Math.PI, sprites.get(0)[0].getWidth()/2, sprites.get(0)[0].getHeight()/2);
+        return transform.createTransformedShape(shape);
+    }
+
     public void draw(Graphics2D g){
         double rangle = Math.toDegrees(Math.atan2(dy, dx));
         AffineTransform transform = new AffineTransform();
@@ -128,6 +161,7 @@ public class SpaceObject {
         // check if game has been started in debug mode
         if(isDebug){
             g.draw(getRectangle());
+            g.fill(getPolygon()); // translated shape collisionbox
         }
 
         g.drawImage(
@@ -233,13 +267,21 @@ public class SpaceObject {
         this.sprites = sprites;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
+    }
+
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects) {
 
         // loop spaceobjects
         for(SpaceObject so : spaceobjects){
 
             // check collision
-            if(intersects(so)){
+            if(intersects2(so)){
                 int idx = getDx() * -1;
                 int idy = getDy();
 
@@ -250,6 +292,13 @@ public class SpaceObject {
                     so.setDx(idx);
                     so.setDy(idy);
                     //setSpeed(0);
+                }
+                else if (this instanceof Bullet){
+                    int damage = ((Bullet) this).getDamage();
+                    if (so instanceof StarFleetShip){
+                        int health = ((StarFleetShip) so).getHealth();
+                        ((StarFleetShip) so).setHealth(health - damage);
+                    }
                 }
                 else{
                     setDx(sodx);

@@ -14,6 +14,9 @@ public class NameGenerator {
     private List endConsonants = new ArrayList<String>();
     private List nameInstructions = new ArrayList<String>();
 
+    /**
+     * default constructor
+     */
     public NameGenerator() {
         String[] ArrVocals = { "a", "e", "i", "o", "u", "ei", "ai", "ou", "j",
                 "ji", "y", "oi", "au", "oo" };
@@ -35,6 +38,12 @@ public class NameGenerator {
         this.nameInstructions.addAll(Arrays.asList(ArrNameInstructions));
     }
 
+    /**
+     * overloaded constructor
+     * @param vocals
+     * @param startConsonants
+     * @param endConsonants
+     */
     public NameGenerator(String[] vocals, String[] startConsonants,
                          String[] endConsonants) {
         this.vocals.addAll(Arrays.asList(vocals));
@@ -42,6 +51,13 @@ public class NameGenerator {
         this.endConsonants.addAll(Arrays.asList(endConsonants));
     }
 
+    /**
+     * overloaded constructor
+     * @param vocals
+     * @param startConsonants
+     * @param endConsonants
+     * @param nameInstructions
+     */
     public NameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants, String[] nameInstructions) {
         this(vocals, startConsonants, endConsonants);
         this.nameInstructions.addAll(Arrays.asList(nameInstructions));
@@ -51,10 +67,21 @@ public class NameGenerator {
         return firstCharUppercase(getNameByInstructions(getRandomElementFrom(nameInstructions)));
     }
 
+    /**
+     * creates a random number
+     * @param min minimum value
+     * @param max maximum value
+     * @return random number
+     */
     private int randomInt(int min, int max) {
         return (int) (min + (Math.random() * (max + 1 - min)));
     }
 
+    /**
+     * Creates a word based on given instructions
+     * @param nameInstructions instructions how the word should be created
+     * @return created word
+     */
     private String getNameByInstructions(String nameInstructions) {
         String name = "";
         int l = nameInstructions.length();
@@ -74,10 +101,20 @@ public class NameGenerator {
         return name;
     }
 
+    /**
+     * makes first letter of a word to uppercase
+     * @param name name to set first letter to uppercase
+     * @return name with uppercase first letter
+     */
     private String firstCharUppercase(String name) {
         return Character.toString(name.charAt(0)).toUpperCase() + name.substring(1);
     }
 
+    /**
+     * gets a random element from the given list
+     * @param v list in which a random element should be given
+     * @return random element
+     */
     private String getRandomElementFrom(List v) {
         return v.get(randomInt(0, v.size() - 1)).toString();
     }

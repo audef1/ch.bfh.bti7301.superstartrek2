@@ -14,6 +14,9 @@ public class SpaceObjectFactory {
 
     private static ArrayList<SpaceObject> so = new ArrayList<SpaceObject>();
 
+    /**
+     * default constructor
+     */
     public SpaceObjectFactory() {
         so = new ArrayList<SpaceObject>();
     }
@@ -32,18 +35,9 @@ public class SpaceObjectFactory {
             case "meteor":
                 for (int i = 0; i < amount; i++){
 
-                    Meteor m = new Meteor(100, 80, setObjectPosition(50, 600), setObjectPosition(50, 400),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.05 - 0.01) + 0.01));
-
-                    /*for(SpaceObject object: so) {
-                        if(m.intersects(object))
-                        {
-                            m.setX((int) object.getX() + 100);
-                            m.setY((int) object.getY() + 100);
-                        }
-                    }*/
+                    Meteor m = new Meteor(100, 80, setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.05 - 0.01) + 0.01));
 
                     setPosition(so, m);
-
                     so.add(m);
                 }
             break;
@@ -51,14 +45,7 @@ public class SpaceObjectFactory {
             case "enemy":
             {
                 for (int i = 0; i < amount; i++) {
-                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 600), setObjectPosition(50, 400),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
-                    /*for(SpaceObject object: so) {
-                        if(es.intersects(object))
-                        {
-                            es.setX((int) object.getX() + 100);
-                            es.setY((int) object.getY() + 100);
-                        }
-                    }*/
+                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
 
                     setPosition(so, es);
                     so.add(es);
@@ -69,14 +56,7 @@ public class SpaceObjectFactory {
             case "spaceStation":
             {
                 for (int i = 0; i < amount; i++) {
-                    SpaceStation ss = new SpaceStation(91, 91, setObjectPosition(50, 600), setObjectPosition(50, 400));
-                    /*for(SpaceObject object: so) {
-                        if(ss.intersects(object))
-                        {
-                            ss.setX((int) object.getX() + 100);
-                            ss.setY((int) object.getY() + 100);
-                        }
-                    }*/
+                    SpaceStation ss = new SpaceStation(91, 91, setObjectPosition(50, 500), setObjectPosition(50, 350));
 
                     setPosition(so, ss);
                     so.add(ss);
@@ -95,8 +75,8 @@ public class SpaceObjectFactory {
     private static void setPosition(ArrayList<SpaceObject> arrSo, SpaceObject spaceObject){
         for(SpaceObject obj: arrSo){
             if(spaceObject.intersects(obj)){
-                spaceObject.setX((int)obj.getX() + setObjectPosition(30, 600));
-                spaceObject.setX((int)obj.getX() + setObjectPosition(30, 400));
+                spaceObject.setX((int)obj.getX() + setObjectPosition(50, 500));
+                spaceObject.setX((int)obj.getX() + setObjectPosition(50, 350));
 
                 setPosition(arrSo, obj);
             }
