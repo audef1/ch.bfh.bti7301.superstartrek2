@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class MessageGenerator {
 
-    Map<Character, String> map = new HashMap<>();
+    Map<MsgCharacter, String> map = new HashMap<>();
     public String msg;
     public BufferedImage img;
     public MessageType messageType;
@@ -28,10 +28,10 @@ public class MessageGenerator {
      * default constructor
      */
     public MessageGenerator() {
-        map.put(Character.SPOCK, "Spock: ");
-        map.put(Character.KIRK, "Kirk: ");
-        map.put(Character.SCOTT, "Scotty: ");
-        map.put(Character.KLINGON, "Klingon: ");
+        map.put(MsgCharacter.SPOCK, "Spock: ");
+        map.put(MsgCharacter.KIRK, "Kirk: ");
+        map.put(MsgCharacter.SCOTT, "Scotty: ");
+        map.put(MsgCharacter.KLINGON, "Klingon: ");
 
         msg = "";
         try {
@@ -43,9 +43,13 @@ public class MessageGenerator {
     }
 
     /**
-     * @param chara which character sends the message
+     * Reads the picture and sets the message for the given character
+     * @param chara who says the message
+     * @param msgType what kind of message is it
+     * @param msgShowTime for how many seconds should the message be displayed
+     * @param text message text
      */
-    public void createMessage(Character chara, MessageType msgType, int msgShowTime, String text) {
+    public void createMessage(MsgCharacter chara, MessageType msgType, int msgShowTime, String text) {
         timer = 0;
         ttl = msgShowTime * GamePanel.FPS;
 
@@ -107,6 +111,9 @@ public class MessageGenerator {
         }
     }
 
+    /**
+     * Removes the message and sets image to default
+     */
     public void removeMessage() {
         setMsg("");
 

@@ -9,6 +9,10 @@ public class LevelGenerator {
     private Level[][] levels;
     private NameGenerator ngen;
 
+    /**
+     * Generates the given amount of levels
+     * @param size how many levels should be created
+     */
     public LevelGenerator(int size){
 
         levels = new Level[size][size];
@@ -22,6 +26,10 @@ public class LevelGenerator {
         }
     }
 
+    /**
+     * Lvel getter method
+     * @return amount of levels
+     */
     public Level[][] getLevels(){
         return levels;
     };
