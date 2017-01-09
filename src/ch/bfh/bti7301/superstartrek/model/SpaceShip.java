@@ -127,6 +127,7 @@ public class SpaceShip extends SpaceObject {
                     }
                 }
             }
+
         }
 
         // check if my bullets hit someone else

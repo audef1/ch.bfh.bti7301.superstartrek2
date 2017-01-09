@@ -279,19 +279,33 @@ public class GameState extends State {
         }
 
         if (key == KeyEvent.VK_S) {
-            player.toggleShield();
-            SoundBoard.BUTTON2.play();
-            if (player.shieldUp()){
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "Shields up!");
+            if (player.getShield() > 0){
+                player.toggleShield();
+                SoundBoard.BUTTON2.play();
+                if (player.shieldUp()){
+                    msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "Shields up!");
+                }
+                else{
+                    msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields down!");
+                }
             }
             else{
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields down!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields severly damaged, Captain!");
             }
+
         }
 
         if (key == KeyEvent.VK_G) {
-            player.fire(1);
-            SoundBoard.LASER.play();
+
+            if (player.getWeapons().get(1).getCapacity() > 0){
+                player.fire(1);
+                SoundBoard.LASER4.play();
+            }
+            else{
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of granades, Captain!");
+                SoundBoard.NOTIFICATION.play();
+            }
+
         }
 
         if (key == KeyEvent.VK_UP) {
