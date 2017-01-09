@@ -14,6 +14,7 @@ public class SpaceShip extends SpaceObject {
     protected ArrayList<Point> directions;
     protected ArrayList<Weapon> weapons;
     protected int directionPointer = 0;
+    protected long phaserDelay = System.currentTimeMillis();
     protected String name;
     protected int shield;
     protected int shieldMax;
@@ -69,8 +70,9 @@ public class SpaceShip extends SpaceObject {
      * @param index
      */
     public synchronized void fire(int index){
-        if(weapons.get(index).getCapacity() > 0) {
-            firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2) * this.dy, this.y + (sprites.get(0)[0].getWidth()/2) * this.dx, this.dx, this.dy));
+        if(weapons.get(index).getCapacity() > 0 && System.currentTimeMillis() - this.phaserDelay >= 300) {
+            firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2), this.y, this.dx, this.dy));
+            phaserDelay = System.currentTimeMillis();
         }
     }
 
@@ -138,7 +140,7 @@ public class SpaceShip extends SpaceObject {
                 so.setDy(idy);
                 setSpeed(0);
 
-                if (so instanceof Bullet){
+                if (so instanceof Bullet && !firedBullets.contains(so)){
                     this.shipTakesDamage(((Bullet)so).getDamage());
                 }
             }
