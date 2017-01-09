@@ -109,23 +109,6 @@ public class SpaceObject {
      * @return
      */
     public boolean intersects(SpaceObject spaceobject) {
-
-        if (this != spaceobject){
-            Rectangle r1 = getRectangle();
-            Rectangle r2 = spaceobject.getRectangle();
-            return r1.intersects(r2);
-        }
-        else{
-            return false;
-        }
-    }
-
-    public Rectangle getRectangle() {
-        //return new Rectangle((int) x - cwidth, (int) y - cheight, cwidth, cheight);
-        return new Rectangle((int) x, (int) y, cwidth, cheight);
-    }
-
-    public boolean intersects2(SpaceObject spaceobject) {
         if (this != spaceobject){
             Area areaA = new Area(getPolygon());
             areaA.intersect(new Area(spaceobject.getPolygon()));
@@ -162,7 +145,6 @@ public class SpaceObject {
 
         // check if game has been started in debug mode
         if(isDebug){
-            g.draw(getRectangle());
             g.fill(getPolygon()); // translated shape collisionbox
         }
 
@@ -286,38 +268,37 @@ public class SpaceObject {
     }
 
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects) {
-
-        // loop spaceobjects
+        /* standardprocedure for spaceobjects
+        *  loop spaceobjects
+        */
         for(SpaceObject so : spaceobjects){
-
             // check collision
-            if(intersects2(so)){
+            if(intersects(so)){
                 int idx = getDx() * -1;
                 int idy = getDy();
 
                 int sodx = so.getDx() * -1;
                 int sody = so.getDy();
 
-                if (this instanceof StarFleetShip){
-                    so.setDx(idx);
-                    so.setDy(idy);
-                    //setSpeed(0);
-                }
-                else if (this instanceof Bullet){
-                    int damage = ((Bullet) this).getDamage();
-                    if (so instanceof StarFleetShip){
-                        int health = ((StarFleetShip) so).getHealth();
-                        ((StarFleetShip) so).setHealth(health - damage);
-                    }
-                }
-                else{
-                    setDx(sodx);
-                    setDy(sody);
+                setDx(sodx);
+                setDy(sody);
 
-                    so.setDx(idx);
-                    so.setDy(idy);
+                so.setDx(idx);
+                so.setDy(idy);
+            }
+
+            /* check if hit by a bullet
+            *  remove bullet, do nothing else
+            */
+            if (so instanceof SpaceShip){
+                for (int i = 0; i < ((SpaceShip) so).getFiredBullets().size(); i++){
+                    if (intersects(((SpaceShip) so).getFiredBullets().get(i))){
+                        ((SpaceShip) so).getFiredBullets().remove(i);
+                        i--;
+                    }
                 }
             }
         }
+
     }
 }

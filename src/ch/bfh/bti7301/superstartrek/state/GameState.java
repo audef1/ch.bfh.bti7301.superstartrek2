@@ -85,8 +85,6 @@ public class GameState extends State {
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
 
         msgGenerator = new MessageGenerator();
-
-       /* addKeyListener(new TAdapter());*/
     }
 
     private void initlevels(int size) {
@@ -278,6 +276,17 @@ public class GameState extends State {
         if (key == KeyEvent.VK_SPACE) {
             player.fire(0);
             SoundBoard.LASER.play();
+        }
+
+        if (key == KeyEvent.VK_S) {
+            player.toggleShield();
+            SoundBoard.BUTTON2.play();
+            if (player.shieldUp()){
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "Shields up!");
+            }
+            else{
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields down!");
+            }
         }
 
         if (key == KeyEvent.VK_G) {

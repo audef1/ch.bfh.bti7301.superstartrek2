@@ -67,20 +67,22 @@ public class StatusPanel extends SubPanel {
         int shieldHeight = 139;
         int singleShieldHeight = shieldHeight / (maxShield / 10);
 
-        for (int i = 0; i < (shield / 10); i++) {
-            if (shield > i) {
-                if (shield < (maxShield / 3 * 2)) {
-                    g.setColor(Color.ORANGE);
-                    if (shield < maxShield / 3) {
-                        g.setColor(Color.RED);
+        if (p.shieldUp()){
+            for (int i = 0; i < (shield / 10); i++) {
+                if (shield > i) {
+                    if (shield < (maxShield / 3 * 2)) {
+                        g.setColor(Color.ORANGE);
+                        if (shield < maxShield / 3) {
+                            g.setColor(Color.RED);
+                        }
+                    } else {
+                        g.setColor(Color.GREEN);
                     }
-                } else {
-                    g.setColor(Color.GREEN);
+                    g.fillRect(112, 235 - (i * singleShieldHeight), 26, singleShieldHeight);
+                    g.setColor(new Color(230, 230, 230));
+                    g.setStroke(new BasicStroke(4));
+                    g.drawRect(112, 235 - (i * singleShieldHeight), 26, singleShieldHeight);
                 }
-                g.fillRect(112, 235 - (i * singleShieldHeight), 26, singleShieldHeight);
-                g.setColor(new Color(230, 230, 230));
-                g.setStroke(new BasicStroke(4));
-                g.drawRect(112, 235 - (i * singleShieldHeight), 26, singleShieldHeight);
             }
         }
 

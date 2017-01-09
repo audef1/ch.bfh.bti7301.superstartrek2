@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import ch.bfh.bti7301.superstartrek.misc.MessageGenerator;
+
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class SpaceShip extends SpaceObject {
     protected int maxFuel;
     protected int money;
     protected Boolean dead = false;
+    protected Boolean shieldup = false;
 
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
         super(width, height, x, y, dx, dy, speed);
@@ -42,9 +45,9 @@ public class SpaceShip extends SpaceObject {
         directions.add(new Point(0, -1));
         directions.add(new Point(1, -1));
         setMaxSpeed(5);
-        setHealth(60);
+        setHealth(100);
         setHealthMax(100);
-        setShield(30);
+        setShield(100);
         setShieldMax(100);
     }
 
@@ -52,9 +55,6 @@ public class SpaceShip extends SpaceObject {
         if(weapons.get(index).getCapacity() > 0) {
             //firedBullets.add(weapons.get(index).fire(this.x + sprites.get(0)[0].getWidth()* this.dx / 2, this.y + sprites.get(0)[0].getHeight() * this.dy / 2, this.dx, this.dy));
             firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2) * this.dy, this.y + (sprites.get(0)[0].getWidth()/2) * this.dx, this.dx, this.dy));
-            System.out.println("peng");
-        }else{
-            System.out.println("kein peng");
         }
     }
 
@@ -62,12 +62,17 @@ public class SpaceShip extends SpaceObject {
         super.draw(g);
         firedBullets.forEach(Bullet -> Bullet.draw(g));
     }
+
     public void update(){
         super.update();
         firedBullets.forEach(Bullet -> Bullet.update());
 
         if (health == 0){
             dead = true;
+        }
+
+        if (shield == 0){
+            shieldup = false;
         }
 
         /*if(!firedBullets.isEmpty()){
@@ -92,10 +97,42 @@ public class SpaceShip extends SpaceObject {
 
     }
 
+    @Override
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
-        super.checkAttackCollisions(spaceobjects);
+        // loop spaceobjects
+        for(SpaceObject so : spaceobjects){
 
-        firedBullets.forEach(Bullet -> Bullet.checkAttackCollisions(spaceobjects));
+            // check collision
+            if(intersects(so)){
+                int idx = getDx() * -1;
+                int idy = getDy();
+
+                so.setDx(idx);
+                so.setDy(idy);
+                setSpeed(0);
+
+                if (so instanceof Bullet){
+                    this.shipTakesDamage(((Bullet)so).getDamage());
+                }
+            }
+
+            /* check if hit by a bullet */
+            if (so instanceof SpaceShip){
+                for (int i = 0; i < ((SpaceShip) so).getFiredBullets().size(); i++){
+                    if (intersects(((SpaceShip) so).getFiredBullets().get(i))){
+                        this.shipTakesDamage(((SpaceShip) so).getFiredBullets().get(i).getDamage());
+                        //((SpaceShip) so).getFiredBullets().get(i).remove();
+                        ((SpaceShip) so).getFiredBullets().remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+        // check if my bullets hit someone else
+        for (int i = 0; i < firedBullets.size(); i++){
+            firedBullets.get(i).checkAttackCollisions(spaceobjects);
+        }
     }
 
     public void turnRight(){
@@ -174,6 +211,14 @@ public class SpaceShip extends SpaceObject {
         this.shieldMax = shieldMax;
     }
 
+    public Boolean shieldUp() {
+        return shieldup;
+    }
+
+    public void toggleShield() {
+        shieldup = (!shieldup);
+    }
+
     public int getHealth() {
         return health;
     }
@@ -219,5 +264,11 @@ public class SpaceShip extends SpaceObject {
     public Boolean isDead() {
         return dead;
     }
+
+    public ArrayList<Bullet> getFiredBullets() {
+        return firedBullets;
+    }
+
+
 
 }

@@ -37,6 +37,8 @@ public enum SoundBoard {
     ERROR("soundeffects/misc/error.wav", false),
     NOTIFICATION("soundeffects/powerups/4.wav", false),
     BUTTON("soundeffects/buttonselect/2.wav", false),
+    BUTTON2("soundeffects/buttonselect/3.wav", false),
+    BUTTON3("soundeffects/buttonselect/4.wav", false),
     BUTTONSELECT("soundeffects/buttonselect/7.wav", false),
     ACTION("soundeffects/powerups/2.wav", false);
 

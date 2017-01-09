@@ -162,4 +162,5 @@ public class Meteor extends SpaceObject {
                 break;
         }
     }
+
 }

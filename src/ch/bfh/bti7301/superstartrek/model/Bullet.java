@@ -37,6 +37,7 @@ public class Bullet extends SpaceObject{
         super.update();
     }
 
+    @Override
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
 
         // loop spaceobjects
@@ -46,6 +47,9 @@ public class Bullet extends SpaceObject{
             if(intersects(so)){
                 if(so instanceof SpaceShip){
                     ((SpaceShip) so).shipTakesDamage(this.getDamage());
+                    this.remove();
+                }
+                else if (so instanceof Meteor){
                     this.remove();
                 }
             }

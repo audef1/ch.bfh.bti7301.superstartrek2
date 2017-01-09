@@ -64,13 +64,13 @@ public class Explosion extends SpaceObject {
         /* update the timer */
         explosionTimer++;
 
-        if (explosionTimer >= sprites.get(0).length-1 * 4){
+        if (explosionTimer >= sprites.get(0).length-1 * 10){
             remove = true;
         }
     }
 
     @Override
     public void draw(Graphics2D g){
-        g.drawImage(getSprites().get(0)[(explosionTimer/4)], (int) x, (int) y, null);
+        g.drawImage(getSprites().get(0)[(explosionTimer/10)], (int) x, (int) y, null);
     }
 }
