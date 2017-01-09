@@ -15,6 +15,14 @@ public abstract class Weapon {
     private int width;
     private int speed;
 
+    /**
+     * returns a Bullet to be added by the SpaceShip
+     * @param x
+     * @param y
+     * @param dx
+     * @param dy
+     * @return
+     */
     public Bullet fire(double x, double y, int dx, int dy){
         return new Bullet(width, height, x, y, dx, dy);
     }

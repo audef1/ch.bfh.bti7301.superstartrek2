@@ -8,6 +8,19 @@ import java.util.ArrayList;
  */
 public class StarFleetShip extends SpaceShip {
 
+    /**
+     * The Ship for the player. Functionalities are in SpaceShip, controls in
+     * another class
+     * @param width
+     * @param height
+     * @param x
+     * @param y
+     * @param dx
+     * @param dy
+     * @param speed
+     * @param health
+     * @param shield
+     */
     public StarFleetShip(int width, int height, int x, int y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed, health, shield);
         weapons.add(new GrenadeLauncher());

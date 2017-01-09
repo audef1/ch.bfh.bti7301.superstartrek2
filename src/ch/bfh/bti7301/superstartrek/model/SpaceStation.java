@@ -16,6 +16,11 @@ public class SpaceStation extends SpaceObject {
     private int upgradeShieldMultiplier = 2;
     private int upgradeHealthMultiplier = 2;
 
+    /**
+     * Station where the Player can visit the Shop
+     * @param width
+     * @param height
+     */
     public SpaceStation(int width, int height){
         super(width, height);
     }
