@@ -75,8 +75,8 @@ public class SpaceObjectFactory {
     private static void setPosition(ArrayList<SpaceObject> arrSo, SpaceObject spaceObject){
         for(SpaceObject obj: arrSo){
             if(spaceObject.intersects(obj)){
-                spaceObject.setX((int)obj.getX() + setObjectPosition(50, 500));
-                spaceObject.setY((int)obj.getY() + setObjectPosition(50, 350));
+                spaceObject.setX(setObjectPosition(50, 500));
+                spaceObject.setY(setObjectPosition(50, 350));
 
                 setPosition(arrSo, obj);
             }
