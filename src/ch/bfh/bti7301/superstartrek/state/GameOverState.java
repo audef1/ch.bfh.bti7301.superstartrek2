@@ -128,7 +128,12 @@ public class GameOverState extends State {
 
         @Override
         public void exit() {
-            SoundBoard.MENU.stop();
+
+            GameState gs = (GameState) getStateMachine().getStates().get("game");
+            gs.initGame();
+            gs.setScore(0);
+
+            SoundBoard.ENDING.stop();
         }
 
         @Override

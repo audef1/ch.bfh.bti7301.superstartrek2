@@ -95,7 +95,10 @@ public class SpaceShip extends SpaceObject {
      */
     public void update(){
         super.update();
-        firedBullets.forEach(Bullet -> Bullet.update());
+
+        for (int i = 0; i < firedBullets.size(); i++){
+            firedBullets.get(i).update();
+        }
 
         if (health == 0){
             dead = true;
@@ -309,6 +312,10 @@ public class SpaceShip extends SpaceObject {
 
     public Boolean isDead() {
         return dead;
+    }
+
+    public void setDead(Boolean dead){
+        this.dead = dead;
     }
 
     public ArrayList<Bullet> getFiredBullets() {

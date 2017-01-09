@@ -70,7 +70,7 @@ public class GameState extends State {
         getPanels().add(messagePanel);
         getPanels().add(infoPanel);
 
-        initlevels(GamePanel.GAMESIZE);
+        initGame();
 
         /* Initialize variables defined on top of the class */
         backgrounds.add(new Background("background_black.jpg", 0.1));
@@ -78,16 +78,21 @@ public class GameState extends State {
         backgrounds.add(new Background("background_purple.jpg", 0.1));
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
-        /* Initialize game objects */
-        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0, 100, 100);
-
-        // initialize spaceobjects with meteors, enemies and spacestations
-        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
-
         msgGenerator = new MessageGenerator();
     }
 
-    private void initlevels(int size) {
+    public void initGame(){
+
+        initlevels(GamePanel.GAMESIZE);
+
+        /* Initialize game objects */
+        player = new StarFleetShip(98, 75, ((mainPanel.getWidth() / 2) - (98 / 2)), mainPanel.getHeight() / 3 * 2, 1, 0, 0, 100, 100);
+
+        /* initialize spaceobjects with meteors, enemies and spacestations */
+        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
+    }
+
+    public void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
         currentLevel = levels[0][0];
     }
@@ -142,6 +147,7 @@ public class GameState extends State {
             if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
                 if(((EnemyShip) so).isDead()){
+                    score += 100;
                     spaceobjects.add(new Explosion(so.getX(), so.getY()));
                     spaceobjects.remove(so);
                 }
