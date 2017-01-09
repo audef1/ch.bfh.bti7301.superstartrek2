@@ -1,5 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
+
 /**
  * Created by Florian on 03.01.2017.
  */
@@ -15,6 +17,8 @@ public class GrenadeLauncher extends Weapon {
         setDamage(30);
         setAreaOfDamage(50);
         setSpeed(6);
+        setWidth(13);
+        setHeight(54);
     }
 
     /**
@@ -27,7 +31,8 @@ public class GrenadeLauncher extends Weapon {
      */
     public Bullet fire(double x, double y, int dx, int dy){
         setCapacity(Math.max(getCapacity()-1,0));
-        return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserBlue01.png");
+        SoundBoard.LASER4.play();
+        return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserRed16.png");
     }
 
 }

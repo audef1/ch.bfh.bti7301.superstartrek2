@@ -73,9 +73,6 @@ public class SpaceShip extends SpaceObject {
     public synchronized void fire(int index){
         if(weapons.get(index).getCapacity() > 0 && System.currentTimeMillis() - this.phaserDelay >= 300) {
             firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2), this.y, this.dx, this.dy));
-            if(this instanceof StarFleetShip){
-                SoundBoard.LASER.play();
-            }
             phaserDelay = System.currentTimeMillis();
         }
     }

@@ -83,6 +83,7 @@ public class GameState extends State {
 
         /* initialize game */
         initGame();
+        player = new StarFleetShip(98, 75, ((mainPanel.getWidth() / 2) - (98 / 2)), mainPanel.getHeight() / 3 * 2, 1, 0, 0, 100, 100);
     }
 
     public void initGame(){
@@ -333,7 +334,6 @@ public class GameState extends State {
 
             if (player.getWeapons().get(1).getCapacity() > 0){
                 player.fire(1);
-                SoundBoard.LASER4.play();
             }
             else{
                 msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of grenades, Captain!");
