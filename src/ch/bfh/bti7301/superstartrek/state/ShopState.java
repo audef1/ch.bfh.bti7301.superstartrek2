@@ -1,9 +1,6 @@
 package ch.bfh.bti7301.superstartrek.state;
 
-import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
-import ch.bfh.bti7301.superstartrek.graphics.InfoPanel;
-import ch.bfh.bti7301.superstartrek.graphics.MapPanel;
-import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+import ch.bfh.bti7301.superstartrek.graphics.*;
 import ch.bfh.bti7301.superstartrek.model.Level;
 import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
@@ -17,8 +14,7 @@ import java.util.ArrayList;
 
 public class ShopState extends State {
 
-    private InfoPanel infoPanel;
-    private MapPanel mapPanel;
+    private ShopPanel shopPanel;
     private BorderLayout layout = new BorderLayout();
 
     private Level currentLevel;
@@ -36,11 +32,10 @@ public class ShopState extends State {
 
         super(stateMachine);
 
-        infoPanel = new InfoPanel(this, 1024, 88);
-        mapPanel = new MapPanel(this, 1024, 680);
+        shopPanel = new ShopPanel(this, 1024, 680);
 
-        getPanels().add(infoPanel);
-        getPanels().add(mapPanel);
+        //getPanels().add(infoPanel);
+        getPanels().add(shopPanel);
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
@@ -82,8 +77,8 @@ public class ShopState extends State {
 
         // set layout and add different panels
         getGamePanel().setLayout(layout);
-        getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
-        getGamePanel().add(mapPanel, BorderLayout.CENTER);
+        getGamePanel().add(shopPanel, BorderLayout.PAGE_START);
+        //getGamePanel().add(mapPanel, BorderLayout.CENTER);
 
         // play backgroundmusic and toggle sound
         SoundBoard.BACKGROUND.play();
