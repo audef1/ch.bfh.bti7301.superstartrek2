@@ -132,7 +132,12 @@ public class SpaceShip extends SpaceObject {
 
         // check if my bullets hit someone else
         for (int i = 0; i < firedBullets.size(); i++){
-            firedBullets.get(i).checkAttackCollisions(spaceobjects);
+            if (!firedBullets.get(i).remove){
+                firedBullets.get(i).checkAttackCollisions(spaceobjects);
+            }else{
+                firedBullets.remove(i);
+                i--;
+            }
         }
     }
 
