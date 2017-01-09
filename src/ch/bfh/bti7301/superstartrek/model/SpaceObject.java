@@ -30,10 +30,8 @@ public class SpaceObject {
     protected int dx = 0;
     protected int dy = 1;
 
-    protected float inerta;
     protected double speed;
     protected int maxSpeed;
-    protected float mass;
 
     protected Boolean remove = false;
 
@@ -138,6 +136,7 @@ public class SpaceObject {
     }
 
     public void draw(Graphics2D g){
+        // Creates the rotation angle from the Object
         double rangle = Math.toDegrees(Math.atan2(dy, dx));
         AffineTransform transform = new AffineTransform();
         transform.translate(x,y);
@@ -161,22 +160,6 @@ public class SpaceObject {
 
     public int getHeight() {
         return height;
-    }
-
-    public int getCwidth() {
-        return cwidth;
-    }
-
-    public void setCwidth(int cwidth) {
-        this.cwidth = cwidth;
-    }
-
-    public int getCheight() {
-        return cheight;
-    }
-
-    public void setCheight(int cheight) {
-        this.cheight = cheight;
     }
 
     public double getX() {
@@ -211,14 +194,6 @@ public class SpaceObject {
         this.dy = dy;
     }
 
-    public float getInerta() {
-        return inerta;
-    }
-
-    public void setInerta(float inerta) {
-        this.inerta = inerta;
-    }
-
     public double getSpeed() {
         return speed;
     }
@@ -233,14 +208,6 @@ public class SpaceObject {
 
     public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
-    }
-
-    public float getMass() {
-        return mass;
-    }
-
-    public void setMass(float mass) {
-        this.mass = mass;
     }
 
     public ArrayList<BufferedImage[]> getSprites() {
