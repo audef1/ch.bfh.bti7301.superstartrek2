@@ -132,6 +132,7 @@ public class GameOverState extends State {
             GameState gs = (GameState) getStateMachine().getStates().get("game");
             gs.initGame();
             gs.setScore(0);
+            score = "Score: ";
 
             SoundBoard.ENDING.stop();
         }
