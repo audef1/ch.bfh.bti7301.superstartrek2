@@ -71,6 +71,7 @@ public class StateMachine {
         add("paused", new PausedState(this));
         add("map", new MapState(this));
         add("game", new GameState(this));
+        add("shop", new ShopState(this));
         add("gameover", new GameOverState(this));
         add("shop", new ShopState(this));
         change("menu");

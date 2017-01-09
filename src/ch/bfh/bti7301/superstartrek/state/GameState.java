@@ -148,6 +148,11 @@ public class GameState extends State {
         /* Check collisions and update position */
         player.update();
         player.checkAttackCollisions(spaceobjects);
+        for(SpaceObject so: spaceobjects){
+            if(so instanceof SpaceStation && player.intersects(so)){
+                getStateMachine().change("shop");
+            }
+        }
 
        for (int i = 0; i < spaceobjects.size(); i++){
            SpaceObject so = spaceobjects.get(i);
