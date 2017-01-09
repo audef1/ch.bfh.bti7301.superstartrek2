@@ -45,7 +45,7 @@ public class SpaceObjectFactory {
             case "enemy":
             {
                 for (int i = 0; i < amount; i++) {
-                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05));
+                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05), 40, 20);
 
                     setPosition(so, es);
                     so.add(es);

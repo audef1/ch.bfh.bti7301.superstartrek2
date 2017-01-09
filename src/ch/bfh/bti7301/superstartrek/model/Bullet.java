@@ -46,6 +46,7 @@ public class Bullet extends SpaceObject{
             // check collision
             if(intersects(so)){
                 if(so instanceof SpaceShip){
+                    System.out.println(this.getDamage());
                     ((SpaceShip) so).shipTakesDamage(this.getDamage());
                     this.remove();
                 }

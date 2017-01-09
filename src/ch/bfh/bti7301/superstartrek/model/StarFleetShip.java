@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 public class StarFleetShip extends SpaceShip {
 
-    public StarFleetShip(int width, int height, int x, int y, int dx, int dy, double speed){
-        super(width, height, x, y, dx, dy, speed);
+    public StarFleetShip(int width, int height, int x, int y, int dx, int dy, double speed, int health, int shield){
+        super(width, height, x, y, dx, dy, speed, health, shield);
         weapons.add(new GrenadeLauncher());
 
         this.getSprite("images/PNG/playerShip3_green.png");

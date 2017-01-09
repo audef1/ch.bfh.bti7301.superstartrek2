@@ -79,7 +79,7 @@ public class GameState extends State {
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         /* Initialize game objects */
-        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0);
+        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0, 100, 100);
 
         // initialize spaceobjects with meteors, enemies and spacestations
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();

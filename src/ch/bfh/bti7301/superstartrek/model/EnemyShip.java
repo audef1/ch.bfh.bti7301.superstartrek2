@@ -13,8 +13,8 @@ public class EnemyShip extends SpaceShip {
     private long lastSpeedUp = System.currentTimeMillis();
     private int timeToNextShot = 1000;
 
-    public EnemyShip(int width, int height, double x, double y, int dx, int dy, double speed){
-        super(width, height, x, y, dx, dy, speed);
+    public EnemyShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
+        super(width, height, x, y, dx, dy, speed, health, shield);
         this.getSprite("images/PNG/playerShip2_red.png");
     }
 

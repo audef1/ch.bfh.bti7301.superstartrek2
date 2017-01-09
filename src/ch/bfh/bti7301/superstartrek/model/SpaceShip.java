@@ -27,7 +27,7 @@ public class SpaceShip extends SpaceObject {
     protected Boolean dead = false;
     protected Boolean shieldup = false;
 
-    public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed){
+    public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed);
 
         // init weapons
@@ -45,10 +45,10 @@ public class SpaceShip extends SpaceObject {
         directions.add(new Point(0, -1));
         directions.add(new Point(1, -1));
         setMaxSpeed(5);
-        setHealth(100);
-        setHealthMax(100);
-        setShield(100);
-        setShieldMax(100);
+        setHealth(health);
+        setHealthMax(health);
+        setShield(shield);
+        setShieldMax(shield);
     }
 
     public void fire(int index){
@@ -261,6 +261,10 @@ public class SpaceShip extends SpaceObject {
         this.health = Math.max(this.health - (damage - shield), 0);
 
         this.shield -= (this.shield >= damage) ? damage : this.shield;
+
+        if(this.health <= 0){
+            this.remove();
+        }
     }
 
     public int shipHasDamage(){
