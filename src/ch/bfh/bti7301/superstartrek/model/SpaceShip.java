@@ -27,6 +27,19 @@ public class SpaceShip extends SpaceObject {
     protected Boolean dead = false;
     protected Boolean shieldup = false;
 
+    /**
+     * SpaceShip - parent class for starFleetShip and EnemyShip.
+     *
+     * @param width
+     * @param height
+     * @param x
+     * @param y
+     * @param dx
+     * @param dy
+     * @param speed
+     * @param health
+     * @param shield
+     */
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed);
 
@@ -51,18 +64,29 @@ public class SpaceShip extends SpaceObject {
         setShieldMax(shield);
     }
 
-    public void fire(int index){
+    /**
+     * Adds a new Bullet to firedBullets, if the weapon has capacity > 0
+     * @param index
+     */
+    public synchronized void fire(int index){
         if(weapons.get(index).getCapacity() > 0) {
-            //firedBullets.add(weapons.get(index).fire(this.x + sprites.get(0)[0].getWidth()* this.dx / 2, this.y + sprites.get(0)[0].getHeight() * this.dy / 2, this.dx, this.dy));
             firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2) * this.dy, this.y + (sprites.get(0)[0].getWidth()/2) * this.dx, this.dx, this.dy));
         }
     }
 
+    /**
+     * Draw function - also draws the Bullets, because they won't be drawn
+     * by the game itself
+     * @param g
+     */
     public void draw(Graphics2D g){
         super.draw(g);
         firedBullets.forEach(Bullet -> Bullet.draw(g));
     }
 
+    /**
+     * update function - also updates the Bullets, because they won't be updated
+     */
     public void update(){
         super.update();
         firedBullets.forEach(Bullet -> Bullet.update());
@@ -85,6 +109,9 @@ public class SpaceShip extends SpaceObject {
 
     }
 
+    /**
+     * Sets the direction of the Ship 45° to the left
+     */
     public void turnLeft(){
         if (directionPointer == 0)
             directionPointer = directions.size() -1;
@@ -141,6 +168,9 @@ public class SpaceShip extends SpaceObject {
         }
     }
 
+    /**
+     *
+     */
     public void turnRight(){
         if (directionPointer == directions.size() -1)
             directionPointer = 0;

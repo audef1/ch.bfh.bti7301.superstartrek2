@@ -13,11 +13,28 @@ public class EnemyShip extends SpaceShip {
     private long lastSpeedUp = System.currentTimeMillis();
     private int timeToNextShot = 1000;
 
+    /**
+     * Generated Ships which are able to attack the player.
+     * @param width
+     * @param height
+     * @param x
+     * @param y
+     * @param dx
+     * @param dy
+     * @param speed
+     * @param health
+     * @param shield
+     */
     public EnemyShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed, health, shield);
         this.getSprite("images/PNG/playerShip2_red.png");
     }
 
+    /**
+     * check where the enemy (Player) is.
+     * then call parent update
+     * @param player
+     */
     public void update(StarFleetShip player){
         this.detectEnemyDirection(player.getX(), player.getY());
         super.update();
@@ -34,6 +51,11 @@ public class EnemyShip extends SpaceShip {
         shape = new Polygon(xPoly, yPoly, xPoly.length);
     }
 
+    /**
+     * check where the enemy is. the ship rotates to this direction.
+     * @param enemyX
+     * @param enemyY
+     */
     public void detectEnemyDirection(double enemyX, double enemyY){
         double diffX = this.x - enemyX;
         double diffY = this.y - enemyY;
@@ -64,7 +86,7 @@ public class EnemyShip extends SpaceShip {
             this.setDx((int) directions.get(directionPointer).getX());
             this.setDy((int) directions.get(directionPointer).getY());
 
-            /*
+            /* Ram function
             if(distance <= 50){
                 long curSpeedUp = System.currentTimeMillis();
                 if(curSpeedUp - lastSpeedUp > 200){
@@ -74,6 +96,9 @@ public class EnemyShip extends SpaceShip {
             }
             */
 
+            /**
+             * If enemy is close enough, shoot
+             */
             if(distance > 200){
                 long curShot = System.currentTimeMillis();
                 if(curShot - lastShot > timeToNextShot){

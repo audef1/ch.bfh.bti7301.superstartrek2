@@ -5,6 +5,9 @@ package ch.bfh.bti7301.superstartrek.model;
  */
 public class GrenadeLauncher extends Weapon {
 
+    /**
+     * Pretty manually  - only the player has a grenade launcher
+     */
     public GrenadeLauncher(){
         setName("GrenadeLauncher");
         setCapacity(10);
