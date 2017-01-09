@@ -80,5 +80,6 @@ public class Explosion extends SpaceObject {
     @Override
     public void draw(Graphics2D g){
         g.drawImage(getSprites().get(0)[currentImg-1], (int) x, (int) y, null);
+
     }
 }
