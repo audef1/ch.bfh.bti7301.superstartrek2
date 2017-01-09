@@ -71,7 +71,8 @@ public class StateMachine {
         add("paused", new PausedState(this));
         add("map", new MapState(this));
         add("game", new GameState(this));
-        change("menu");
+        add("gameover", new GameOverState(this));
+        change("gameover");
     }
 
     public void keyPressed(KeyEvent e)

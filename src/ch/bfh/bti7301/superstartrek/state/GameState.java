@@ -114,6 +114,23 @@ public class GameState extends State {
             }
         }
 
+        /* check if mission goal is reached */
+        Boolean gameover = true;
+        Quadrant[][] quadrants = currentLevel.getQuadrants();
+        for (int i = 0; i < quadrants.length; i++){
+            for (int j = 0; j < quadrants[i].length; j++){
+                 for (SpaceObject so : quadrants[i][j].getSpaceobjects()){
+                     if (so instanceof EnemyShip){
+                         gameover = false;
+                     }
+                 }
+            }
+        }
+
+        if (gameover || player.isDead()){
+            getStateMachine().change("gameover");
+        }
+
         /* Check collisions and update position */
         player.update();
         player.checkAttackCollisions(spaceobjects);
@@ -222,12 +239,6 @@ public class GameState extends State {
     public void tellMission(){
         msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 30, "Captain, we have to neutralize\nall Klingons in the Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
     }
-    /*
-    @Override
-    public void draw() {
-
-    }
-    */
 
     @Override
     public void enter() {
