@@ -300,9 +300,13 @@ public class SpaceShip extends SpaceObject {
     }
 
     public void shipTakesDamage(int damage){
-        this.health = Math.max(this.health - (damage - shield), 0);
 
-        this.shield -= (this.shield >= damage) ? damage : this.shield;
+        if (shieldup){
+            this.shield -= (this.shield >= damage) ? damage : 0;
+        }
+        else{
+            this.health -= (this.health >= damage) ? damage : 0;
+        }
 
         if(this.health <= 0){
             this.remove();

@@ -73,8 +73,6 @@ public class GameState extends State {
         getPanels().add(messagePanel);
         getPanels().add(infoPanel);
 
-        initGame();
-
         /* Initialize variables defined on top of the class */
         backgrounds.add(new Background("background_black.jpg", 0.1));
         backgrounds.add(new Background("background_blue.jpg", 0.1));
@@ -82,6 +80,9 @@ public class GameState extends State {
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
         msgGenerator = new MessageGenerator();
+
+        /* initialize game */
+        initGame();
     }
 
     public void initGame(){
