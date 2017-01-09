@@ -2,6 +2,7 @@ package ch.bfh.bti7301.superstartrek.model;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -22,8 +23,6 @@ public class Meteor extends SpaceObject {
         int random = (int) (Math.random() * (8 - 1) + 1);
         BufferedImage sprite = loadSprite(random);
         this.setPolygon(random);
-        setCwidth(sprite.getWidth());
-        setCheight(sprite.getHeight());
         BufferedImage[] bi = new BufferedImage[1];
         bi[0] = sprite;
         sprites.add(bi);
@@ -161,6 +160,23 @@ public class Meteor extends SpaceObject {
                 shape = new Polygon(xPoly, yPoly, xPoly.length);
                 break;
         }
+    }
+
+    @Override
+    public void draw(Graphics2D g){
+        AffineTransform transform = new AffineTransform();
+        transform.translate(x,y);
+
+        // check if game has been started in debug mode
+        if(isDebug){
+            g.fill(getPolygon()); // translated shape collisionbox
+        }
+
+        g.drawImage(
+                sprites.get(0)[0],
+                transform,
+                null
+        );
     }
 
 }
