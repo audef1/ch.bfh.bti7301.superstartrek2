@@ -72,7 +72,8 @@ public class StateMachine {
         add("map", new MapState(this));
         add("game", new GameState(this));
         add("gameover", new GameOverState(this));
-        change("gameover");
+        add("shop", new ShopState(this));
+        change("menu");
     }
 
     public void keyPressed(KeyEvent e)
