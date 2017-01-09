@@ -73,7 +73,7 @@ public class GameState extends State {
         getPanels().add(messagePanel);
         getPanels().add(infoPanel);
 
-        initlevels(GamePanel.GAMESIZE);
+        initGame();
 
         /* Initialize variables defined on top of the class */
         backgrounds.add(new Background("background_black.jpg", 0.1));
@@ -81,19 +81,20 @@ public class GameState extends State {
         backgrounds.add(new Background("background_purple.jpg", 0.1));
         backgrounds.add(new Background("background_darkpurple.jpg", 0.1));
 
-        /* Initialize game objects */
-        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0, 100, 100);
-
-        // initialize spaceobjects with meteors, enemies and spacestations
-        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
-
         msgGenerator = new MessageGenerator();
     }
 
-    /**
-     * Create levels
-     * @param size how many levels
-     */
+    public void initGame(){
+
+        initlevels(GamePanel.GAMESIZE);
+
+        /* Initialize game objects */
+        player = new StarFleetShip(98, 75, ((mainPanel.getWidth() / 2) - (98 / 2)), mainPanel.getHeight() / 3 * 2, 1, 0, 0, 100, 100);
+
+        /* initialize spaceobjects with meteors, enemies and spacestations */
+        spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
+    }
+
     private void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
         currentLevel = levels[0][0];
@@ -125,6 +126,23 @@ public class GameState extends State {
             }
         }
 
+        /* check if mission goal is reached */
+        Boolean gameover = true;
+        Quadrant[][] quadrants = currentLevel.getQuadrants();
+        for (int i = 0; i < quadrants.length; i++){
+            for (int j = 0; j < quadrants[i].length; j++){
+                 for (SpaceObject so : quadrants[i][j].getSpaceobjects()){
+                     if (so instanceof EnemyShip){
+                         gameover = false;
+                     }
+                 }
+            }
+        }
+
+        if (gameover || player.isDead()){
+            getStateMachine().change("gameover");
+        }
+
         /* Check collisions and update position */
         player.update();
         player.checkAttackCollisions(spaceobjects);
@@ -136,6 +154,7 @@ public class GameState extends State {
             if (so instanceof EnemyShip) {
                 ((EnemyShip) so).update(player);
                 if(((EnemyShip) so).isDead()){
+                    score += 100;
                     spaceobjects.add(new Explosion(so.getX(), so.getY()));
                     spaceobjects.remove(so);
                 }
@@ -236,12 +255,6 @@ public class GameState extends State {
     public void tellMission(){
         msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 30, "Captain, we have to neutralize\nall Klingons in the Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
     }
-    /*
-    @Override
-    public void draw() {
-
-    }
-    */
 
     /**
      * Handles the state entering
@@ -296,7 +309,6 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE) {
             player.fire(0);
-            SoundBoard.LASER.play();
         }
 
         if (key == KeyEvent.VK_S) {

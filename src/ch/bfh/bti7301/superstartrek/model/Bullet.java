@@ -147,4 +147,6 @@ public class Bullet extends SpaceObject{
     public void setTimeToExplode(int timeToExplode) {
         this.timeToExplode = timeToExplode;
     }
+
+    public long getShotMicroTime(){return shotMicroTime;}
 }

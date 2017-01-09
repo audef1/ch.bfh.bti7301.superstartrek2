@@ -1,21 +1,27 @@
 package ch.bfh.bti7301.superstartrek.state;
 
 import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
+import ch.bfh.bti7301.superstartrek.graphics.InfoPanel;
+import ch.bfh.bti7301.superstartrek.graphics.MapPanel;
 import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
+import ch.bfh.bti7301.superstartrek.model.Level;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
- * Created by filip on 07.01.2017.
+ * Created by florianauderset on 20.12.16.
  */
+
 public class ShopState extends State {
-    private SubPanel mainPanel;
+
+    private InfoPanel infoPanel;
+    private MapPanel mapPanel;
     private BorderLayout layout = new BorderLayout();
 
-    private ArrayList<String[]> options;
-    private int menuPointer = 0;
+    private Level currentLevel;
 
     private Font font;
     private Color fontColor;
@@ -27,11 +33,14 @@ public class ShopState extends State {
      * @param stateMachine StateMachine object
      */
     public ShopState(StateMachine stateMachine) {
+
         super(stateMachine);
 
-        mainPanel = new SubPanel(this, GamePanel.WIDTH, GamePanel.HEIGHT);
-        getGamePanel().add(mainPanel, BorderLayout.CENTER);
-        getPanels().add(mainPanel);
+        infoPanel = new InfoPanel(this, 1024, 88);
+        mapPanel = new MapPanel(this, 1024, 680);
+
+        getPanels().add(infoPanel);
+        getPanels().add(mapPanel);
 
         // init menu fonts and colors
         titleColor = new Color(238,221,130);
@@ -57,28 +66,35 @@ public class ShopState extends State {
      */
     public void draw() {
 
-        // set background
-        Graphics2D g = mainPanel.getG();
-        g.setBackground(Color.BLACK);
-
-        // draw title
-        g.setColor(titleColor);
-        g.setFont(titleFont);
-        String paused = "GAME PAUSED";
-        g.drawString(paused, ((GamePanel.WIDTH/2)-(g.getFontMetrics().stringWidth(paused)/2)), ((GamePanel.HEIGHT/2)-(font.getSize()/2)));
     }
 
     /**
      * Handles entering the state
      */
     public void enter() {
+        // get data from current level
+        GameState gs = (GameState) getStateMachine().getStates().get("game");
+        currentLevel = gs.getCurrentLevel();
+
+        // TODO: for testing
+        currentLevel.getCurrentquardant().setCleared(true);
+        currentLevel.getCurrentquardant().setVisited(true);
+
+        // set layout and add different panels
         getGamePanel().setLayout(layout);
-        getGamePanel().add(mainPanel, BorderLayout.CENTER);
+        getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
+        getGamePanel().add(mapPanel, BorderLayout.CENTER);
+
+        // play backgroundmusic and toggle sound
+        SoundBoard.BACKGROUND.play();
+        SoundBoard.ERROR.play();
+
     }
 
     @Override
     public void exit() {
-
+        SoundBoard.BACKGROUND.pause();
+        SoundBoard.ERROR.play();
     }
 
     /**
@@ -88,7 +104,7 @@ public class ShopState extends State {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_P) {
+        if (key == KeyEvent.VK_M) {
             getStateMachine().change("game");
         }
 
@@ -99,7 +115,13 @@ public class ShopState extends State {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
 
     }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+
 
 }
