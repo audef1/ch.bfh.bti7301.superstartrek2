@@ -286,7 +286,6 @@ public class GameState extends State {
 
         if (key == KeyEvent.VK_SPACE) {
             player.fire(0);
-            SoundBoard.LASER.play();
         }
 
         if (key == KeyEvent.VK_S) {

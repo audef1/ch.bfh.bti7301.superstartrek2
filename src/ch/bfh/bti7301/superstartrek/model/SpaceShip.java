@@ -1,6 +1,7 @@
 package ch.bfh.bti7301.superstartrek.model;
 
 import ch.bfh.bti7301.superstartrek.misc.MessageGenerator;
+import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -72,6 +73,9 @@ public class SpaceShip extends SpaceObject {
     public synchronized void fire(int index){
         if(weapons.get(index).getCapacity() > 0 && System.currentTimeMillis() - this.phaserDelay >= 300) {
             firedBullets.add(weapons.get(index).fire(this.x + (sprites.get(0)[0].getHeight()/2), this.y, this.dx, this.dy));
+            if(this instanceof StarFleetShip){
+                SoundBoard.LASER.play();
+            }
             phaserDelay = System.currentTimeMillis();
         }
     }
@@ -148,7 +152,7 @@ public class SpaceShip extends SpaceObject {
             /* check if hit by a bullet */
             if (so instanceof SpaceShip){
                 for (int i = 0; i < ((SpaceShip) so).getFiredBullets().size(); i++){
-                    if (intersects(((SpaceShip) so).getFiredBullets().get(i))){
+                    if (intersects(((SpaceShip) so).getFiredBullets().get(i)) && System.currentTimeMillis() - ((SpaceShip) so).getFiredBullets().get(i).getShotMicroTime() > 100){
                         this.shipTakesDamage(((SpaceShip) so).getFiredBullets().get(i).getDamage());
                         //((SpaceShip) so).getFiredBullets().get(i).remove();
                         ((SpaceShip) so).getFiredBullets().remove(i);
