@@ -17,7 +17,14 @@ public class GrenadeLauncher extends Weapon {
         setSpeed(6);
     }
 
-    @Override
+    /**
+     * fires the grenade
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @return bullet with the given parameters
+     */
     public Bullet fire(double x, double y, int dx, int dy){
         setCapacity(Math.max(getCapacity()-1,0));
         return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserBlue01.png");

@@ -11,15 +11,15 @@ public class StarFleetShip extends SpaceShip {
     /**
      * The Ship for the player. Functionalities are in SpaceShip, controls in
      * another class
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
-     * @param speed
-     * @param health
-     * @param shield
+     * @param width StarFleetShip - width
+     * @param height StarFleetShip - height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param speed StarFleetShip speed
+     * @param health how much health does the SpaceShip have
+     * @param shield how much shield odes the SpaceShip have
      */
     public StarFleetShip(int width, int height, int x, int y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed, health, shield);

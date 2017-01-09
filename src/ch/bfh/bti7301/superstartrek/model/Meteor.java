@@ -15,6 +15,16 @@ public class Meteor extends SpaceObject {
 
     boolean isDebug;
 
+    /**
+     * overloaded constructor
+     * @param width meteor-width
+     * @param height meteor-height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param speed meteor speed
+     */
     public Meteor(int width, int height, int x, int y, int dx, int dy, double speed) {
 
         super(width, height, x, y, dx, dy, speed);
@@ -108,8 +118,9 @@ public class Meteor extends SpaceObject {
     }
 
     /**
-     * Sets the Collisionbox to the shape of the image.
-     * Polygon has to be generated manually.
+     * Sets the Collision box to the shape of the image.
+     * polygon has to be generated manually.
+     * @param randomNumber for which meteor should the polygon be created
      */
     public void setPolygon(int randomNumber){
 
@@ -162,7 +173,10 @@ public class Meteor extends SpaceObject {
         }
     }
 
-    @Override
+    /**
+     * Draw meteor
+     * @param g Graphics2D-object
+     */
     public void draw(Graphics2D g){
         AffineTransform transform = new AffineTransform();
         transform.translate(x,y);
@@ -178,5 +192,4 @@ public class Meteor extends SpaceObject {
                 null
         );
     }
-
 }

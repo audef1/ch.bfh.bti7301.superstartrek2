@@ -1,7 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import ch.bfh.bti7301.superstartrek.misc.MessageGenerator;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -31,15 +29,15 @@ public class SpaceShip extends SpaceObject {
     /**
      * SpaceShip - parent class for starFleetShip and EnemyShip.
      *
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
-     * @param speed
-     * @param health
-     * @param shield
+     * @param width SpaceShip-width
+     * @param height Space-Object height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param speed SpaceShip speed
+     * @param health how much health does the SpaceShip have
+     * @param shield how much shield odes the SpaceShip have
      */
     public SpaceShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed);
@@ -79,7 +77,7 @@ public class SpaceShip extends SpaceObject {
     /**
      * Draw function - also draws the Bullets, because they won't be drawn
      * by the game itself
-     * @param g
+     * @param g Graphics2D-object
      */
     public void draw(Graphics2D g){
         super.draw(g);
@@ -126,7 +124,10 @@ public class SpaceShip extends SpaceObject {
 
     }
 
-    @Override
+    /**
+     * Check collision between SpaceShip and bullet
+     * @param spaceobjects SpaceObjects array
+     */
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
         // loop spaceobjects
         for(SpaceObject so : spaceobjects){
@@ -171,7 +172,7 @@ public class SpaceShip extends SpaceObject {
     }
 
     /**
-     *
+     * Sets the direction of the Ship 45° to the right
      */
     public void turnRight(){
         if (directionPointer == directions.size() -1)

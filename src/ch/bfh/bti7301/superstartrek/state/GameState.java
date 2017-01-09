@@ -45,8 +45,10 @@ public class GameState extends State {
 
     private Boolean missionTold = false;
 
-    /* private variables - ex. score */
-
+    /**
+     * overloaded constructor
+      * @param stateMachine StateMachine object
+     */
     public GameState(StateMachine stateMachine) {
 
         super(stateMachine);
@@ -64,6 +66,7 @@ public class GameState extends State {
         infoPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         messagePanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
+        /* add panels */
         getPanels().add(mainPanel);
         getPanels().add(weaponPanel);
         getPanels().add(statusPanel);
@@ -87,12 +90,18 @@ public class GameState extends State {
         msgGenerator = new MessageGenerator();
     }
 
+    /**
+     * Create levels
+     * @param size how many levels
+     */
     private void initlevels(int size) {
         levels = new LevelGenerator(size).getLevels();
         currentLevel = levels[0][0];
     }
 
-    @Override
+    /**
+     * Handles the input
+     */
     public void input() {
         /* check input of all spaceobjects */
         player.input();
@@ -102,7 +111,9 @@ public class GameState extends State {
         }
     }
 
-    @Override
+    /**
+     * Updates the GameState
+     */
     public void update() {
 
         /* check if mission has already told */
@@ -219,6 +230,9 @@ public class GameState extends State {
         }
     }
 
+    /**
+     * Create mission message
+     */
     public void tellMission(){
         msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 30, "Captain, we have to neutralize\nall Klingons in the Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
     }
@@ -229,7 +243,9 @@ public class GameState extends State {
     }
     */
 
-    @Override
+    /**
+     * Handles the state entering
+     */
     public void enter() {
         /* do stuff when entering this state */
         initialized = true;
@@ -249,13 +265,18 @@ public class GameState extends State {
         tellMission();
     }
 
-    @Override
+    /**
+     * Handles the exiting of the State
+     */
     public void exit() {
         /* do stuff when exiting this state */
         SoundBoard.BACKGROUND.pause();
     }
 
-    @Override
+    /**
+     * Handles the user input
+     * @param e KeyEvent
+     */
     public void keyPressed(KeyEvent e) {
         /* do something with the input */
 
@@ -290,7 +311,7 @@ public class GameState extends State {
                 }
             }
             else{
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields severly damaged, Captain!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields severely damaged, Captain!");
             }
 
         }
@@ -302,7 +323,7 @@ public class GameState extends State {
                 SoundBoard.LASER4.play();
             }
             else{
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of granades, Captain!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of grenades, Captain!");
                 SoundBoard.NOTIFICATION.play();
             }
 

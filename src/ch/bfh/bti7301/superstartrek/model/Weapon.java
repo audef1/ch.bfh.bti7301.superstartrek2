@@ -17,11 +17,11 @@ public abstract class Weapon {
 
     /**
      * returns a Bullet to be added by the SpaceShip
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
-     * @return
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @return Bullet object with given parameters
      */
     public Bullet fire(double x, double y, int dx, int dy){
         return new Bullet(width, height, x, y, dx, dy);

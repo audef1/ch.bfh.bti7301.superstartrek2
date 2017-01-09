@@ -23,6 +23,10 @@ public class PausedState extends State {
     private Font titleFont;
     private Color titleColor;
 
+    /**
+     * overloaded constructor
+     * @param stateMachine StateMachine object
+     */
     public PausedState(StateMachine stateMachine) {
         super(stateMachine);
 
@@ -49,7 +53,9 @@ public class PausedState extends State {
 
     }
 
-    @Override
+    /**
+     * Draw the font
+     */
     public void draw() {
 
         // set background
@@ -63,7 +69,9 @@ public class PausedState extends State {
         g.drawString(paused, ((GamePanel.WIDTH/2)-(g.getFontMetrics().stringWidth(paused)/2)), ((GamePanel.HEIGHT/2)-(font.getSize()/2)));
     }
 
-    @Override
+    /**
+     * Handles entering the state
+     */
     public void enter() {
         getGamePanel().setLayout(layout);
         getGamePanel().add(mainPanel, BorderLayout.CENTER);
@@ -74,7 +82,10 @@ public class PausedState extends State {
 
     }
 
-    @Override
+    /**
+     * Handles the user input
+     * @param e KeyEvent object
+     */
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 

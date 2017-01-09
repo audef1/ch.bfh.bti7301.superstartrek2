@@ -38,31 +38,6 @@ public class NameGenerator {
         this.nameInstructions.addAll(Arrays.asList(ArrNameInstructions));
     }
 
-    /**
-     * overloaded constructor
-     * @param vocals
-     * @param startConsonants
-     * @param endConsonants
-     */
-    public NameGenerator(String[] vocals, String[] startConsonants,
-                         String[] endConsonants) {
-        this.vocals.addAll(Arrays.asList(vocals));
-        this.startConsonants.addAll(Arrays.asList(startConsonants));
-        this.endConsonants.addAll(Arrays.asList(endConsonants));
-    }
-
-    /**
-     * overloaded constructor
-     * @param vocals
-     * @param startConsonants
-     * @param endConsonants
-     * @param nameInstructions
-     */
-    public NameGenerator(String[] vocals, String[] startConsonants, String[] endConsonants, String[] nameInstructions) {
-        this(vocals, startConsonants, endConsonants);
-        this.nameInstructions.addAll(Arrays.asList(nameInstructions));
-    }
-
     public String getName() {
         return firstCharUppercase(getNameByInstructions(getRandomElementFrom(nameInstructions)));
     }

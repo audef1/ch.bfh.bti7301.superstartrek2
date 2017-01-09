@@ -1,6 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.misc.SpaceObjectFactory;
 
 import java.util.ArrayList;
@@ -19,6 +18,11 @@ public class Quadrant {
 
     SpaceObjectFactory sof;
 
+    /**
+     * overloaded constructor
+     * @param name quadrant name
+     * @param quadrantnr quadrant number
+     */
     public Quadrant(String name, int quadrantnr){
         this.name = name;
         this.quadrantnr = quadrantnr;
@@ -28,8 +32,11 @@ public class Quadrant {
         initQuadrant();
     }
 
+    /**
+     * Creates a quadrant
+     */
     private void initQuadrant(){
-        // fill spaceobjects with rocks and stuff
+
         int min = 0;
         int maxSpaceStation = 1;
         int maxMeteors = 3;
@@ -39,6 +46,7 @@ public class Quadrant {
         int amountMeteors = ThreadLocalRandom.current().nextInt(min, maxMeteors + 1);
         int amountEnemies = ThreadLocalRandom.current().nextInt(min, maxEnemies + 1);
 
+        // fill spaceobjects with meteors and stuff
         spaceobjects.addAll(sof.createSpaceObject("spaceStation", amountSpaceStation));
         spaceobjects.addAll(sof.createSpaceObject("meteor", amountMeteors));
         spaceobjects.addAll(sof.createSpaceObject("enemy", amountEnemies));

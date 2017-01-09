@@ -20,6 +20,10 @@ public class OptionState extends State {
     private Font titleFont;
     private Color titleColor;
 
+    /**
+     * overloaded constructor
+     * @param stateMachine StateMachine object
+     */
     public OptionState(StateMachine stateMachine) {
 
         super(stateMachine);

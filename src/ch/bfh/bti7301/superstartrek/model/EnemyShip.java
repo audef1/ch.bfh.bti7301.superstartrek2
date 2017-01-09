@@ -15,15 +15,15 @@ public class EnemyShip extends SpaceShip {
 
     /**
      * Generated Ships which are able to attack the player.
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
-     * @param speed
-     * @param health
-     * @param shield
+     * @param width Ship-width
+     * @param height Ship-height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param speed ships moving speed
+     * @param health how much health does the enemy have
+     * @param shield how much shield does the enemy have
      */
     public EnemyShip(int width, int height, double x, double y, int dx, int dy, double speed, int health, int shield){
         super(width, height, x, y, dx, dy, speed, health, shield);

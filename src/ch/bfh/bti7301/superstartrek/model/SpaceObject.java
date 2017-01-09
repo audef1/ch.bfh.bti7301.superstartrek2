@@ -40,6 +40,11 @@ public class SpaceObject {
 
     boolean isDebug;
 
+    /**
+     * overloaded constructor
+     * @param width objects width
+     * @param height objects height
+     */
     public SpaceObject(int width, int height){
         this.width = width;
         this.height = height;
@@ -50,6 +55,13 @@ public class SpaceObject {
                 getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
+    /**
+     * overloaded constructor
+     * @param width objects width
+     * @param height objects height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
     public SpaceObject(int width, int height, int x, int y) {
         this.width = width;
         this.height = height;
@@ -62,6 +74,16 @@ public class SpaceObject {
                 getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
+    /**
+     * overloaded constructor
+     * @param width objects width
+     * @param height objects height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param speed objects speed
+     */
     public SpaceObject(int width, int height, double x, double y, int dx, int dy, double speed) {
         this.width = width;
         this.height = height;
@@ -77,6 +99,10 @@ public class SpaceObject {
                 getInputArguments().toString().indexOf("-agentlib:jdwp") > 0;
     }
 
+    /**
+     * load the objects sprite
+     * @param path sprite-path
+     */
     protected void getSprite(String path){
         try {
             BufferedImage sprite = ImageIO.read(new File(getClass().getClassLoader().getResource(path).getFile()));
@@ -93,6 +119,9 @@ public class SpaceObject {
 
     }
 
+    /**
+     * update objects position
+     */
     public void update() {
         double penalty = 1d/Math.sqrt(dx*dx+dy*dy);
 
@@ -117,6 +146,10 @@ public class SpaceObject {
         }
     }
 
+    /**
+     * Sets the Collisionbox to the shape of the image.
+     * Polygon has to be generated manually.
+     */
     public void setPolygon(){
         int xPoly[] = {0,width,width, 0};
         int yPoly[] = {0,0,height,height};
@@ -135,6 +168,10 @@ public class SpaceObject {
         return transform.createTransformedShape(shape);
     }
 
+    /**
+     * Draw the SpaceObject
+     * @param g Graphics2D-object
+     */
     public void draw(Graphics2D g){
         // Creates the rotation angle from the Object
         double rangle = Math.toDegrees(Math.atan2(dy, dx));
@@ -234,9 +271,14 @@ public class SpaceObject {
         remove = true;
     }
 
+    /**
+     * checks the collision between a SpaceObject and a bullet
+     * @param spaceobjects SpaceObjects array
+     */
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects) {
-        /* standardprocedure for spaceobjects
-        *  loop spaceobjects
+        /*
+            standardprocedure for spaceobjects
+            loop spaceobjects
         */
         for(SpaceObject so : spaceobjects){
             // check collision

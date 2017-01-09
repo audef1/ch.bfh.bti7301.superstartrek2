@@ -1,6 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import java.awt.*;
 import java.awt.geom.Ellipse2D;
 
 /**
@@ -17,14 +16,12 @@ public class SpaceStation extends SpaceObject {
     private int upgradeHealthMultiplier = 2;
 
     /**
-     * Station where the Player can visit the Shop
-     * @param width
-     * @param height
+     * overloaded constructor
+     * @param width SpaceStation-width
+     * @param height SpaceStation-height
+     * @param x x-coordinate
+     * @param y y-coordinate
      */
-    public SpaceStation(int width, int height){
-        super(width, height);
-    }
-
     public SpaceStation(int width, int height, int x, int y){
         super(width, height, x, y);
 
@@ -35,7 +32,6 @@ public class SpaceStation extends SpaceObject {
      * Sets the Collisionbox to the shape of the image.
      * Polygon has to be generated manually.
      */
-    @Override
     public void setPolygon(){
         shape = new Ellipse2D.Double(0, 0, getWidth(), getHeight());
     }
@@ -104,6 +100,10 @@ public class SpaceStation extends SpaceObject {
         return ship.getHealthMax() * this.upgradeHealthMultiplier;
     }
 
+    /**
+     *
+     * @param ship SpaceShip Object
+     */
     public void refuel(SpaceShip ship){
         if(this.canAffordRefuel(ship)){
             ship.setMoney(ship.getMoney() - this.getFuelCostForSpaceShip(ship));
@@ -111,6 +111,10 @@ public class SpaceStation extends SpaceObject {
         }
     }
 
+    /**
+     * Repair SpaceShip
+     * @param ship SpaceShip Object
+     */
     public void repair(SpaceShip ship){
         if(this.canAffordRepair(ship)){
             ship.setMoney(ship.getMoney() - this.getRepairCostForSpaceShip(ship));
@@ -119,6 +123,10 @@ public class SpaceStation extends SpaceObject {
         }
     }
 
+    /**
+     * Upgrade shield
+     * @param ship SpaceShip Object
+     */
     public void upgradeShield(SpaceShip ship){
         if(this.canAffordUpgradeShieldCost(ship)){
             ship.setMoney(ship.getMoney() - this.getUpgradeShieldCost(ship));
@@ -126,6 +134,10 @@ public class SpaceStation extends SpaceObject {
         }
     }
 
+    /**
+     * Upgrade fuel
+     * @param ship SpaceShip Object
+     */
     public void upgradeFuel(SpaceShip  ship){
         if(this.canAffordUpgradeFuelCost(ship)){
             ship.setMoney(ship.getMoney() - this.getUpgradeFuelCost(ship));
@@ -133,6 +145,11 @@ public class SpaceStation extends SpaceObject {
         }
     }
 
+    /**
+     * Upgrade weapon
+     * @param ship SpaceShip Object
+     * @param weapon Weapon Object
+     */
     public void upgradeWeapon(SpaceShip ship, Weapon weapon){
         if(this.canAffordUpgradeWeaponCost(ship, weapon)){
             ship.setMoney(ship.getMoney() - this.getUpgradeWeaponCost(weapon));
@@ -140,6 +157,10 @@ public class SpaceStation extends SpaceObject {
         }
     }
 
+    /**
+     * Upgrade health
+     * @param ship SpaceShip Object
+     */
     public void upgradeHealth(SpaceShip ship){
         if(ship.getMoney() >= ship.getHealthMax()*this.upgradeHealthMultiplier){
             ship.setHealthMax(ship.getHealthMax() + 5);

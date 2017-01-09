@@ -1,15 +1,12 @@
 package ch.bfh.bti7301.superstartrek.state;
 
-import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.graphics.InfoPanel;
 import ch.bfh.bti7301.superstartrek.graphics.MapPanel;
-import ch.bfh.bti7301.superstartrek.graphics.SubPanel;
 import ch.bfh.bti7301.superstartrek.model.Level;
 import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 /**
  * Created by florianauderset on 20.12.16.
@@ -28,6 +25,10 @@ public class MapState extends State {
     private Font titleFont;
     private Color titleColor;
 
+    /**
+     * overloaded constructor
+     * @param stateMachine
+     */
     public MapState(StateMachine stateMachine) {
 
         super(stateMachine);
@@ -62,7 +63,9 @@ public class MapState extends State {
 
     }
 
-    @Override
+    /**
+     * Handles the state entering
+     */
     public void enter() {
         // get data from current level
         GameState gs = (GameState) getStateMachine().getStates().get("game");
@@ -83,13 +86,18 @@ public class MapState extends State {
 
     }
 
-    @Override
+    /**
+     * Handles the state exiting
+     */
     public void exit() {
         SoundBoard.BACKGROUND.pause();
         SoundBoard.ERROR.play();
     }
 
-    @Override
+    /**
+     * Handles the user input
+     * @param e KeyEvent
+     */
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -102,7 +110,10 @@ public class MapState extends State {
         }
     }
 
-    @Override
+    /**
+     * Handles what's happening when a key is released
+     * @param e KeyEvent
+     */
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -111,6 +122,4 @@ public class MapState extends State {
     public Level getCurrentLevel() {
         return currentLevel;
     }
-
-
 }

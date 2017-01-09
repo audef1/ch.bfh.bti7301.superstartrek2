@@ -13,8 +13,13 @@ public class Level {
     private Boolean cleared = false;
     private Quadrant[][] quadrants;
     private Quadrant currentquadrant;
-    private int size;
 
+    /**
+     * overloaded constructor
+     * @param name Level name
+     * @param levelnr level number
+     * @param size level size
+     */
     public Level(String name, int levelnr, int size){
         this.name = name;
         this.levelnr = levelnr;
@@ -23,11 +28,20 @@ public class Level {
         currentquadrant = quadrants[0][0];
     }
 
+    /**
+     * create quadrants
+     * @param size how many quadrants should be created
+     */
     private void initQuadrants(int size) {
         QuadrantGenerator quadrantgenerator = new QuadrantGenerator(size);
         quadrants = quadrantgenerator.getQuadrants();
     }
 
+    /**
+     * Gets a quadrant based on the given parameter
+     * @param nr which quadrant should be returned
+     * @return Quadrant asked by parameter
+     */
     public Quadrant getQuadrantByNr(int nr){
         for (int i = 0; i < quadrants.length; i++){
             for (int j = 0; j < quadrants[i].length; j++){

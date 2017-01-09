@@ -1,7 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -18,12 +16,12 @@ public class Bullet extends SpaceObject{
     /**
      * The Bullet Class is used by Weapons. Makes damage on intersection with enemies
      * First Constructor is for Bullets wich donn't explode.
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
+     * @param width bullet width
+     * @param height bullet height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
      */
     public Bullet(int width, int height, double x, double y, int dx, int dy){
         super(9, 54,x,y,dx,dy, 10);
@@ -32,17 +30,16 @@ public class Bullet extends SpaceObject{
 
     /**
      * The second Constructor is for Exploding weapons
-     * @param width
-     * @param height
-     * @param x
-     * @param y
-     * @param dx
-     * @param dy
-     * @param damage
-     * @param areaOfDamage
-     * @param timeToExplode
-     * @param speed
-     * @param filename
+     * @param width bullet width
+     * @param height bullet height
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @param damage how much damage is dealt
+     * @param timeToExplode how many second between fire and explosion
+     * @param speed flight speed of bullet
+     * @param filename to be loaded sprite name
      */
     public Bullet(int width, int height, double x, double y, int dx, int dy, int damage, float areaOfDamage, int timeToExplode, int speed, String filename ){
         super(width, height,x,y,dx,dy,speed);
@@ -61,10 +58,13 @@ public class Bullet extends SpaceObject{
         if(shotMicroTime > 0 && System.currentTimeMillis() - shotMicroTime <= timeToExplode){
             explode();
         }
-
         super.update();
     }
 
+    /**
+     * check collision of bullet and SpaceObject
+     * @param spaceobjects SpaceObjects-Array
+     */
     @Override
     public void checkAttackCollisions(ArrayList<SpaceObject> spaceobjects){
 
@@ -133,7 +133,7 @@ public class Bullet extends SpaceObject{
     }
 
     /**
-     * Returns the time to explode (Timer starts with consstruction of class)
+     * Returns the time to explode (Timer starts with construction of class)
      * @return
      */
     public int getTimeToExplode() {
@@ -141,7 +141,7 @@ public class Bullet extends SpaceObject{
     }
 
     /**
-     * Sets the time to explode (Timer starts with consstruction of class)
+     * Sets the time to explode (Timer starts with construction of class)
      * @param timeToExplode
      */
     public void setTimeToExplode(int timeToExplode) {

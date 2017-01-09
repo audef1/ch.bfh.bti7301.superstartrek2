@@ -16,6 +16,10 @@ public class State {
     private GamePanel gamePanel;
     private ArrayList<SubPanel> panels = new ArrayList<SubPanel>();
 
+    /**
+     * overloaded constructor
+     * @param stateMachine StateMachine object
+     */
     public State(StateMachine stateMachine){
         this.stateMachine = stateMachine;
         this.gamePanel = stateMachine.getGamePanel();

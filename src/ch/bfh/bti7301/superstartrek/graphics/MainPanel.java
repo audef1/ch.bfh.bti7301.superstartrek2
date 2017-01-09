@@ -38,9 +38,11 @@ public class MainPanel extends SubPanel {
 
         /* draw all all other spaceobjects on screen */
         for (SpaceObject so : gs.getSpaceobjects()) {
-            so.draw(g);
-        }
+            if(so.getX() > 50 && so.getX() < 500 && so.getY() > 50 && so.getY() < 350){
+                so.draw(g);
+            }
 
+        }
         /* draw other stuff here */
     }
 }

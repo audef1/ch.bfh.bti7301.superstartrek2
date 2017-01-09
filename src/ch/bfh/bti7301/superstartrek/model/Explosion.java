@@ -1,6 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import ch.bfh.bti7301.superstartrek.graphics.GamePanel;
 import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
 
 import javax.imageio.ImageIO;
@@ -17,6 +16,11 @@ public class Explosion extends SpaceObject {
 
     private int explosionTimer = 0;
 
+    /**
+     * overloaded constructor
+     * @param x x-coordinate
+     * @param y y-coordinate
+     */
     public Explosion(double x, double y) {
 
         super(90, 90, x, y, 0, 0, 0);
@@ -59,7 +63,9 @@ public class Explosion extends SpaceObject {
         SoundBoard.EXPLOSION.play();
     }
 
-    @Override
+    /**
+     * Update explosion position
+     */
     public void update(){
         /* update the timer */
         explosionTimer++;
@@ -69,7 +75,10 @@ public class Explosion extends SpaceObject {
         }
     }
 
-    @Override
+    /**
+     * draw the sprite
+     * @param g Graphics2D instance used to draw to the screen
+     */
     public void draw(Graphics2D g){
         g.drawImage(getSprites().get(0)[explosionTimer/10], (int) x, (int) y, null);
     }

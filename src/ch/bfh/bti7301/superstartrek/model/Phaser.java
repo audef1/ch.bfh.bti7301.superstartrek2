@@ -5,6 +5,9 @@ package ch.bfh.bti7301.superstartrek.model;
  */
 public class Phaser extends Weapon {
 
+    /**
+     * default constructor
+     */
     public Phaser(){
         setName("Phaser");
         setCapacity(99);
@@ -16,7 +19,14 @@ public class Phaser extends Weapon {
         setHeight(54);
     }
 
-    @Override
+    /**
+     * fires the phaser
+     * @param x x-coordinate
+     * @param y y-coordinate
+     * @param dx x-direction
+     * @param dy y-direction
+     * @return bullet with given parameters
+     */
     public Bullet fire(double x, double y, int dx, int dy){
         return new Bullet(getWidth(), getHeight(), x, y, dx, dy, getDamage(), getAreaOfDamage(), getTimeToExplode(), getSpeed(), "laserBlue01.png");
     }

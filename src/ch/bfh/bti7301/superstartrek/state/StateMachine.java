@@ -92,6 +92,9 @@ public class StateMachine {
         currentState.update();
     }
 
+    /**
+     * Draws the panel
+     */
     public void draw() {
         for (SubPanel subPanel : currentState.getPanels()){
             subPanel.draw();

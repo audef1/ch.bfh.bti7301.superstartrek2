@@ -76,7 +76,7 @@ public class SpaceObjectFactory {
         for(SpaceObject obj: arrSo){
             if(spaceObject.intersects(obj)){
                 spaceObject.setX((int)obj.getX() + setObjectPosition(50, 500));
-                spaceObject.setX((int)obj.getX() + setObjectPosition(50, 350));
+                spaceObject.setY((int)obj.getY() + setObjectPosition(50, 350));
 
                 setPosition(arrSo, obj);
             }
