@@ -16,6 +16,8 @@ import java.util.ArrayList;
 public class Explosion extends SpaceObject {
 
     private int explosionTimer = 0;
+    private int animationtime = 100;
+    private int currentImg = 1;
 
     public Explosion(double x, double y) {
 
@@ -63,14 +65,20 @@ public class Explosion extends SpaceObject {
     public void update(){
         /* update the timer */
         explosionTimer++;
+        if (explosionTimer%((animationtime/getSprites().get(0).length)-1) == 0){
+            currentImg++;
+            if (currentImg >= getSprites().get(0).length){
+                currentImg = getSprites().get(0).length;
+            }
+        }
 
-        if (explosionTimer >= sprites.get(0).length-1 * 10){
+        if (explosionTimer >= animationtime){
             remove = true;
         }
     }
 
     @Override
     public void draw(Graphics2D g){
-        g.drawImage(getSprites().get(0)[explosionTimer/10], (int) x, (int) y, null);
+        g.drawImage(getSprites().get(0)[currentImg-1], (int) x, (int) y, null);
     }
 }
