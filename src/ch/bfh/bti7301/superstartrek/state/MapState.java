@@ -71,10 +71,6 @@ public class MapState extends State {
         GameState gs = (GameState) getStateMachine().getStates().get("game");
         currentLevel = gs.getCurrentLevel();
 
-        // TODO: for testing
-        currentLevel.getCurrentquardant().setCleared(true);
-        currentLevel.getCurrentquardant().setVisited(true);
-
         // set layout and add different panels
         getGamePanel().setLayout(layout);
         getGamePanel().add(infoPanel, BorderLayout.PAGE_START);
