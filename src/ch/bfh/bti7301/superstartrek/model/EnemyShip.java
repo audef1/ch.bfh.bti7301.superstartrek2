@@ -86,20 +86,23 @@ public class EnemyShip extends SpaceShip {
             this.setDx((int) directions.get(directionPointer).getX());
             this.setDy((int) directions.get(directionPointer).getY());
 
-            /* Ram function
-            if(distance <= 50){
+            /**
+             * If enemy is close enough, follow player
+             */
+            if(distance <= 250 && distance >= 100){
                 long curSpeedUp = System.currentTimeMillis();
-                if(curSpeedUp - lastSpeedUp > 200){
+                if(curSpeedUp - lastSpeedUp > 1000){
                     speedUp();
                     lastSpeedUp = curSpeedUp;
                 }
+            }else{
+                slowDown();
             }
-            */
 
             /**
              * If enemy is close enough, shoot
              */
-            if(distance > 200){
+            if(distance > 50){
                 long curShot = System.currentTimeMillis();
                 if(curShot - lastShot > timeToNextShot){
                     fire(0);

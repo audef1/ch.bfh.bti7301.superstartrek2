@@ -40,12 +40,13 @@ public class Quadrant {
      */
     private void initQuadrant(){
 
-        int min = 0;
-        int maxMeteors = 3;
+        int minMeteors = 2;
+        int maxMeteors = 4;
+        int minEnemies = 0;
         int maxEnemies = 3;
 
-        int amountMeteors = ThreadLocalRandom.current().nextInt(min, maxMeteors + 1);
-        int amountEnemies = ThreadLocalRandom.current().nextInt(min, maxEnemies + 1);
+        int amountMeteors = ThreadLocalRandom.current().nextInt(minMeteors, maxMeteors + 1);
+        int amountEnemies = ThreadLocalRandom.current().nextInt(minEnemies, maxEnemies + 1);
 
         // fill spaceobjects with meteors and stuff
         if (spacestation)
