@@ -156,7 +156,6 @@ public class SpaceShip extends SpaceObject {
                 for (int i = 0; i < ((SpaceShip) so).getFiredBullets().size(); i++){
                     if (intersects(((SpaceShip) so).getFiredBullets().get(i)) && System.currentTimeMillis() - ((SpaceShip) so).getFiredBullets().get(i).getShotMicroTime() > 100){
                         this.shipTakesDamage(((SpaceShip) so).getFiredBullets().get(i).getDamage());
-                        //((SpaceShip) so).getFiredBullets().get(i).remove();
                         ((SpaceShip) so).getFiredBullets().remove(i);
                         i--;
                     }
