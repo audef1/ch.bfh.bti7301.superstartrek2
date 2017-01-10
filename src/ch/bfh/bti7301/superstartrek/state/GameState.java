@@ -150,7 +150,8 @@ public class GameState extends State {
         player.checkAttackCollisions(spaceobjects);
         for(SpaceObject so: spaceobjects){
             if(so instanceof SpaceStation && player.intersects(so)){
-                getStateMachine().change("shop");
+                player.setHealth(player.getMaxHealth());
+                player.setShield(player.getMaxShield());
             }
         }
 
