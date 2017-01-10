@@ -35,7 +35,7 @@ public class SpaceObjectFactory {
             case "meteor":
                 for (int i = 0; i < amount; i++){
 
-                    Meteor m = new Meteor(100, 80, setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.05 - 0.01) + 0.01));
+                    Meteor m = new Meteor(100, 80, setObjectPosition(50, 540), setObjectPosition(50, 380),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.05 - 0.01) + 0.01));
 
                     setPosition(so, m);
                     so.add(m);
@@ -45,7 +45,7 @@ public class SpaceObjectFactory {
             case "enemy":
             {
                 for (int i = 0; i < amount; i++) {
-                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 500), setObjectPosition(50, 350),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05), 40, 20);
+                    EnemyShip es = new EnemyShip(112, 75,setObjectPosition(50, 540), setObjectPosition(50, 380),random.nextInt(3) -1,random.nextInt(3) -1,(Math.random() * (0.1 - 0.05) + 0.05), 40, 20);
 
                     setPosition(so, es);
                     so.add(es);
@@ -56,7 +56,7 @@ public class SpaceObjectFactory {
             case "spaceStation":
             {
                 for (int i = 0; i < amount; i++) {
-                    SpaceStation ss = new SpaceStation(91, 91, setObjectPosition(50, 500), setObjectPosition(50, 350));
+                    SpaceStation ss = new SpaceStation(91, 91, setObjectPosition(50, 540), setObjectPosition(50, 380));
 
                     setPosition(so, ss);
                     so.add(ss);
@@ -75,8 +75,8 @@ public class SpaceObjectFactory {
     private static void setPosition(ArrayList<SpaceObject> arrSo, SpaceObject spaceObject){
         for(SpaceObject obj: arrSo){
             if(spaceObject.intersects(obj)){
-                spaceObject.setX(setObjectPosition(50, 500));
-                spaceObject.setY(setObjectPosition(50, 350));
+                spaceObject.setX(setObjectPosition(50, 540));
+                spaceObject.setY(setObjectPosition(50, 380));
 
                 setPosition(arrSo, obj);
             }

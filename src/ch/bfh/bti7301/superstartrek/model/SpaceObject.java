@@ -123,7 +123,14 @@ public class SpaceObject {
      * update objects position
      */
     public void update() {
-        double penalty = 1d/Math.sqrt(dx*dx+dy*dy);
+        double penalty;
+
+        if(dx == 0 && dy == 0){
+            penalty = 1;
+        }
+        else{
+            penalty = 1d/Math.sqrt(dx*dx+dy*dy);
+        }
 
         // set new position
         x += (dy*speed)*penalty;
