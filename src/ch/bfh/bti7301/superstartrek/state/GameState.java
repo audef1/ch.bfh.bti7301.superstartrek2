@@ -83,7 +83,6 @@ public class GameState extends State {
 
         /* initialize game */
         initGame();
-        player = new StarFleetShip(98, 75, ((mainPanel.getWidth() / 2) - (98 / 2)), mainPanel.getHeight() / 3 * 2, 1, 0, 0, 100, 100);
     }
 
     public void initGame(){
@@ -91,7 +90,7 @@ public class GameState extends State {
         initlevels(GamePanel.GAMESIZE);
 
         /* Initialize game objects */
-        player = new StarFleetShip(98, 75, ((mainPanel.getWidth() / 2) - (98 / 2)), mainPanel.getHeight() / 3 * 2, 1, 0, 0, 100, 100);
+        player = new StarFleetShip(98, 75, ((640 / 2) - (98 / 2)), 480 / 3 * 2, 1, 0, 0, 100, 100);
 
         /* initialize spaceobjects with meteors, enemies and spacestations */
         spaceobjects = currentLevel.getCurrentquardant().getSpaceobjects();
