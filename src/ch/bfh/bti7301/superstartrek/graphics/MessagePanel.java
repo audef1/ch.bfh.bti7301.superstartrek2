@@ -144,11 +144,11 @@ public class MessagePanel extends SubPanel {
 
         int fontSize = 20;
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-        g.setColor(Color.WHITE);
+        g.setFont(new Font("Perfect DOS VGA 437", Font.PLAIN, fontSize));
+        g.setColor(Color.GREEN);
 
         /* draw messages with linebreaks */
-        drawString(g, message, 210, 30);
+        drawString(g, message, 210, 35);
 
         g.drawImage(image, 56, 31, this);
 

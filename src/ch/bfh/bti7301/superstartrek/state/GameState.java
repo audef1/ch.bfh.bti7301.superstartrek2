@@ -261,7 +261,7 @@ public class GameState extends State {
      * Create mission message
      */
     public void tellMission(){
-        msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 30, "Captain, we have to neutralize\nall Klingons in the Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
+        msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 30, "Captain, we have to\nneutralize all Klingons in\nthe Galaxy " + currentLevel.getName() + "\nTake care of the Enterprise Kirk!");
     }
 
     /**

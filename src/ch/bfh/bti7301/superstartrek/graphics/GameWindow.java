@@ -20,9 +20,11 @@ public class GameWindow extends JFrame {
 
         // add star trek font
         // usage -> titleFont = new Font("Final Frontier Old Style", Font.PLAIN, 100);
+        // usage -> titleFont = new Font("Perfect DOS VGA 437", Font.PLAIN, 20);
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/finalfrontierold.ttf").getFile())));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(getClass().getClassLoader().getResource("fonts/perfectdos.ttf").getFile())));
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }
