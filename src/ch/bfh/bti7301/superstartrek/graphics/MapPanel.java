@@ -74,6 +74,11 @@ public class MapPanel extends SubPanel {
                 }
                 g.setStroke(stroke);
 
+                if (q == gs.getCurrentLevel().getCurrentquardant()){
+                    g.setStroke(new BasicStroke(4));
+                    g.setColor(Color.ORANGE);
+                }
+
                 g.drawRect(xMap + i * qWidth, yMap + j * qHeight, qWidth - linewidth, qHeight - linewidth);
 
                 /* draw player */
