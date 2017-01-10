@@ -317,7 +317,7 @@ public class GameState extends State {
         if (key == KeyEvent.VK_SPACE) {
 
             if(player.shieldUp()){
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Lower the shields to use\nthe Phaser, Captain!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Lower the shields to\nuse the Phaser, Captain!");
             }
             else {
                 player.fire(0);
@@ -336,7 +336,7 @@ public class GameState extends State {
                 }
             }
             else{
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields severely damaged, Captain!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Shields severely damaged,\nCaptain!");
             }
 
         }
@@ -352,7 +352,7 @@ public class GameState extends State {
                 }
             }
             else{
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of grenades, Captain!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of grenades,\nCaptain!");
                 SoundBoard.NOTIFICATION.play();
             }
 
