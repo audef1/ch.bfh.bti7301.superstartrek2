@@ -1,8 +1,5 @@
 package ch.bfh.bti7301.superstartrek.model;
 
-import ch.bfh.bti7301.superstartrek.misc.MessageGenerator;
-import ch.bfh.bti7301.superstartrek.sounds.SoundBoard;
-
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -84,7 +81,9 @@ public class SpaceShip extends SpaceObject {
      */
     public void draw(Graphics2D g){
         super.draw(g);
-        firedBullets.forEach(Bullet -> Bullet.draw(g));
+        for (int i = 0; i < firedBullets.size(); i++){
+            firedBullets.get(i).draw(g);
+        }
     }
 
     /**
