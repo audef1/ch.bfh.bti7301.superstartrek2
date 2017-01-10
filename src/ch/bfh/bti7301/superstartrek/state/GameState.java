@@ -317,7 +317,7 @@ public class GameState extends State {
         if (key == KeyEvent.VK_SPACE) {
 
             if(player.shieldUp()){
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Lower your shields first!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Lower the shields to use\nthe Phaser, Captain!");
             }
             else {
                 player.fire(0);
@@ -344,7 +344,12 @@ public class GameState extends State {
         if (key == KeyEvent.VK_G) {
 
             if (player.getWeapons().get(1).getCapacity() > 0){
-                player.fire(1);
+                if(player.shieldUp()){
+                    msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "We can't shoot through the\nshield, Captain!");
+                }
+                else {
+                    player.fire(1);
+                }
             }
             else{
                 msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "We're out of grenades, Captain!");
