@@ -15,6 +15,7 @@ public class Quadrant {
     private Boolean cleared = false;
     private Boolean visited = false;
     private ArrayList<SpaceObject> spaceobjects;
+    private Boolean spacestation = false;
 
     SpaceObjectFactory sof;
 
@@ -22,10 +23,12 @@ public class Quadrant {
      * overloaded constructor
      * @param name quadrant name
      * @param quadrantnr quadrant number
+     * @param spacestation set to true places a spacestation
      */
-    public Quadrant(String name, int quadrantnr){
+    public Quadrant(String name, int quadrantnr, boolean spacestation){
         this.name = name;
         this.quadrantnr = quadrantnr;
+        this.spacestation = spacestation;
         spaceobjects = new ArrayList<SpaceObject>();
 
         sof = new SpaceObjectFactory();
@@ -38,16 +41,15 @@ public class Quadrant {
     private void initQuadrant(){
 
         int min = 0;
-        int maxSpaceStation = 1;
         int maxMeteors = 3;
         int maxEnemies = 3;
 
-        int amountSpaceStation = ThreadLocalRandom.current().nextInt(min, maxSpaceStation + 1);
         int amountMeteors = ThreadLocalRandom.current().nextInt(min, maxMeteors + 1);
         int amountEnemies = ThreadLocalRandom.current().nextInt(min, maxEnemies + 1);
 
         // fill spaceobjects with meteors and stuff
-        spaceobjects.addAll(sof.createSpaceObject("spaceStation", amountSpaceStation));
+        if (spacestation)
+            spaceobjects.addAll(sof.createSpaceObject("spaceStation", 1));
         spaceobjects.addAll(sof.createSpaceObject("meteor", amountMeteors));
         spaceobjects.addAll(sof.createSpaceObject("enemy", amountEnemies));
     }

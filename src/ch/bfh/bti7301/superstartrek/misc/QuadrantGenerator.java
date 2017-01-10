@@ -17,11 +17,19 @@ public class QuadrantGenerator {
     public QuadrantGenerator(int size){
         quadrants = new Quadrant[size][size];
         ngen = new NameGenerator();
+        Boolean spacestationplaced = false;
+        int random = 0 + (int)(Math.random() * ((size*size) + 1));
 
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++) {
                 int quadrantNr = (i+1)+(j* GamePanel.GAMESIZE);
-                quadrants[i][j] = new Quadrant(ngen.getName(), quadrantNr);
+                if (!spacestationplaced && i*j == random){
+                    quadrants[i][j] = new Quadrant(ngen.getName(), quadrantNr, true);
+                    spacestationplaced = true;
+                }
+                else{
+                    quadrants[i][j] = new Quadrant(ngen.getName(), quadrantNr, false);
+                }
             }
         }
     }
