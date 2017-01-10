@@ -317,7 +317,7 @@ public class GameState extends State {
         if (key == KeyEvent.VK_SPACE) {
 
             if(player.shieldUp()){
-                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.NORMAL, 3, "Lower shields first!");
+                msgGenerator.createMessage(MsgCharacter.SCOTT, MessageType.ALERT, 3, "Lower your shields first!");
             }
             else {
                 player.fire(0);
