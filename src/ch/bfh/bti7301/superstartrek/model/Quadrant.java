@@ -51,7 +51,10 @@ public class Quadrant {
         // fill spaceobjects with meteors and stuff
         if (spacestation)
             spaceobjects.addAll(sof.createSpaceObject("spaceStation", 1));
+
         spaceobjects.addAll(sof.createSpaceObject("meteor", amountMeteors));
+
+        if (!(quadrantnr == 1))
         spaceobjects.addAll(sof.createSpaceObject("enemy", amountEnemies));
     }
 
