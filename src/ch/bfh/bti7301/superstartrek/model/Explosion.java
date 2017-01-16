@@ -25,7 +25,7 @@ public class Explosion extends SpaceObject {
      */
     public Explosion(double x, double y) {
 
-        super(90, 90, x, y, 0, 0, 0);
+        super(1, 1, x, y, 0, 0, 0);
         setPolygon();
 
         setSprites(new ArrayList<BufferedImage[]>());
