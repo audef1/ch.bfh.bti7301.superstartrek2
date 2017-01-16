@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.FlatteningPathIterator;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -290,17 +289,38 @@ public class SpaceObject {
         for(SpaceObject so : spaceobjects){
             // check collision
             if(intersects(so)){
-                int idx = getDx() * -1;
+                int idx = getDx();
                 int idy = getDy();
+                double ispeed = getSpeed();
 
-                int sodx = so.getDx() * -1;
+                int sodx = so.getDx();
                 int sody = so.getDy();
+                double sospeed = so.getSpeed();
 
-                setDx(sodx);
-                setDy(sody);
+                if (idx == sodx) {
+                    so.setSpeed(ispeed);;
+                    setSpeed(sospeed);
+                }
+                else {
+                    so.setSpeed(ispeed);
+                    so.setDx(idx);
 
-                so.setDx(idx);
-                so.setDy(idy);
+                    setSpeed(sospeed);
+                    setDx(sodx);
+                }
+
+                if (idy == sody) {
+                    so.setSpeed(ispeed);;
+                    setSpeed(sospeed);
+                }
+                else {
+                    so.setSpeed(ispeed);
+                    so.setDy(idy);
+
+                    setSpeed(sospeed);
+                    setDy(sody);
+                }
+
             }
 
             /* check if hit by a bullet

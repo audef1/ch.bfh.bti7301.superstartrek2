@@ -154,7 +154,7 @@ public class SpaceShip extends SpaceObject {
             /* check if hit by a bullet
             *  check when the bullet was fired to prevent hitting their own ship
             */
-            if (so instanceof SpaceShip){
+            if (so instanceof SpaceShip && !so.equals(this)){
                 for (int i = 0; i < ((SpaceShip) so).getFiredBullets().size(); i++){
                     if (intersects(((SpaceShip) so).getFiredBullets().get(i)) && System.currentTimeMillis() - ((SpaceShip) so).getFiredBullets().get(i).getShotMicroTime() > 175){
                         this.shipTakesDamage(((SpaceShip) so).getFiredBullets().get(i).getDamage());
