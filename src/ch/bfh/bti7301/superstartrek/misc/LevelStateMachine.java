@@ -42,7 +42,7 @@ public class LevelStateMachine {
     public void changeQuadrant(Quadrant quadrant) {
 
         /* set state visited */
-        gameState.getCurrentLevel().getCurrentquardant().setVisited(true);
+        quadrant.setVisited(true);
 
         /* check if enemies exist */
         Boolean enemiesleft = false;

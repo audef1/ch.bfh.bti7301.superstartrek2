@@ -48,14 +48,22 @@ public class Quadrant {
         int amountMeteors = ThreadLocalRandom.current().nextInt(minMeteors, maxMeteors + 1);
         int amountEnemies = ThreadLocalRandom.current().nextInt(minEnemies, maxEnemies + 1);
 
-        // fill spaceobjects with meteors and stuff
-        if (spacestation)
-            spaceobjects.addAll(sof.createSpaceObject("spaceStation", 1));
+        /*
+         * fill spaceobjects with meteors and stuff
+         * no enemies and only one meteor on first quadrant
+         */
+        if (!(quadrantnr == 1)){
+            spaceobjects.addAll(sof.createSpaceObject("meteor", amountMeteors));
+            spaceobjects.addAll(sof.createSpaceObject("enemy", amountEnemies));
 
-        spaceobjects.addAll(sof.createSpaceObject("meteor", amountMeteors));
+            if (spacestation){
+                spaceobjects.addAll(sof.createSpaceObject("spaceStation", 1));
+            }
+        }
+        else{
+            spaceobjects.addAll(sof.createSpaceObject("meteor", 1));
+        }
 
-        if (!(quadrantnr == 1))
-        spaceobjects.addAll(sof.createSpaceObject("enemy", amountEnemies));
     }
 
     public String getName() {

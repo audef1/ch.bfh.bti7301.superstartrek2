@@ -51,6 +51,8 @@ public class MapPanel extends SubPanel {
         int qWidth = 240; // quadrant width
         int qHeight = 147; // quadrant height
 
+
+
         /* draw map */
         for (int i = 0; i < quadrants.length; i++) {
             for (int j = 0; j < quadrants[i].length; j++) {

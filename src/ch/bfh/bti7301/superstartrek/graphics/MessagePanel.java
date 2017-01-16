@@ -62,6 +62,8 @@ public class MessagePanel extends SubPanel {
         /* draw minimap */
         int mapWidth = 233;
         int mapHeight = 145;
+        int xRatio = gs.getPanels().get(0).getWidth() / mapWidth;
+        int yRatio = gs.getPanels().get(0).getHeight() / mapHeight;
         int xMapStart = 760;
         int yMapStart = 25;
 
@@ -71,15 +73,15 @@ public class MessagePanel extends SubPanel {
 
         for (SpaceObject so : spaceobjects) {
             if (so instanceof EnemyShip) {
-                if (xMapStart + (int) (so.getX() / 2.66) >= xMapStart && xMapStart + (int) (so.getX() / 2.66) <= xMapStart + mapWidth && yMapStart + (int) (so.getY() / 3.3) >= yMapStart && yMapStart + (int) (so.getY() / 3.3) <= yMapStart + mapHeight - so.getHeight()) {
+                if (xMapStart + (int) (so.getX() / xRatio)  <= xMapStart + mapWidth && xMapStart + (int) (so.getX() / xRatio) - (so.getWidth()/xRatio) <= xMapStart + mapWidth && yMapStart + (int) (so.getY() / yRatio) <= yMapStart + mapHeight) {
                     g.setColor(Color.RED);
-                    g.fillOval(xMapStart + (int) (so.getX() / 2.66), yMapStart + (int) (so.getY() / 3.3), 10, 10);
+                    g.fillOval(xMapStart + (int) (so.getX() / xRatio), yMapStart + (int) (so.getY() / yRatio), 10, 10);
                 }
             }
 
             if (so instanceof SpaceStation) {
                 g.setColor(Color.GREEN);
-                g.fillOval(xMapStart + (int) (so.getX() / 2.66), yMapStart + (int) (so.getY() / 3.3), 15, 15);
+                g.fillOval(xMapStart + (int) (so.getX() / xRatio) , yMapStart + (int) (so.getY() / yRatio) - (so.getWidth() / yRatio), 15, 15);
             }
         }
 
